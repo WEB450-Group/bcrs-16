@@ -55,6 +55,16 @@ html, body {
     flex-direction: row;
   }
 }
+
+button {
+  background-color: #041222;
+  color: #fff;
+}
+
+.active {
+  text-decoration: underline;
+}
+
 @media only screen and (max-width: 768px) {
   .page-container {
     padding: 2rem;

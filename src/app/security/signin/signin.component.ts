@@ -11,7 +11,6 @@ import { Component } from '@angular/core';
 
 //interface/model
 export interface SessionUser {
-
 }
 
 @Component({

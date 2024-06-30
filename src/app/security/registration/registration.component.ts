@@ -9,6 +9,10 @@
 */
 import { Component } from '@angular/core';
 
+//interface/model
+export interface SessionUser {
+}
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -16,4 +20,21 @@ import { Component } from '@angular/core';
 })
 export class RegistrationComponent {
 
+    errMessage: string = '';
+    sessionUser: SessionUser;
+    isLoading: boolean = false;
+  
+  
+    constructor() {
+      this.errMessage = "";
+      this.sessionUser = {} as SessionUser;
+    }
+  
+      //UI submit button registration function
+      register() {
+        //for status wheel/spinner 
+        this.isLoading = true;
+  
+        //code
+      }
 }
