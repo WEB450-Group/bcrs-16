@@ -1,0 +1,24 @@
+<!-- FOOTER -->
+<footer class="py-6 px-10 primary text-slate-50">		
+  <div class="base-container flex row justify-between m-auto">
+    <div class="">
+      <address class="not-italic">
+        <p>1(800)555-5435</p>
+        <p>
+          4885 University Drive<br>
+          Chicago,IL<br>
+          60610
+        </p>
+        <a href="mailto:support&#64;example.com">support&#64;example.com</a>
+      </address>
+    </div>
+
+    <div class="">
+      <p><a routerLink="contact">Contact</a></p>
+      <p><a routerLink="about">About</a></p>
+      <p><a *ngIf="!isSignedIn" routerLink="/security/login">Login</a></p>
+      <p><a *ngIf="!isSignedIn" routerLink="/security/registration">Register</a></p>
+     </div>	
+  </div>
+    <p class="text-center">&copy; Joanna Brumfield & Zadkiel Rodriguez Alvarado</p>
+</footer>

@@ -1,0 +1,84 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html, body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  height: 100%;
+}
+
+//Theme
+.primary {
+  background-color: #0D1E4B;
+}
+
+.primary-text {
+  color: #041222;
+}
+
+.secondary {
+  background-color: #BD9E6F;
+}
+
+.secondary-text {
+  color: #BD9E6F;
+}
+
+.tertiary {
+  background-color: #222f5b;
+}
+
+.tertiary-text {
+  color: #222f5b;
+}
+
+.page-container {
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    padding-bottom: 2rem;
+    text-align: center;
+    font-weight: 300;
+  }
+
+  &.flex-col {
+    flex-direction: column;
+  }
+
+  &.flex-row {
+    flex-direction: row;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .page-container {
+    padding: 2rem;
+    align-items: flex-start;
+  }
+
+  .page-container.flex-col {
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  .page-container {
+    padding-top: 10%;
+    align-items: flex-start;
+  }
+
+  .page-container.flex-col {
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .base-container {
+    width: 85%;
+    margin:0 auto
+  }
+}
