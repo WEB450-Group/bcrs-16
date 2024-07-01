@@ -35,12 +35,8 @@ const options = {
       version: '1.0.0',
     },
   },
-  apis: ['./server/routes/employee-routes.js', './server/routes/security-routes']    
+  apis: ['./server/routes/employee-routes.js', './server/routes/security-routes.js']    
 };
-
-//connect APIs
-app.use('/api/employees', employeeRoutes);
-app.use('/api/security', securityRoutes);
 
 //Create a new variable name openapiSpecification and call the swaggerJsdoc library using the options object literal.  For example, const openapiSpecification = swaggerJsdoc(options);
 const openapiSpecification = swaggerJsdoc(options);
@@ -50,6 +46,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
 //connect APIs
 app.use("/api/employees", employeeRoutes);
+app.use("/api/security", securityRoutes);
 
 // error handler for 404 errors
 app.use(function(req, res, next) {
