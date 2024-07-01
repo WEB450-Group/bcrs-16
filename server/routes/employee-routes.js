@@ -7,12 +7,12 @@
 ; Description: Employee Routes
 ;===========================================
 */
-'use strict';
+"use strict";
 
 // Imports
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { mongo } = require('../utils/mongo');
+const { mongo } = require("../utils/mongo");
 const createError = require('http-errors');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -20,7 +20,7 @@ const saltRounds = 10;
 /**
  * employee Register
  * @openapi
- * /api/employee/register:
+ * /api/employees/register:
  *   post:
  *     tags:
  *      - employees
@@ -38,7 +38,6 @@ const saltRounds = 10;
  *               - password
  *               - phoneNumber
  *               - address
- *               - language
  *             properties:
  *               firstName:
  *                 type: string
@@ -51,8 +50,6 @@ const saltRounds = 10;
  *               phoneNumber:
  *                 type: number
  *               address:
- *                 type: string
- *               language:
  *                 type: string
  *     responses:
  *       '201':
@@ -69,45 +66,44 @@ router.post('/register', (req, res, next) => {
         console.log('Creating a new employee...');
 
         // Get the user information from the request body
-        const { firstName, lastName, emailAddress, password, phoneNumber, address, language } = req.body;
+        const { firstName, lastName, emailAddress, password, phoneNumber, address } = req.body;
 
         // Call mongo and create the new employee
         mongo(async db => {
 
-            // Get the employees collection
-        const employeeCollection = db.collection('employees');
+            console.log("Checking if the employee emailAddress exists in the database...");
+            // Check if the employee already exist in the database
+            const existingEmployee = await db.collection("employees").findOne({ emailAddress: emailAddress });
+            
+            // If the employee exist; then throw an error status code 409 with message 'Employee already exists!'
+            if(existingEmployee) {
+                console.log("Employee exists");
+                console.error('Employee already exists!');
+                return next(createError(409, `Employee already exists with the email address ${emailAddress}.`));
+            }
 
-        // Check if the employee already exist in the database
-        const existingEmployee = await employeeCollection.findOne({ $or: [{ firstName: firstName }, { lastName: lastName }, { email: emailAddress }] });
-        
-        // If the employee exist; then throw an error status code 409 with message 'Employee already exist!'
-        if(existingEmployee) {
-            console.error('Employee already exists!');
-            return next(createError(409, `Employee already exist with those credentials ${firstName} ${lastName} ${emailAddress}.`));
-        }
+            // Create the new employee object
+            const newEmployee = {
+                firstName: firstName,
+                lastName: lastName,
+                emailAddress: emailAddress,
+                password: bcrypt.hashSync(password, saltRounds),
+                phoneNumber: phoneNumber,
+                address: address,
+                isDisabled: false,
+                role: 'standard',
+                selectedSecurityQuestions: []
+            }
 
-        // Create the new employee object
-        const newEmployee = {
-            firstName: firstName,
-            lastName: lastName,
-            emailAdress: emailAddress,
-            password: bcrypt.hashSync(password, saltRounds),
-            phoneNumber: phoneNumber,
-            address: address,
-            language: language,
-            role: 'standard',
-        }
-
-        // Insert new employee to the employee collection
-        const result = await employeeCollection.insertOne(newEmployee);
-        console.log('New employee created successfully!');
-        res.status(201).send({
-            'message': 'Employee created successfully!',
-            json: result
-        });
+            // Insert new employee to the employee collection
+            const result = await db.collection("employees").insertOne(newEmployee);
+            console.log('New employee created successfully!');
+            res.status(201).send({
+                'message': 'Employee created successfully!',
+                json: result
+            });
 
         }, next);
-
 
     } catch (err) {
         console.error('Error: ', err);

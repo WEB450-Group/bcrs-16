@@ -13,17 +13,14 @@ const {
   MongoClient
 } = require("mongodb");
 
-const MONGO_URL = 'mongodb+srv://BCRS_User:s3cret@bcrs-cluster.djwllrd.mongodb.net/?retryWrites=true&w=majority&appName=BCRS-Cluster';
+const MONGO_URL = 'mongodb+srv://bcrs_user:s3cret@bcrs-cluster.djwllrd.mongodb.net/?retryWrites=true&w=majority&appName=BCRS-Cluster';
 
 const mongo = async (operations, next) => {
 
   try {
     console.log("Connecting to database");
   
-    const client = await MongoClient.connect(MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const client = await MongoClient.connect(MONGO_URL);
     
     const db = client.db("BCRS_DB");
     console.log("Connected to the database!");
