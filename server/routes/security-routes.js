@@ -15,9 +15,109 @@ const { mongo } = require('../utils/mongo');
 const createError = require('http-errors');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-
+let counter = 0;
 
 // Routes
+
+
+/**
+ * employee Register
+ * @openapi
+ * /api/security/register:
+ *   post:
+ *     tags:
+ *      - security
+ *     description: API for creating new employees
+ *     summary: Employee Registration
+ *     requestBody:
+ *       description: Employee Information
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - firstName
+ *               - lastName
+ *               - emailAddress
+ *               - password
+ *               - phoneNumber
+ *               - address
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *               emailAddress:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               phoneNumber:
+ *                 type: number
+ *               address:
+ *                 type: string
+ *     responses:
+ *       '201':
+ *         description: Employee created successfully
+ *       '409':
+ *         description: Employee already exists
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
+ */
+router.post('/', (req, res, next) => {
+    try {
+        console.log('Creating a new employee...');
+
+        // Increase the counter
+        counter++;
+
+        // Get the user information from the request body
+        const { firstName, lastName, emailAddress, password, phoneNumber, address } = req.body;
+
+        // Call mongo and create the new employee
+        mongo(async db => {
+
+            console.log("Checking if the employee emailAddress exists in the database...");
+            // Check if the employee already exist in the database
+            const existingEmployee = await db.collection("employees").findOne({ emailAddress: emailAddress });
+            
+            // If the employee exist; then throw an error status code 409 with message 'Employee already exists!'
+            if(existingEmployee) {
+                console.log("Employee exists");
+                console.error('Employee already exists!');
+                return next(createError(409, `Employee already exists with the email address ${emailAddress}.`));
+            }
+
+            // Generate a random employeeId
+            const employeeId = 1000 + counter;
+
+            // Create the new employee object
+            const newEmployee = {
+                employeeId: employeeId,
+                firstName: firstName,
+                lastName: lastName,
+                emailAddress: emailAddress,
+                password: bcrypt.hashSync(password, saltRounds),
+                phoneNumber: phoneNumber,
+                address: address,
+                isDisabled: false,
+                role: 'standard',
+                selectedSecurityQuestions: []
+            }
+
+            // Insert new employee to the employee collection
+            const result = await db.collection("employees").insertOne(newEmployee);
+            console.log('New employee created successfully!');
+            res.status(201).send('Employee created successfully!');
+
+        }, next);
+
+    } catch (err) {
+        console.error('Error: ', err);
+        next(err);
+    }
+});
+
 /**
  * employee Sign in
  * @openapi
@@ -74,24 +174,18 @@ router.post('/signin', (req, res, next) => {
                 // If the password matches; then return status code 200 with message "Employee sign in"
                 if(passwordIsValid) {
                     console.log("Password matches!");
-                    res.status(200).send({
-                        "message": "Employee signed in"
-                    });
+                    res.status(200).send('Employee Signed in!');
                 }
                 // Else if the password doesn't match; then return status code 400 with message "Invalid credentials"
                 else {
                     console.log("Password doesn't match!");
-                    res.status(400).send({
-                        "message": "Invalid credentials"
-                    });
+                    return next(createError(400, "Invalid Credentials!"));
                 }
             }
             // Else if employee is not found; then return status code 400 with message "Invalid credentials"
             else {
                 console.log("Employee not found!");
-                res.status(400).send({
-                    "messsage": "Invalid credentials"
-                })
+                return next(createError(400, "Invalid Credentials!"));
             }
         }, next);
     
