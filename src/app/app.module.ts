@@ -21,7 +21,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { CookieService } from 'ngx-cookie-service';
 
-import { AppRoutingModule } from './app-routing.module';
+
+
 import { AppComponent } from './app.component';
 
 import { HomeComponent } from './home/home.component';
@@ -36,7 +37,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ServiceGraphComponent } from './service-graph/service-graph.component';
 import { ServiceRepairComponent } from './service-repair/service-repair.component';
 import { ProfileComponent } from './profile/profile.component';
-
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,6 @@ import { ProfileComponent } from './profile/profile.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     CommonModule,
     MatIconModule,
@@ -66,7 +66,8 @@ import { ProfileComponent } from './profile/profile.component';
     RouterModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatOptionModule
+    MatOptionModule,
+    AppRoutingModule,
   ],
   providers: [CookieService], 
   bootstrap: [AppComponent]
