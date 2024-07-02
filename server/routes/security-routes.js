@@ -26,7 +26,7 @@ let counter = 0;
  * /api/security/register:
  *   post:
  *     tags:
- *      - security
+ *      - Security
  *     description: API for creating new employees
  *     summary: Employee Registration
  *     requestBody:
@@ -124,7 +124,7 @@ router.post('/', (req, res, next) => {
  * /api/security/signin:
  *   post:
  *     tags:
- *      - security
+ *      - Security
  *     description: API for signing in employees
  *     summary: Employee Sign in
  *     requestBody:

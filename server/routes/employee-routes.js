@@ -14,7 +14,6 @@ const express = require("express");
 const router = express.Router();
 const { mongo } = require("../utils/mongo");
 const createError = require('http-errors');
-const bcrypt = require('bcrypt');
 
 
 /** 
@@ -83,7 +82,7 @@ router.get('/', (req, res, next) => {
  * /api/employees/{email}:
  *   get:
  *     tags:
- *       - employees
+ *       - Employees
  *     description: Returns employee by email
  *     summary: Returns an employee document
  *     parameters:
@@ -138,6 +137,148 @@ router.get('/:email',(req, res, next) => {
         next(err);
     }
 })
+
+/**
+ * createEmployee
+ * @openapi
+ * /api/employees:
+ *   post:
+ *     tags:
+ *       - Employees
+ *     description: API for creating an employee
+ *     summary: Creates a new employee
+ *     requestBody:
+ *       description: Employee Information
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - employeeId
+ *               - firstName
+ *               - lastName
+ *               - emailAddress
+ *               - phoneNumber
+ *               - address
+ *               - role
+ *             properties:
+ *               employeeId:
+ *                 type: number
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *               emailAddress:
+ *                 type: string
+ *               phoneNumber:
+ *                 type: number
+ *               address:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *     responses:
+ *       '201':
+ *         description: Employee created successfully
+ *       '400':
+ *         description: Bad Request
+ *       '500':
+ *         description: Internal Server Error
+ *       '501':
+ *         description: Database Error
+ */
+router.post('/', (req, res, next) => {
+    try {
+
+        console.log("Starting the create employee API...");
+
+        // Get the data for the new employee from the request body
+        const { employeeId, firstName, lastName, emailAddress, phoneNumber, address, role } = req.body;
+
+        // Call mongo and create the new user
+        mongo(async db => {
+
+            console.log("Checking the employee ID is valid...");
+
+            // Check that the employeeId is a number with the parseInt function; If the checkEmployeeId is not a number it will return NaN
+            const checkEmployeeId = parseInt(employeeId, 10);
+
+            // If the checkEmployeeId is NaN; then return a status code 400 with a message "Employee ID must be a number."
+            if(isNaN(checkEmployeeId)) {
+                console.error("Employee Id must be a number!");
+                return next(createError(400, "Employee Id must be a number!"));
+            }
+
+            // Check the employee ID is 4 digits
+            // If the employee ID length is not equal to 4; then return a status code 400 with a message "Invalid employee ID!"
+            if(checkEmployeeId.toString().length !== 4) {
+                console.error("Invalid employee ID!");
+                return next(createError(400, "Invalid employee ID!"));
+            }
+
+            console.log("Employee ID is valid!");
+
+            console.log("Checking the employee ID is not being used...");
+            
+            // Check if the employeeId is not register already with another employee
+            const existingEmployee = await db.collection("employees").findOne({ employeeId: employeeId });
+
+            // If the employee Id is being used already; then return a status code 400 with a message "Employee ID already in use!"
+            if(existingEmployee) {
+                console.error("Employee ID already in use!");
+                return next(createError(400, "Employee ID already in use!"));
+            }
+
+            console.log("Employee ID is not being used!");
+
+            console.log("Checking the phone number is valid...");
+
+            // Check that the checkPhoneNumber is consists of numbers only with the parseInt function; If the checkPhoneNumber is is not a number it will return NaN
+            const checkPhoneNumber = parseInt(phoneNumber, 10);
+
+            // If the checkPhoneNumber is NaN; then return a status code 400 with a message "Invalid phone number!"
+            if(isNaN(checkPhoneNumber)) {
+                console.error("Invalid phone number!");
+                return next(createError(400, "Invalid phone number!"));
+            }
+
+            // Check if the phone number is the correct length of number (US ONLY)
+            if(checkPhoneNumber.toString().length !== 10) {
+                console.log("Invalid phone number!");
+                return next(createError(400, "Invalid phone number!"));
+            }
+
+            console.log("Phone number is valid!");
+
+            console.log("Creating the employee...");
+
+            // Create the new employee
+            const newEmployee = {
+                employeeId: employeeId,
+                firstName: firstName,
+                lastName: lastName,
+                emailAddress: emailAddress,
+                password: '',
+                phoneNumber: phoneNumber,
+                address: address,
+                isDisabled: false,
+                role: role,
+                selectedSecurityQuestions: []
+            };
+
+            console.log("Inserting new employee to the employees collection...");
+
+            // Insert the new employee into the employees collection
+            const result = await db.collection("employees").insertOne(newEmployee);
+            res.status(201).send("Employee created successfully!");
+            console.log("New employee inserted successfully!");
+
+        }, next);
+        
+      // Catch any database errors  
+    } catch (err) {
+        console.error('Database Error:', err);
+        next(err);
+    }
+});
 
 // Export the router
 module.exports = router;
