@@ -17,21 +17,21 @@
         class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 primary-text">
         <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="block py-1 px-2 uppercase tracking-widest">Home</a></li>
         
-        <li><a routerLink="/about" routerLinkActive="active" class="block py-1 px-2 uppercase tracking-widest">About</a></li>
-        <li><a routerLink="/contact" routerLinkActive="active" class="block py-1 px-2 uppercase tracking-widest">Contact</a></li>
+        <li><a routerLink="/about" routerLinkActive="active" class="block py-1 px-2 uppercase tracking-wider">About</a></li>
+        <li><a routerLink="/contact" routerLinkActive="active" class="block py-1 px-2 uppercase tracking-wider">Contact</a></li>
         <li *ngIf="isSignedIn">
-          <a routerLink="/service-repair" routerLinkActive="active" class="block py-1 px-2 uppercase tracking-widest">Service Repair</a>
+          <a routerLink="/service-repair" routerLinkActive="active" class="block py-1 px-2 uppercase tracking-wider">Service Repair</a>
         </li>
 
         <li [ngClass]="{'hidden': isSignedIn, 'm-0': isSignedIn}">
-          <a *ngIf="!isSignedIn" routerLink="/security/registration" class="block py-1 px-2 uppercase tracking-widest">Register</a>
+          <a *ngIf="!isSignedIn" routerLink="/security/registration" class="block py-1 px-2 uppercase tracking-wider">Register</a>
         </li>
         <li [ngClass]="{'hidden': isSignedIn, 'm-0': isSignedIn}">
-          <a *ngIf="!isSignedIn" routerLink="/security/signin" class="block py-1 px-2 uppercase tracking-widest">Log In</a>
+          <a *ngIf="!isSignedIn" routerLink="/security/signin" class="block py-1 px-2 uppercase tracking-wider">Log In</a>
         </li>
 
         <li *ngIf="isSignedIn" class="logged-in-menu relative">
-          <a (click)="toggleDropdown()" class="flex items-center px-2 py-1 md:px-0 uppercase tracking-widest bg-transparent">
+          <a (click)="toggleDropdown()" class="flex items-center px-2 py-1 md:px-0 uppercase tracking-wider bg-transparent">
             <mat-icon class="mr-2 mb-1">person</mat-icon>
             <span>Hi, {{ appUser.fullName }}</span>
             <mat-icon>arrow_drop_down</mat-icon>
@@ -41,20 +41,20 @@
             *ngIf="dropdownVisible" 
             class="absolute md:right-0 mt-4 w-48 rounded-b-lg">
             <li>
-              <a routerLink="/employee-list" class="block w-full text-left py-2 px-4 tracking-widest">Employee List</a>
+              <a routerLink="/employee-list" class="block w-full text-left py-2 px-4 tracking-wider">Employee List</a>
             </li>
             <li>
-              <a routerLink="/faq" class="block w-full text-left py-2 px-4 tracking-widest">FAQ</a>
+              <a routerLink="/faq" class="block w-full text-left py-2 px-4 tracking-wider">FAQ</a>
             </li>
             <li>
-              <a routerLink="/profile" class="block w-full text-left py-2 px-4 tracking-widest">Profile</a>
+              <a routerLink="/profile" class="block w-full text-left py-2 px-4 tracking-wider">Profile</a>
             </li>
             <!-- *ngIf=isAdmin -->
             <li>
-              <a routerLink="/service-graph" class="block w-full text-left py-2 px-4 tracking-widest">Employee List</a>
+              <a routerLink="/service-graph" class="block w-full text-left py-2 px-4 tracking-wider">Service Graph</a>
             </li>
             <li>
-              <a (click)="signOut()" class="block w-full text-left py-2 px-4">Sign Out</a>
+              <a (click)="signOut()" class="block w-full text-left py-2 px-4 tracking-wider">Sign Out</a>
             </li>
           </ul>
         </li>
