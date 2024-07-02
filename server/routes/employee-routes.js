@@ -45,6 +45,7 @@ router.get('/', (req, res, next) => {
                 projection: {
                     firstName: 1,
                     lastName: 1,
+                    employeeId: 1,
                     emailAddress: 1,
                     phoneNumber: 1,
                     isDisabled: 1,
@@ -79,17 +80,17 @@ router.get('/', (req, res, next) => {
 /**
  * findById
  * @openapi
- * /api/employees/{email}:
+ * /api/employees/{id}:
  *   get:
  *     tags:
  *       - Employees
- *     description: Returns employee by email
+ *     description: Returns employee by id
  *     summary: Returns an employee document
  *     parameters:
- *       - name: email
+ *       - name: id
  *         in: path
  *         required: true
- *         description: Employee email
+ *         description: Employee ID
  *         schema:
  *           type: string
  *     responses:
@@ -100,24 +101,27 @@ router.get('/', (req, res, next) => {
  *       '500':
  *         description: Server exception
  */
-router.get('/:email',(req, res, next) => {
+router.get('/:employeeId', (req, res, next) => {
     try {
         //Email params 
-        const emailAddress = (req.params.email);
-        //regex to varify email pattern 
-        const regEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-        //Test valid email pattern against email param, if not a valid email format send 404 
-        if (!regEx.test(emailAddress)) {
-            return res.status(400).json({error: 'Incorrect Email Format'});
+        let employeeId = req.params.employeeId;
+        //pasrse to integer
+        employeeId = parseInt(employeeId, 10); 
+        //if input not numerical,return 400 
+        if (isNaN(employeeId)) {
+            const err = new Error('Input must be a number');
+            err.status = 400;
+            return next(err);
         }
         //connect to database 
         mongo(async (db) => {
             //Match email param to a valid email in employee collection
-            const employee = await db.collection('employees').findOne({emailAddress}, {
+            const employee = await db.collection('employees').findOne({employeeId}, {
                 //What to return from database 
                 projection: {
                     firstName: 1,
                     lastName: 1,
+                    employeeId: 1,
                     emailAddress: 1,
                     phoneNumber: 1,
                     isDisabled: 1,
@@ -279,6 +283,13 @@ router.post('/', (req, res, next) => {
         next(err);
     }
 });
+
+//Add email pattern when creating an account as well? 
+// const regEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+// //Test valid email pattern against email param, if not a valid email format send 404 
+// if (!regEx.test(emailAddress)) {
+//     return res.status(400).json({error: 'Incorrect Email Format'});
+// }
 
 // Export the router
 module.exports = router;
