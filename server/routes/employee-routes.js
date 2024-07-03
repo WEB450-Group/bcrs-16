@@ -280,5 +280,108 @@ router.post('/', (req, res, next) => {
     }
 });
 
+/**
+ * updateEmployee
+ * @openapi
+ * /api/employees/{employeeId}:
+ *   put:
+ *     tags:
+ *       - Employees
+ *     description: API for update an employee data
+ *     summary: Update an employee
+ *     parameters:
+ *       - name: employeeId
+ *         in: path
+ *         description: The Employee ID requested by the user.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       description: Updating data request
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - role
+ *               - isDisabled
+ *             properties:
+ *               role:
+ *                 type: string
+ *               isDisabled:
+ *                 type: boolean
+ *     responses:
+ *       '204':
+ *         description: Employee updated successfully
+ *       '400':
+ *         description: Bad Request
+ *       '404':
+ *         description: Employee not found
+ *       '500':
+ *         description: Internal Server Error
+ *       '501':
+ *         description: Database Error
+ */
+router.put('/:employeeId', (req, res, next) =>{
+    try {
+
+        console.log('Updating the employee ID...');
+
+        // Get the employee ID from the request paramaters
+        let { employeeId } = req.params;
+
+        console.log('Checking if the employee ID is a valid...');
+
+        // Check if the employee ID is a number with the parseInt function; if is not a number it will return NaN
+        employeeId = parseInt(employeeId, 10);
+
+        // If the employee ID is NaN; then return status code 400 with message "Employee ID must be a number"
+        if(isNaN(employeeId)) {
+            console.error("Employee ID must be a number!");
+            return next(createError(400, `Employee ID must be a number: ${employeeId}`));
+        }
+
+        console.log('The employee ID is valid!');
+        
+        // Call mongo and update the employee
+        mongo(async db => {
+
+            console.log('Getting the employee from the collection with the employee ID...');
+
+            // Get the employee from the employees collection with the employee ID
+            const employee = await db.collection('employees').findOne({ employeeId: employeeId });
+
+            console.log('Employee is found!');
+
+            // If the employee is not found with given employee ID; then return status code 404 with message "Employee not found with employee ID"
+            if(!employee) {
+                console.error('Employee not found with employee ID: ', employeeId);
+                return next(createError(404, `Employee not found with employee ID: ${employeeId}`));
+            }
+
+            console.log('Getting the data that will update from the employee from the request body...');
+
+            // Get the role and isDisabled from the request
+            const { role, isDisabled } = req.body;
+
+            // Update the employee role and isDisable
+            const result = await db.collection('employees').updateOne(
+                { employeeId: employeeId },
+                { $set: { role: role, isDisabled: isDisabled }}
+            );
+
+            console.log('Employee is updated successfully!');
+
+            // Send successful response to the client
+            res.status(204).send();
+
+        }, next);
+    
+        // Catch any databse errors
+    } catch (err) {
+        console.error("Database Error:", err);
+        next(err);
+    }
+})
+
 // Export the router
 module.exports = router;
