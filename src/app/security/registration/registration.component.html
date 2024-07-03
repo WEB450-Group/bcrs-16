@@ -1,17 +1,17 @@
 <div class="login-container bg-color">
   <!-- LOGO -->
-  <div class="pt-6 border-slate-600 base-container">
+  <div class=" border-slate-600 base-container">
     <a routerLink="/">
       <img src="./assets/images/logo.png" alt="Bob's Computer Repair Shop Logo" width="300px" class="pl-6 py-3">
     </a>
   </div>
 
-  <div class="page-container">
-    <div class="w-full md:w-1/3 2xl:w-1/4 px-8 md:px-12 py-10 3xl:py-20 pb-8 border rounded-lg bg-white shadow-lg">
+  <div class="page-container ">
+    <div class=" m-2 md:w-1/3 2xl:w-1/4 md:px-8 lg:px-12 md:py-10 2xl:py-20 md:pb-8 border rounded-lg bg-white shadow-lg">
       <h2 class="text-3xl 3xl:text-4xl md:ml-4 pt-3 primary-text font-semibold">Create a New Account</h2>
       <!-- FORM FIELDS -->
       <div class="my-2">
-        <form (ngSubmit)="register()" class="md:pt-3 md:px-4 pb-8 bg-white">
+        <form (ngSubmit)="register()" class="md:pt-3 md:px-4 pb-8 bg-white ">
 
           <h4 class="text-medium 2lg:text-xl font-bold tracking-wide pb-2 text-start">Create a Username</h4>
           <div>
@@ -29,8 +29,8 @@
           </div>
 
           <h4 class="text-medium 2lg:text-xl font-bold tracking-wide pb-2 text-start pt-4">Select A Security Question</h4>
-          <div class="w-10/12">
-            <select class="py-3 border rounded-md select-items">
+          <div class="">
+            <select class="py-3 border rounded-md select-items w-10/12">
               <option value="0" class="p-2 select-item">Select question:</option>
               <option value="mom-city" class="p-2">What City was your mom born in?</option>
               <option value="best-friend" class="p-2 select-item">What is the name of your best friend groing up?</option>

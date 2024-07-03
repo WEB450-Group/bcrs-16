@@ -1,1 +1,12 @@
-<p>employee-list works!</p>
+<div class="page-container">
+  <div class = "Employee-list-container w-full lg:w-3/5 2xl:w-1/2 bg-white border shadow-lg flex-col">
+
+    <div *ngIf="employeeList.length === 0"  class="border-slate-500 p-4">
+        <span>Employees List Empty</span>
+    </div>
+
+    <div *ngFor="let employee of employeeList" class="employee-list-item divide-y divide-gray-200 p-4">
+      {{employee}}
+    </div>
+  </div>
+</div>
