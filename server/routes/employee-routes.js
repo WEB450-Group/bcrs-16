@@ -476,7 +476,7 @@ router.put('/:employeeId/disable', (req, res, next) => {
       if (!result.modifiedCount) {
         return next(createError(400, 'Unable to disable employee - note they may already be disabled'));
       }
-        res.status(204).send();
+      res.status(204).send();
     });
   }
   //Mongo error handling 
