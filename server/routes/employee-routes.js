@@ -417,7 +417,7 @@ router.put('/:employeeId', (req, res, next) =>{
 /**
  * deleteUser
  * @openapi
- * /api/employees/{employeeId}:
+ * /api/employees/{employeeId}/disable:
  *   put:
  *     tags:
  *       - employees
@@ -427,7 +427,7 @@ router.put('/:employeeId', (req, res, next) =>{
  *       - name: employeeId
  *         in: path
  *         required: true
- *         description: Employee id
+ *         description: EmployeeId
  *         schema:
  *           type: string
  *     responses:
@@ -440,7 +440,7 @@ router.put('/:employeeId', (req, res, next) =>{
  *       '200':
  *         description:  Internal Server Error
  */
-router.put('/:employeeId', (req, res, next) => {
+router.put('/:employeeId/disable', (req, res, next) => {
   try {
     //Employee ID params 
     let employeeId = req.params.employeeId;
@@ -476,6 +476,7 @@ router.put('/:employeeId', (req, res, next) => {
       if (!result.modifiedCount) {
         return next(createError(400, 'Unable to disable employee - note they may already be disabled'));
       }
+        res.status(204).send();
     });
   }
   //Mongo error handling 
