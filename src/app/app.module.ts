@@ -38,6 +38,8 @@ import { ServiceGraphComponent } from './service-graph/service-graph.component';
 import { ServiceRepairComponent } from './service-repair/service-repair.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AppRoutingModule } from './app-routing.module';
+import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
+
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { AppRoutingModule } from './app-routing.module';
     NotFoundComponent,
     ServiceGraphComponent,
     ServiceRepairComponent,
-    ProfileComponent
+    ProfileComponent,
+    EditEmployeeComponent
   ],
   imports: [
     BrowserModule,
