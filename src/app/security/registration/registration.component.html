@@ -13,19 +13,19 @@
       <div class="my-2">
         <form (ngSubmit)="register()" class="md:pt-3 md:px-4 pb-8 bg-white ">
 
-          <h4 class="text-medium 2lg:text-xl font-bold tracking-wide pb-2 text-start">Create a Username</h4>
+          <p class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Create a Username</p>
           <div>
             <input id="username" [ngClass]="{'border-red-600': errMessage, 'placeholder-err': errMessage}"
               placeholder="Enter Your ID"
               class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
           </div>
 
-          <h4 class="text-medium 2lg:text-xl font-bold tracking-wide pb-2 text-start pt-4">Create a Password</h4>
+          <p class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Create a Password</p>
           <div>
             <input id="password" [ngClass]="{'border-red-600': errMessage, 'placeholder-err': errMessage}"
-              placeholder="Create A Strong Password"
+              placeholder="Create a Strong Password"
               class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
-              <label for="password" class="text-xs text-red-400">Password must contain numbers, letters, and symbols and be at least 8 characters long</label>
+              <label for="password" class="text-xs">Password must contain numbers, letters, and symbols and be at least 8 characters long</label>
           </div>
 
           <h4 class="text-medium 2lg:text-xl font-bold tracking-wide pb-2 text-start pt-4">Select A Security Question</h4>
