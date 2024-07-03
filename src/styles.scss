@@ -8,23 +8,24 @@ html, body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   height: 100%;
+  background-color: rgb(248, 248, 248);
 }
 
 //Theme
 .primary {
-  background-color: #0D1E4B;
+  background-color: rgb(34,77,49);
 }
 
 .primary-text {
-  color: #041222;
+  color: rgb(34,77,49);
 }
 
 .secondary {
-  background-color: #BD9E6F;
+  background-color: rgb(173,173,173);
 }
 
 .secondary-text {
-  color: #BD9E6F;
+  color: rgb(173,173,173);
 }
 
 .tertiary {
@@ -57,7 +58,7 @@ html, body {
 }
 
 button {
-  background-color: #041222;
+  background-color: rgb(34,77,49);
   color: #fff;
 }
 
