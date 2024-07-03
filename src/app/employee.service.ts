@@ -11,6 +11,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Employee } from './employee.interface';
+import { EmployeeEdit } from './employeeEdit.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -30,12 +31,16 @@ export class EmployeeService {
   }
 
   // Create new employee
-  createNewEmployee() {
-
+  createNewEmployee(employee: Employee) {
+    return this.http.post('/api/employees', {
+      employee
+    });
   }
 
   // Update employee by employee ID
-  updateEmployeeById(employeeId: number) {
-    
+  updateEmployeeById(employeeId: number, employee: EmployeeEdit) {
+    return this.http.put('/api/employees/' + employeeId, {
+      employee
+    });
   }
 }
