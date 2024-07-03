@@ -36,6 +36,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ServiceGraphComponent } from './service-graph/service-graph.component';
 import { ServiceRepairComponent } from './service-repair/service-repair.component';
 import { ProfileComponent } from './profile/profile.component';
+import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { ProfileComponent } from './profile/profile.component';
     NotFoundComponent,
     ServiceGraphComponent,
     ServiceRepairComponent,
-    ProfileComponent
+    ProfileComponent,
+    EditEmployeeComponent
   ],
   imports: [
     BrowserModule,
