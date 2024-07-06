@@ -39,6 +39,7 @@ import { ServiceRepairComponent } from './service-repair/service-repair.componen
 import { ProfileComponent } from './profile/profile.component';
 import { AppRoutingModule } from './app-routing.module';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
+import { CreateEmployeeComponent } from './create-employee/create-employee.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
     ServiceGraphComponent,
     ServiceRepairComponent,
     ProfileComponent,
-    EditEmployeeComponent
+    EditEmployeeComponent,
+    CreateEmployeeComponent
   ],
   imports: [
     BrowserModule,

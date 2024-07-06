@@ -7,6 +7,7 @@
 ; Description: Employee Interface
 ;===========================================
 */
+import { selectedSecurityQuestion } from "./selectedSecurityQuestion.interface";
 
 export interface Employee {
     employeeId: number;
@@ -18,5 +19,5 @@ export interface Employee {
     address: string;
     isDisabled: boolean;
     role: string;
-    selectedSecurityQuestions: Array<string>; // Change this to array of security question when interface is created
+    selectedSecurityQuestion: selectedSecurityQuestion;
 }

@@ -32,15 +32,11 @@ export class EmployeeService {
 
   // Create new employee
   createNewEmployee(employee: Employee) {
-    return this.http.post('/api/employees', {
-      employee
-    });
+    return this.http.post('/api/employees', employee);
   }
 
   // Update employee by employee ID
   updateEmployeeById(employeeId: number, employee: EmployeeEdit) {
-    return this.http.put('/api/employees/' + employeeId, {
-      employee
-    });
+    return this.http.put('/api/employees/' + employeeId, employee);
   }
 }

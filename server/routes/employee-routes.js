@@ -15,7 +15,8 @@ const router = express.Router();
 const { mongo } = require("../utils/mongo");
 const createError = require('http-errors');
 const { firstValueFrom } = require("rxjs");
-
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 /** 
  * findAll
@@ -170,8 +171,11 @@ router.get('/:employeeId', (req, res, next) => {
  *               - lastName
  *               - emailAddress
  *               - phoneNumber
+ *               - password
  *               - address
  *               - role
+ *               - isDisabled
+ *               - selectedSecurityQuestion
  *             properties:
  *               employeeId:
  *                 type: number
@@ -183,10 +187,21 @@ router.get('/:employeeId', (req, res, next) => {
  *                 type: string
  *               phoneNumber:
  *                 type: number
+ *               password:
+ *                 type: string
  *               address:
  *                 type: string
  *               role:
  *                 type: string
+ *               isDisabled:
+ *                 type: boolean
+ *               selectedSecurityQuestion:
+ *                 type: object
+ *                 properties:
+ *                    question:
+ *                       type: string
+ *                    answer:
+ *                       type: string
  *     responses:
  *       '201':
  *         description: Employee created successfully
@@ -209,8 +224,11 @@ router.post('/', (req, res, next) => {
       lastName,
       emailAddress,
       phoneNumber,
+      password,
       address,
-      role
+      role,
+      isDisabled,
+      selectedSecurityQuestion
     } = req.body;
 
     // Call mongo and create the new user
@@ -278,19 +296,22 @@ router.post('/', (req, res, next) => {
         firstName: firstName,
         lastName: lastName,
         emailAddress: emailAddress,
-        password: '',
+        password: bcrypt.hashSync(password, saltRounds),
         phoneNumber: phoneNumber,
         address: address,
-        isDisabled: false,
+        isDisabled: isDisabled,
         role: role,
-        selectedSecurityQuestions: []
+        selectedSecurityQuestion: selectedSecurityQuestion
       };
 
       console.log("Inserting new employee to the employees collection...");
 
       // Insert the new employee into the employees collection
       const result = await db.collection("employees").insertOne(newEmployee);
-      res.status(201).send("Employee created successfully!");
+      res.status(201).send({
+        message: "Employee created successfully!",
+        json: newEmployee
+      });
       console.log("New employee inserted successfully!");
 
     }, next);
@@ -420,7 +441,7 @@ router.put('/:employeeId', (req, res, next) =>{
  * /api/employees/{employeeId}/disable:
  *   put:
  *     tags:
- *       - employees
+ *       - Employees
  *     description: Disables an employee by id
  *     summary: Disables an employee document so they don't show up in contact list for currect employees (?)
  *     parameters:
