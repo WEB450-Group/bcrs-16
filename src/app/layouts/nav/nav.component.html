@@ -1,4 +1,4 @@
-<nav class="bg-white">
+<nav class="bg-white shadow border-b border-gray-200">
   <div class="base-container flex flex-wrap items-center justify-between mx-auto py-1 px-4 shardow-bottom">
     <a routerLink="/" routerLinkActive="active" class="flex items-center pl-2">
       <img src="/assets/images/logo.png" alt="Bob's Computer Repair Shop Logo" width="300px" class="p-1">
@@ -39,7 +39,7 @@
 
           <ul id="dropDownMenu" data-dropdown-toggle="dropdownMenu" 
             *ngIf="dropdownVisible" 
-            class="absolute md:right-0 mt-4 w-48 rounded-b-lg bg-white">
+            class="absolute md:right-0 mt-4 w-48 rounded-b-lg bg-white shadow">
             <li>
               <a routerLink="/employee-list" class="block w-full text-left py-2 px-4 tracking-wider">Employee List</a>
             </li>
