@@ -173,7 +173,7 @@ router.post('/signin', (req, res, next) => {
                 // If the password matches; then return status code 200 with message "Employee sign in"
                 if(passwordIsValid) {
                     console.log("Password matches!");
-                    res.status(200).send('Employee Signed in!');
+                    res.status(200).json('Employee Signed in!');
                 }
                 // Else if the password doesn't match; then return status code 400 with message "Invalid credentials"
                 else {
