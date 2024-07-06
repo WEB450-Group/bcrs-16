@@ -12,9 +12,10 @@ import { Component } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+// import { Employee } from 'src/app/employee.interface';
+import { EmployeeService } from 'src/app/employee.service';
 
 export interface AppUser {
-  fullName: string;
   firstName: string;
 }
 
@@ -57,12 +58,11 @@ export class NavComponent {
     // If signed in get/set session cookies so name can dynamically be displayed in nav
     if (this.isSignedIn) {
       this.appUser = {
-        fullName: this.cookieService.get('session_name'),
-        firstName: this.cookieService.get('session_first_name')
+        firstName: this.cookieService.get('session_user')
       };
     }
     console.log('Signed in as', this.appUser);
-    console.log('session_first_name test: ', this.appUser.firstName); 
+    console.log('session_user', this.appUser.firstName); 
   }
 
   // Sign out function
