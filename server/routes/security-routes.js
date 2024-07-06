@@ -163,10 +163,9 @@ router.post('/signin', (req, res, next) => {
             // Find the employee
             const employee = await db.collection("employees").findOne({ emailAddress: emailAddress });
 
-            console.log("Employee found!");
-
             // If the employee is found; Then compare password passed in from the body with the password in the database
             if(employee) {
+                console.log("Employee found!");
                 console.log("Comparing passwords...");
                 // Compare the password
                 let passwordIsValid = bcrypt.compareSync(password, employee.password);

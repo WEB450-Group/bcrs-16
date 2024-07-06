@@ -22,6 +22,7 @@ import { FaqComponent } from './faq/faq.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
+import { CreateEmployeeComponent } from './create-employee/create-employee.component';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
 export const routes: Routes = [
@@ -70,6 +71,10 @@ export const routes: Routes = [
       {
         path: 'edit-employee',
         component: EditEmployeeComponent
+      },
+      {
+        path: 'create-employee',
+        component: CreateEmployeeComponent
       }
     ]
   },
