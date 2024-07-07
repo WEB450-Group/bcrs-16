@@ -58,7 +58,7 @@ import { CreateEmployeeComponent } from './admin/create-employee/create-employee
     ServiceRepairComponent,
     ProfileComponent,
     EditEmployeeComponent,
-    CreateEmployeeComponent
+    CreateEmployeeComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,7 +74,7 @@ import { CreateEmployeeComponent } from './admin/create-employee/create-employee
     MatOptionModule,
     AppRoutingModule,
   ],
-  providers: [CookieService], 
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

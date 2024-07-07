@@ -18,7 +18,7 @@ const { firstValueFrom } = require("rxjs");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-/** 
+/**
  * findAll
  * @openapi
  * /api/employees:
@@ -31,7 +31,7 @@ const saltRounds = 10;
  *       '200':
  *         description: OK - Array of employee documents
  *       '400':
- *         description: Bad Request (?? How and where to impliment since it is a get request with no req.body?)
+ *         description: Bad Request (?? How and where to implement since it is a get request with no req.body?)
  *       '504':
  *         description: Not Found
  *       '500':
@@ -39,11 +39,11 @@ const saltRounds = 10;
  */
 router.get('/', (req, res, next) => {
   try {
-    //connect to database 
+    //connect to database
     mongo(async (db) => {
       //find employee list and create an array of employee objects
       const employees = await db.collection('employees').find({}, {
-        //What to return from database NOTE: assuming we pull it all than depending on the role deal with that on the from end for the employee list? 
+        //What to return from database NOTE: assuming we pull it all than depending on the role deal with that on the from end for the employee list?
         projection: {
           firstName: 1,
           lastName: 1,
@@ -56,16 +56,16 @@ router.get('/', (req, res, next) => {
       //Turn into an array
       }).toArray();
       console.log('Employee list', employees);
-      //If employee list is emplty, return 404
+      //If employee list is empty, return 404
       if (!employees || employees.length === 0) {
         return res.status(404).json({
           error: 'No Employees Found'
         });
       }
-      //return array of employee objects 
+      //return array of employee objects
       res.json(employees);
     });
-    //Database error handling 
+    //Database error handling
   } catch (err) {
     console.error('Error: ', err);
     next(err);
@@ -107,23 +107,23 @@ router.get('/', (req, res, next) => {
  */
 router.get('/:employeeId', (req, res, next) => {
   try {
-    //Employee ID params 
+    //Employee ID params
     let employeeId = req.params.employeeId;
-    //pasrse to integer
+    //parse to integer
     employeeId = parseInt(employeeId, 10);
-    //if input not numerical,return 400 
+    //if input not numerical,return 400
     if (isNaN(employeeId)) {
       const err = new Error('Input must be a number');
       err.status = 400;
       return next(err);
     }
-    //connect to database 
+    //connect to database
     mongo(async (db) => {
       //Match email param to a valid email in employee collection
       const employee = await db.collection('employees').findOne({
         employeeId
       }, {
-        //What to return from database 
+        //What to return from database
         projection: {
           firstName: 1,
           lastName: 1,
@@ -134,17 +134,17 @@ router.get('/:employeeId', (req, res, next) => {
           role: 1,
         }
       });
-      // If no emails match param send 404 employee not found error 
+      // If no emails match param send 404 employee not found error
       if (!employee) {
         return res.status(404).json({
           error: 'Employee Not Found'
         });
       }
-      //return employee document 
+      //return employee document
       res.json(employee);
     })
   }
-  //Mong error handling 
+  //Mong error handling
   catch (err) {
     console.error('Error: ', err);
     next(err);
@@ -316,7 +316,7 @@ router.post('/', (req, res, next) => {
 
     }, next);
 
-    // Catch any database errors  
+    // Catch any database errors
   } catch (err) {
     console.error('Database Error:', err);
     next(err);
@@ -384,7 +384,7 @@ router.put('/:employeeId', (req, res, next) =>{
         }
 
         console.log('The employee ID is valid!');
-        
+
         // Call mongo and update the employee
         mongo(async db => {
 
@@ -418,7 +418,7 @@ router.put('/:employeeId', (req, res, next) =>{
             res.status(204).send();
 
         }, next);
-    
+
         // Catch any databse errors
     } catch (err) {
         console.error("Database Error:", err);
@@ -426,9 +426,9 @@ router.put('/:employeeId', (req, res, next) =>{
     }
 })
 
-//Add email pattern when creating an account as well? 
+//Add email pattern when creating an account as well?
 // const regEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-// //Test valid email pattern against email param, if not a valid email format send 404 
+// //Test valid email pattern against email param, if not a valid email format send 404
 // if (!regEx.test(emailAddress)) {
 //     return res.status(400).json({error: 'Incorrect Email Format'});
 // }
@@ -457,29 +457,29 @@ router.put('/:employeeId', (req, res, next) =>{
  *       '400':
  *         description: Bad Requet
  *       '404':
- *         description: Not Found 
+ *         description: Not Found
  *       '200':
  *         description:  Internal Server Error
  */
 router.put('/:employeeId/disable', (req, res, next) => {
   try {
-    //Employee ID params 
+    //Employee ID params
     let employeeId = req.params.employeeId;
     //pasrse to integer
     employeeId = parseInt(employeeId, 10);
-    //if input not numerical,return 400 
+    //if input not numerical,return 400
     if (isNaN(employeeId)) {
       const err = new Error('Input must be a number');
       err.status = 400;
       return next(err);
     }
-    //connect to database 
+    //connect to database
     mongo(async (db) => {
       //Match email param to a valid email in employee collection
       const employee = await db.collection('employees').findOne({
         employeeId
       });
-      // If no emails match param send 404 employee not found error 
+      // If no emails match param send 404 employee not found error
       if (!employee) {
         return res.status(404).json({
           error: 'Employee Not Found'
@@ -500,7 +500,7 @@ router.put('/:employeeId/disable', (req, res, next) => {
       res.status(204).send();
     });
   }
-  //Mongo error handling 
+  //Mongo error handling
   catch (err) {
     console.error('Error: ', err);
     next(err);

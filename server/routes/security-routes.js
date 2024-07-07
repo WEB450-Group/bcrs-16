@@ -171,7 +171,7 @@ router.post('/signin', (req, res, next) => {
       password
     } = req.body;
 
-    // Call mongo and log in employeee
+    // Call mongo and log in employee
     mongo(async db => {
       console.log("Looking up the employee...");
       // Find the employee
