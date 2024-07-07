@@ -17,13 +17,13 @@ import { Employee } from '../employee.interface';
   styleUrls: ['./employee-list.component.scss']
 })
 export class EmployeeListComponent {
-  //definitions 
+  //definitions
   employees: Employee[];
   errorMessage: '';
   isLoading: boolean;
 
   constructor(private employeeService: EmployeeService) {
-    //initialize valiables
+    //initialize variables
     this.employees = [];
     this.errorMessage = "";
     this.isLoading = true;
@@ -32,17 +32,17 @@ export class EmployeeListComponent {
     this.employeeService.findAllEmployees().subscribe({
       //when data fetched assign employee data from database to employee property
       next: (employees: any) => {
-        this.employees = employees 
+        this.employees = employees
       },
-      // if data cannot be fetch console error message 
+      // if data cannot be fetch console error message
       error: (err) => {
       this.errorMessage = err.message;
       console.log(err);
       },
-      //when data is fetched, assigned, and showing on UI, set isLoading (SVG) to false  
+      //when data is fetched, assigned, and showing on UI, set isLoading (SVG) to false
       complete: () => {
         this.isLoading = false;
       }
-    }); 
+    });
   }
 }
