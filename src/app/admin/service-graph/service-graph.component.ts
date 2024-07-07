@@ -8,6 +8,7 @@
 ;===========================================
 */
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-service-graph',
@@ -15,5 +16,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./service-graph.component.scss']
 })
 export class ServiceGraphComponent {
+  constructor(private route: ActivatedRoute,) {
 
+  }
 }

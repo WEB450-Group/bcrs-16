@@ -49,7 +49,8 @@ export class NavComponent implements OnInit {
     }
   }
 
-  constructor(private cookieService: CookieService, public authService: AuthService) {}
+  constructor(private router: Router, private cookieService: CookieService, public authService: AuthService) {
+  }
   ngOnInit(): void {
     // Get session_user  
     this.isSignedIn = this.authService.isLoggedIn();
@@ -59,7 +60,7 @@ export class NavComponent implements OnInit {
     // If signed in get/set session cookies so name can dynamically be displayed in nav
     this.appUser.firstName = this.authService.getFirstName();
     console.log('First Name:', this.appUser.firstName);
-    
+
     // Get session_user role
     this.isAdmin = this.authService.getRole() === 'admin';
     console.log('isAdmin:', this.isAdmin);

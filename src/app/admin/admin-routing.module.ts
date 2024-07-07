@@ -10,11 +10,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
-import { EmployeeListComponent } from 'src/app/admin/employee-list/employee-list.component';
-import { EditEmployeeComponent } from 'src/app/admin/edit-employee/edit-employee.component';
-import { CreateEmployeeComponent } from 'src/app/admin/create-employee/create-employee.component';
-import { ServiceGraphComponent } from 'src/app/service-graph/service-graph.component';
-import { roleGuard } from 'src/app/shared/role.guard';
+import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
+import { CreateEmployeeComponent } from './create-employee/create-employee.component';
+import { ServiceGraphComponent } from './service-graph/service-graph.component';
+import { roleGuard } from '../shared/role.guard';
 
 const routes: Routes = [
   {

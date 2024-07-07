@@ -11,15 +11,14 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-admin',
-  templateUrl: 'admin.component.html', 
-  styleUrls: ['admin.component.scss'],
     // router outlet for the admin module
     template: `
-    <router-outlet></router-outlet>
+    <!-- <app-nav></app-nav> -->
+      <router-outlet></router-outlet>
+    <!-- <app-footer></app-footer> -->
     `,
     styles: [
     ]
 })
 export class AdminComponent {
-
 }

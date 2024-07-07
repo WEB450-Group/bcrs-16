@@ -9,18 +9,44 @@
 */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin/admin.component';
 
 
+import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
+import { CreateEmployeeComponent } from './create-employee/create-employee.component';
+import { ServiceGraphComponent } from './service-graph/service-graph.component';
+import { NavComponent } from '../layouts/nav/nav.component';
+import { FooterComponent } from '../layouts/footer/footer.component';
+
+
 @NgModule({
   declarations: [
-    AdminComponent
+    AdminComponent,
+    EmployeeListComponent,
+    EditEmployeeComponent,
+    CreateEmployeeComponent,
+    ServiceGraphComponent,
+    // NavComponent,
+    // FooterComponent
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule
+  ],
+  exports: [
+    AdminComponent,
+    EmployeeListComponent,
+    EditEmployeeComponent,
+    CreateEmployeeComponent,
+    ServiceGraphComponent
   ]
 })
 export class AdminModule { }
