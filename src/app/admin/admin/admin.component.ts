@@ -13,9 +13,9 @@ import { Component } from '@angular/core';
   selector: 'app-admin',
     // router outlet for the admin module
     template: `
-    <!-- <app-nav></app-nav> -->
+    <app-nav></app-nav>
       <router-outlet></router-outlet>
-    <!-- <app-footer></app-footer> -->
+    <app-footer></app-footer>
     `,
     styles: [
     ]
