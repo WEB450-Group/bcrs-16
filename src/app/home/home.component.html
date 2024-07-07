@@ -1,11 +1,171 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col">
-      <h1>Home Component Works! <span class="material-icons">thumb_up</span></h1>
+<div class="w-full flex justify-center py-8 px-2 lg:py-20 lg:mx-0">
+  <!-- Home page when not logged in -->
+  <div *ngIf="!isLoggedIn">
+
+    <h1 class="primary-text text-center text-6xl uppercase font-bold pb-3 drop-shadow-lg">Welcome to Bob's Computer Repair Shop</h1>
+    <div class="w-1/2 flex-row mx-auto py-10 text-center text-lg">
+      <p class="py-2">Welcome to Bob's Computer Repair Shop, your trusted destination for efficient and reliable computer repair services. We understand your devices' crucial role in your daily life, and our mission is to get you back on track quickly. Our skilled technicians handle everything from hardware to software problems with precision and expertise.</p>
+
+      <p class="py-2">Customer satisfaction is our top priority, and we pride ourselves on clear communication, transparent pricing, and timely service. Whether your computer is running slow or facing more complex issues, we have you covered.</p>
+
+      <p class="py-2">Below, you will find a list of our core services. If there is a service you do not see, feel free give us a call or visit our store. Thank you for choosing Bob's Computer Repair Shop – where your tech issues find their perfect fix.</p>
     </div>
+
+    <!-- Service Cards -->
+     <div>
+       <div class="grid grid-cols-4 grid-rows-2 gap-4 py-4 px-5">
+
+         <!-- Password Service Card -->
+         <div class="bg-white shadow-lg w-10/12">
+           <h3 class="primary text-center text-white text-lg uppercase border rounded-t drop-shadow-lg font-bold tracking-wider py-2">Password Reset Service</h3>
+
+           <div class="py-6">
+             <p class="text-center py-3 mx-4">We will brute force your computer and reset your password to a generic password.</p>
+
+             <p class="text-center">Cost: $39.99</p>
+           </div>
+
+           <div class="flex justify-center py-4">
+             <button routerLink="contact" class="border rounded w-2/3 h-10 uppercase hover:bg-green-700">Book service</button>
+           </div>
+         </div>
+
+         <!-- Spyware Removal Card -->
+         <div class="bg-white shadow-lg w-10/12">
+           <h3 class="primary text-center text-white text-lg uppercase border rounded-t drop-shadow-lg font-bold tracking-wider py-2">Spyware Removal Service</h3>
+
+           <div class="py-6">
+             <p class="text-center py-3 mx-4">We will do a complete scan in your computer and remove any spyware from your device.</p>
+
+             <p class="text-center">Cost: $99.99</p>
+           </div>
+
+           <div class="flex justify-center py-4">
+             <button routerLink="contact" class="border rounded w-2/3 h-10 uppercase hover:bg-green-700">Book service</button>
+           </div>
+         </div>
+
+         <!-- RAM Upgrade Card-->
+         <div class="bg-white shadow-lg w-10/12">
+           <h3 class="primary text-center text-white text-lg uppercase border rounded-t drop-shadow-lg font-bold tracking-wider py-2">RAM Upgrade Service</h3>
+
+           <div class="py-6">
+             <p class="text-center py-3 mx-4">We will upgrade your RAM. This will improve your computer's performance.</p>
+
+             <p class="text-center">Cost: $129.99</p>
+           </div>
+
+           <div class="flex justify-center py-4">
+             <button routerLink="contact" class="border rounded w-2/3 h-10 uppercase hover:bg-green-700">Book service</button>
+           </div>
+         </div>
+
+         <!-- Software Installation Card -->
+         <div class="bg-white shadow-lg w-10/12">
+           <h3 class="primary text-center text-white text-lg uppercase border rounded-t drop-shadow-lg font-bold tracking-wider py-2">Software Installation Service</h3>
+
+           <div class="py-6">
+             <p class="text-center py-3 mx-4">We will install any software on your computer and tested to make sure it runs perfectly.</p>
+
+             <p class="text-center">Cost: $49.99</p>
+           </div>
+
+           <div class="flex justify-center py-4">
+             <button routerLink="contact" class="border rounded w-2/3 h-10 uppercase hover:bg-green-700">Book service</button>
+           </div>
+         </div>
+
+         <!-- PC Tune-up Card-->
+         <div class="bg-white shadow-lg w-10/12">
+           <h3 class="primary text-center text-white text-lg uppercase border rounded-t drop-shadow-lg font-bold tracking-wider py-2">PC Tune-Up Service</h3>
+
+           <div class="py-6">
+             <p class="text-center py-3 mx-4">We will improve your computer's performance.</p>
+
+             <p class="text-center">Cost: $89.99</p>
+           </div>
+
+           <div class="flex justify-center py-4">
+             <button routerLink="contact" class="border rounded w-2/3 h-10 uppercase hover:bg-green-700">Book service</button>
+           </div>
+         </div>
+
+         <!-- Keyboard Cleaning Card -->
+         <div class="bg-white shadow-lg w-10/12">
+           <h3 class="primary text-center text-white text-lg uppercase border rounded-t drop-shadow-lg font-bold tracking-wider py-2">Keyboard Cleaning Service</h3>
+
+           <div class="py-6">
+             <p class="text-center py-3 mx-4">We will deep clean your keyboard and change any damage keys.</p>
+
+             <p class="text-center">Cost: $45.00</p>
+           </div>
+
+           <div class="flex justify-center py-4">
+             <button routerLink="contact" class="border rounded w-2/3 h-10 uppercase hover:bg-green-700">Book service</button>
+           </div>
+         </div>
+
+         <!-- Disk Clean-Up Card -->
+         <div class="bg-white shadow-lg w-10/12">
+           <h3 class="primary text-center text-white text-lg uppercase border rounded-t drop-shadow-lg font-bold tracking-wider py-2">Disk Clean-Up Service</h3>
+
+           <div class="py-6">
+             <p class="text-center py-3 mx-4">We will scan your hard drives to identify and remove unnecessary files.</p>
+
+             <p class="text-center">Cost: $129.99</p>
+           </div>
+
+           <div class="flex justify-center py-4">
+             <button routerLink="contact" class="border rounded w-2/3 h-10 uppercase hover:bg-green-700">Book service</button>
+           </div>
+         </div>
+
+         <!-- Extra Services Card -->
+         <div class="bg-white shadow-lg w-10/12">
+          <h3 class="primary text-center text-white text-lg uppercase border rounded-t drop-shadow-lg font-bold tracking-wider py-2">Extra Service</h3>
+
+          <div class="py-6">
+            <p class="text-center py-3 mx-4">We also do other services in our shop. Contact us to find more information.</p>
+
+            <p class="text-center">Cost: Part Cost + Labor ($50.00/hr)</p>
+          </div>
+
+          <div class="flex justify-center py-4">
+            <button routerLink="contact" class="border rounded w-2/3 h-10 uppercase hover:bg-green-700">Book service</button>
+          </div>
+        </div>
+     </div>
   </div>
 
-  <a routerLink="/security">Test Security Module</a>
-</div>
 
+
+
+ </div>
+
+ <!-- Home page when logged in -->
+ <div *ngIf="isLoggedIn" class="pt-10">
+  <div class="page-container px-4 py-8">
+    <div class="bg-white primary-text rounded-lg shadow-lg p-8 text-center">
+        <h2 class="text-4xl font-bold mb-4 drop-shadow-md">Welcome back, Employee name!</h2>
+        <p class="text-lg mb-8">Here's your dashboard where you can manage your services.</p>
+        <button class="primary hover:bg-green-700 text-white text-lg font-bold py-2 px-4 rounded tracking-wider">
+            Create New Service
+        </button>
+
+        <h2 class="text-4xl font-bold pt-10 drop-shadow-md">Tips and Up sales</h2>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="primary text-white p-6 rounded shadow-md">
+                <h2 class="text-2xl font-bold mb-2 tracking-wider">Costumer service tips</h2>
+                <p class="text-lg">Make sure you always greet the costumer with a smile.</p>
+            </div>
+            <div class="primary text-white p-6 rounded shadow-md">
+                <h2 class="text-2xl font-bold mb-2 tracking-wider">Up sales</h2>
+                <p class="text-lg">We need to be up sale (item that needs to be up sale due to low sales)</p>
+            </div>
+        </div>
+    </div>
+  </div>
+ </div>
+
+</div>
 

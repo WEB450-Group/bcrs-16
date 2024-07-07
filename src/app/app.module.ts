@@ -68,10 +68,7 @@ import { AppRoutingModule } from './app-routing.module';
     MatOptionModule,
     AppRoutingModule,
   ],
-  providers: [
-    CookieService,
-
-  ], 
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
