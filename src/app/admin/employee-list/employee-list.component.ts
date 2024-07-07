@@ -8,8 +8,8 @@
 ;===========================================
 */
 import { Component } from '@angular/core';
-import { EmployeeService } from '../employee.service';
-import { Employee } from '../employee.interface';
+import { EmployeeService } from '../../shared/employee.service';
+import { Employee } from '../../shared/employee.interface';
 
 @Component({
   selector: 'app-employee-list',

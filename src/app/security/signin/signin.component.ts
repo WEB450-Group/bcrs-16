@@ -9,7 +9,7 @@
 */
 import { Component } from '@angular/core';
 import { SecurityService } from '../security.service';
-import { Employee } from 'src/app/employee.interface';
+import { Employee } from 'src/app/shared/employee.interface';
 import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';

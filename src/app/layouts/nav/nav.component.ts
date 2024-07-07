@@ -8,15 +8,27 @@
 ;===========================================
 */
 // imports statements
-import { Component } from '@angular/core';
-import { HostListener } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-// import { Employee } from 'src/app/employee.interface';
-import { EmployeeService } from 'src/app/employee.service';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  HostListener
+} from '@angular/core';
+import {
+  Router,
+  RouterModule
+} from '@angular/router';
+import {
+  CookieService
+} from 'ngx-cookie-service';
+import {
+  AuthService
+} from 'src/app/shared/auth.service';
 
 export interface AppUser {
   firstName: string;
+  role: string;
 }
 
 @Component({
@@ -25,21 +37,16 @@ export interface AppUser {
   styleUrls: ['./nav.component.scss'],
 
 })
-export class NavComponent {
+export class NavComponent implements OnInit {
   menuVisible: boolean = false;
   dropdownVisible: boolean = false;
-  appUser: AppUser;
-  isSignedIn: boolean;
+  appUser: AppUser = {
+    firstName: '',
+    role: ''
+  };
+  isSignedIn: boolean = false;
+  isAdmin: boolean = false;
 
-  // Toggle menu for small screen
-  toggleMenu() {
-    this.menuVisible = !this.menuVisible;
-  }
-
-  // Dropdown toggle menu for isSignedIn
-  toggleDropdown() {
-    this.dropdownVisible = !this.dropdownVisible;
-  }
   //Close drop-down menu if use click ouside of it
   //HostListener decorator to listen for click events on the document or body, and then checking whether the target of the click is outside the specified element.  https://medium.com/@garcia.alberto.4.2012/listening-to-a-click-outside-a-div-in-angular-81f988c88f7f
   @HostListener('document:click', ['$event'])
@@ -50,19 +57,18 @@ export class NavComponent {
     }
   }
 
-  constructor(private cookieService: CookieService, private router: Router) {
-    // Get session user
-    this.isSignedIn = this.cookieService.get('session_user') ? true : false;
-    this.appUser = {} as AppUser;
-
-    // If signed in get/set session cookies so name can dynamically be displayed in nav
-    if (this.isSignedIn) {
-      this.appUser = {
-        firstName: this.cookieService.get('session_user')
-      };
-    }
+  constructor(private cookieService: CookieService, public authService: AuthService) {}
+  ngOnInit(): void {
+    // Get session_user  
+    this.isSignedIn = this.authService.isLoggedIn();
     console.log('Signed in as', this.appUser);
-    console.log('session_user', this.appUser.firstName); 
+    console.log('session_user', this.appUser.firstName);
+    // Get session_user role
+    this.appUser.firstName = JSON.parse(this.authService.getFirstName());
+    // If signed in get/set session cookies so name can dynamically be displayed in nav
+    this.isAdmin = JSON.parse(this.authService.getRole()) === 'admin';
+    console.log('First Name:', this.appUser.firstName);
+    console.log('isAdmin:', this.isAdmin);
   }
 
   // Sign out function
@@ -71,7 +77,14 @@ export class NavComponent {
     this.cookieService.deleteAll();
     window.location.href = '/';
   }
+
+  // Toggle menu for small screen
+  toggleMenu() {
+    this.menuVisible = !this.menuVisible;
+  }
+
+  // Dropdown toggle menu for isSignedIn
+  toggleDropdown() {
+    this.dropdownVisible = !this.dropdownVisible;
+  }
 }
-
-
-

@@ -11,9 +11,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Employee } from '../employee.interface';
-import { EmployeeEdit } from '../employeeEdit.interface';
-import { EmployeeService } from '../employee.service';
+import { Employee } from '../../shared/employee.interface';
+import { EmployeeEdit } from '../../shared/employeeEdit.interface';
+import { EmployeeService } from '../../shared/employee.service';
 
 @Component({
   selector: 'app-edit-employee',

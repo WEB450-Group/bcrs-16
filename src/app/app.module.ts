@@ -31,15 +31,15 @@ import { NavComponent } from './layouts/nav/nav.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
-import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { EmployeeListComponent } from './admin/employee-list/employee-list.component';
 import { FaqComponent } from './faq/faq.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ServiceGraphComponent } from './service-graph/service-graph.component';
 import { ServiceRepairComponent } from './service-repair/service-repair.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AppRoutingModule } from './app-routing.module';
-import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
-import { CreateEmployeeComponent } from './create-employee/create-employee.component';
+import { EditEmployeeComponent } from './admin/edit-employee/edit-employee.component';
+import { CreateEmployeeComponent } from './admin/create-employee/create-employee.component';
 
 
 @NgModule({

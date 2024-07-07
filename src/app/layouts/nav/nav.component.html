@@ -41,7 +41,7 @@
             *ngIf="dropdownVisible" 
             class="absolute md:right-0 mt-4 w-48 rounded-b-lg bg-white shadow">
             <li>
-              <a routerLink="/employee-list" class="block w-full text-left py-2 px-4 tracking-wider">Employee List</a>
+              <a routerLink="/admin/employees" class="block w-full text-left py-2 px-4 tracking-wider">Employee List</a>
             </li>
             <li>
               <a routerLink="/faq" class="block w-full text-left py-2 px-4 tracking-wider">FAQ</a>
@@ -51,7 +51,7 @@
             </li>
             <!-- *ngIf=isAdmin -->
             <li>
-              <a routerLink="/service-graph" class="block w-full text-left py-2 px-4 tracking-wider">Service Graph</a>
+              <a routerLink="/admin/service-graph" class="block w-full text-left py-2 px-4 tracking-wider">Service Graph</a>
             </li>
             <li>
               <a (click)="signOut()" class="block w-full text-left py-2 px-4 tracking-wider">Sign Out</a>
@@ -62,3 +62,5 @@
     </div>
   </div>
 </nav>
+
+
