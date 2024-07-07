@@ -35,12 +35,12 @@ export class CreateEmployeeComponent {
     password: [null, Validators.compose([Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])')])],
     address: [null, Validators.compose([Validators.required])],
     role: [null, Validators.compose([Validators.required])],
-    isDisabled: [null, Validators.compose([Validators.required])], 
+    isDisabled: [null, Validators.compose([Validators.required])],
     selectedSecurityQuestion: [null, Validators.compose([Validators.required])],
     answer: [null, Validators.compose([Validators.required])]
   });
-  
-  
+
+
   constructor(private fb: FormBuilder, private router: Router, private employeeService: EmployeeService) {
     // Assigning local variables
     this.errorMessage = '';
@@ -83,11 +83,11 @@ export class CreateEmployeeComponent {
       },
       error: (err) => {
         console.log(err);
-        this.errorMessage = 'Error occured while creating the employee!';
+        this.errorMessage = 'Error occurred while creating the employee!';
         this.isLoading = false;
       },
       complete: () => {
-        this.router.navigate(['/employee-list']);
+        this.router.navigate(['/admin/employees']);
       }
     })
   }
@@ -97,7 +97,7 @@ export class CreateEmployeeComponent {
     this.showAnswerField = !!selectedQuestion && selectedQuestion !== '0';
     console.log(this.showAnswerField);
   }
-  
+
   stringToBoolean(str: string): boolean {
     return str.toLowerCase() === 'true';
   }

@@ -86,7 +86,7 @@ export class EditEmployeeComponent {
       next: (result: any) => {
         console.log(result);
         // If the result is successful then navigate the user back to the employee list
-        this.router.navigate(['/employee-list']);
+        this.router.navigate(['/admin/employees']);
       },
       error: (err) => {
         console.log(err);
