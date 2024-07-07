@@ -26,9 +26,9 @@ import { authGuard } from './shared/auth.guard';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { BaseLayoutComponent } from './layouts/base-layout/base-layout.component';
-import { NavComponent } from './layouts/nav/nav.component';
-import { FooterComponent } from './layouts/footer/footer.component';
+import { BaseLayoutComponent } from './shared/layouts/base-layout/base-layout.component';
+import { NavComponent } from './shared/layouts/nav/nav.component';
+import { FooterComponent } from './shared/layouts/footer/footer.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { FaqComponent } from './faq/faq.component';
@@ -36,6 +36,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ServiceRepairComponent } from './service-repair/service-repair.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './shared/shared.module';
 
 
 
@@ -43,16 +44,15 @@ import { AppRoutingModule } from './app-routing.module';
   declarations: [
     AppComponent,
     HomeComponent,
-    BaseLayoutComponent,
-    NavComponent,
-    FooterComponent,
+    //BaseLayoutComponent,
+    //NavComponent,
+    //FooterComponent,
     ContactComponent,
     AboutComponent,
     FaqComponent,
     NotFoundComponent,
     ServiceRepairComponent,
     ProfileComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -67,6 +67,7 @@ import { AppRoutingModule } from './app-routing.module';
     MatFormFieldModule,
     MatOptionModule,
     AppRoutingModule,
+    SharedModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
