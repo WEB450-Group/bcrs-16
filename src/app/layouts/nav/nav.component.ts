@@ -22,9 +22,7 @@ import {
 import {
   CookieService
 } from 'ngx-cookie-service';
-import {
-  AuthService
-} from 'src/app/shared/auth.service';
+import { AuthService } from 'src/app/shared/auth.service';
 
 export interface AppUser {
   firstName: string;
