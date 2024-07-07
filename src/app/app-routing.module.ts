@@ -60,14 +60,6 @@ export const routes: Routes = [
         path: 'profile',
         component: ProfileComponent
       },
-      {
-        path: 'edit-employee/:employeeId',
-        component: EditEmployeeComponent
-      },
-      {
-        path: 'create-employee',
-        component: CreateEmployeeComponent
-      }
     ]
   },
   {
