@@ -78,6 +78,7 @@ export class SigninComponent {
         };
         //set session user 
         this.cookieService.set('session_user', JSON.stringify(sessionCookie), 1);
+
         //check if there is a return URL, if not redirect to home page
         const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
         //set is loading to false when logged in 

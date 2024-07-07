@@ -12,16 +12,11 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-import {
-  HostListener
-} from '@angular/core';
+import { HostListener } from '@angular/core';
 import {
   Router,
-  RouterModule
-} from '@angular/router';
-import {
-  CookieService
-} from 'ngx-cookie-service';
+  RouterModule } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from 'src/app/shared/auth.service';
 
 export interface AppUser {
@@ -60,11 +55,13 @@ export class NavComponent implements OnInit {
     this.isSignedIn = this.authService.isLoggedIn();
     console.log('Signed in as', this.appUser);
     console.log('session_user', this.appUser.firstName);
-    // Get session_user role
-    this.appUser.firstName = JSON.parse(this.authService.getFirstName());
+    
     // If signed in get/set session cookies so name can dynamically be displayed in nav
-    this.isAdmin = JSON.parse(this.authService.getRole()) === 'admin';
+    this.appUser.firstName = this.authService.getFirstName();
     console.log('First Name:', this.appUser.firstName);
+    
+    // Get session_user role
+    this.isAdmin = this.authService.getRole() === 'admin';
     console.log('isAdmin:', this.isAdmin);
   }
 
