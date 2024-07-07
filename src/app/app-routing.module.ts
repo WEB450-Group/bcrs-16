@@ -19,10 +19,10 @@ import { AboutComponent } from './about/about.component';
 import { ServiceGraphComponent } from './service-graph/service-graph.component';
 import { ServiceRepairComponent } from './service-repair/service-repair.component';
 import { FaqComponent } from './faq/faq.component';
-import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { EmployeeListComponent } from './admin/employee-list/employee-list.component';
 import { ProfileComponent } from './profile/profile.component';
-import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
-import { CreateEmployeeComponent } from './create-employee/create-employee.component';
+import { EditEmployeeComponent } from './admin/edit-employee/edit-employee.component';
+import { CreateEmployeeComponent } from './admin/create-employee/create-employee.component';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
 export const routes: Routes = [
@@ -49,20 +49,12 @@ export const routes: Routes = [
         component: AboutComponent
       },
       {
-        path: 'service-graph',
-        component: ServiceGraphComponent
-      },
-      {
         path: 'service-repair',
         component: ServiceRepairComponent
       },
       {
         path: 'faq',
         component: FaqComponent
-      },
-      {
-        path: 'employee-list',
-        component: EmployeeListComponent
       },
       {
         path: 'profile',
@@ -77,6 +69,11 @@ export const routes: Routes = [
         component: CreateEmployeeComponent
       }
     ]
+  },
+  {
+    // path for the admin module (e.g. employee-list , create-user, service-graph, etc.)
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
   {
     // path for the security module (e.g. login, register, forgot password, etc.)

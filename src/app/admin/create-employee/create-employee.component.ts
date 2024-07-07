@@ -8,8 +8,8 @@
 ;===========================================
 */
 import { Component } from '@angular/core';
-import { Employee } from '../employee.interface';
-import { EmployeeService } from '../employee.service';
+import { Employee } from '../../shared/employee.interface';
+import { EmployeeService } from '../../shared/employee.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
