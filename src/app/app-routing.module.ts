@@ -69,7 +69,7 @@ export const routes: Routes = [
         component: ProfileComponent
       },
       {
-        path: 'edit-employee',
+        path: 'edit-employee/:employeeId',
         component: EditEmployeeComponent
       },
       {
@@ -88,7 +88,7 @@ export const routes: Routes = [
     component: NotFoundComponent
   },
   {
-    path: '**', 
+    path: '**',
     redirectTo: 'not-found'
   }
 ];

@@ -1,11 +1,11 @@
 <div class="page-container flex-col">
   <!-- <h1>Employee List</h1> -->
   <div class="Employee-list-container w-full lg:w-11/12	 2xl:w-3/4">
-    
+
     <a routerLink="/create-employee" class="text-lg primary-text font-bold hover:underline">
       Create New Employee +
     </a>
-    
+
     <div class="overflow-hidden rounded-lg shadow-md mt-3">
       <table class="min-w-full rounded-lg text-left">
         <thead class="primary rounded-t-lg text-white uppercase">
@@ -40,7 +40,7 @@
             <td class="px-6 py-4">{{employee.emailAddress}}</td>
             <td class="px-6 py-4">{{employee.role}}</td>
             <td>
-              <button routerLink="/edit-employee" class="bg-transparent self-end hover:opacity-100">
+              <button [routerLink]="['/edit-employee', employee.employeeId]" class="bg-transparent self-end hover:opacity-100">
                 <i class="material-icons ml-2 secondary-text hover:opacity-75">edit</i>
               </button>
             </td>
