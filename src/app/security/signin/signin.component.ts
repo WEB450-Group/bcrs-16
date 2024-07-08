@@ -90,7 +90,7 @@ export class SigninComponent {
         this.isLoading = false;
 
         console.log('err', err);
-        if (err.error.status === 401) {
+        if (err.error.status === 400) {
           this.errMessage = 'Invalid email and/or password. Please try again.'
           return;
         }
