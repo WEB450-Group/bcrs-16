@@ -23,8 +23,18 @@ export class AuthService {
 
   getFirstName(): string {
     // Retrieve the user's first name from the session_name cookie
-    const appUser = JSON.parse(this.cookieService.get('session_user'));
-    return appUser.firstName || '';
+    const sessionUser = this.cookieService.get('session_user');
+    if(!sessionUser) {
+      return '';
+    }
+
+    try {
+      const appUser = JSON.parse(sessionUser);
+      return appUser.firstName || '';
+    } catch (err) {
+      console.error("Error parsing session_user cookie: ", err);
+      return '';
+    }
   }
 
   getRole(): string {

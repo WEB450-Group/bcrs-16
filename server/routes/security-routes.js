@@ -186,12 +186,12 @@ router.post('/signin', (req, res, next) => {
         // Compare the password
         let passwordIsValid = bcrypt.compareSync(password, employee.password);
 
-        // Else if the password doesn't match; then return status code 401 with message "Invalid credentials"
+        // Else if the password doesn't match; then return status code 400 with message "Invalid credentials"
         if (!passwordIsValid) {
           const err = new Error('Unauthorized');
-          err.status = 401;
+          err.status = 400;
           console.log('Invalid password for user', err);
-          next(err);
+          return next(err);
         }
         // If the password matches; then return status code 200 with message "Employee sign in"
         console.log("Password matches!");
