@@ -1,11 +1,13 @@
 <div class="page-container flex-col">
-  <!-- <h1>Employee List</h1> -->
-  <div class="Employee-list-container w-full lg:w-11/12	 2xl:w-3/4">
+  <!-- CREATE NEW EMPLOYEE -->
+  <a routerLink="/admin/create-employee"
+    class="pt-8  xl:mt-0 md:pl-16 text-xl primary-text font-bold hover:underline">
+    Create New Employee +
+  </a>
 
-    <a routerLink="/admin/create-employee" class="text-lg primary-text font-bold hover:underline">
-      Create New Employee +
-    </a>
-
+  <!-- CURRENT EMPLOYEE LARGE TABLE -->
+  <div class="Employee-list-container w-full hidden mb-8 md:block lg:w-11/12 2xl:w-3/4">
+    <h2 class="text-xl font-bold hidden md:block">Current Employees</h2>
     <div class="overflow-hidden rounded-lg shadow-md mt-3">
       <table class="min-w-full rounded-lg text-left">
         <thead class="primary rounded-t-lg text-white uppercase">
@@ -14,25 +16,26 @@
             <th class="px-6 py-4">First Name</th>
             <th class="px-6 py-4">Last Name</th>
             <th class="px-6 py-4">Phone Number</th>
-            <th class="px-6 py-4">emailAddress</th>
+            <th class="px-6 py-4">Email Address</th>
             <th class="px-6 py-4">Role</th>
             <th class="px-6 py-4"></th>
           </tr>
         </thead>
-
         <tbody class="divide-y divide-slate-300 font-semi-bold">
-          <div *ngIf="isLoading" role="status" class="">
-            <svg aria-hidden="true" class="p-4 w-16 h-16 text-gray-200 animate-spin dark:text-gray-400 fill-green-700"
-              viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                fill="currentColor" />
-              <path
-                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                fill="currentFill" />
-            </svg>
-          </div>
-          <tr *ngFor="let employee of employees">
+          <tr *ngIf="isLoading" role="status" class="">
+            <td colspan="7">
+              <svg aria-hidden="true" class="p-4 w-16 h-16 text-gray-200 animate-spin dark:text-gray-400 fill-green-700"
+                viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="currentColor" />
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="currentFill" />
+              </svg>
+            </td>
+          </tr>
+          <tr *ngFor="let employee of currentEmployees">
             <td class="px-6 py-4">{{employee.employeeId}}</td>
             <td class="px-6 py-4">{{employee.firstName}}</td>
             <td class="px-6 py-4">{{employee.lastName}}</td>
@@ -40,17 +43,139 @@
             <td class="px-6 py-4">{{employee.emailAddress}}</td>
             <td class="px-6 py-4">{{employee.role}}</td>
             <td>
-              <button [routerLink]="['/admin/edit-employee', employee.employeeId]" class="bg-transparent self-end hover:opacity-100">
+              <!-- EDIT EMPLOYEE BTN -->
+              <button [routerLink]="['/admin/edit-employee', employee.employeeId]"
+                class="bg-transparent self-end hover:opacity-100">
                 <i class="material-icons ml-2 secondary-text hover:opacity-75">edit</i>
               </button>
             </td>
           </tr>
-          <tr *ngIf="employees.length === 0 || !employees" class="hover:shadow-md focus:shadow focus:border-slate-500">
-            <td class="px-6 py-4">
-              Employee List is Empty
-            </td>
+          <tr *ngIf="currentEmployees.length === 0" class="hover:shadow-md focus:shadow focus:border-slate-500">
+            <td class="px-6 py-4" colspan="7">Employee List is Empty</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
+
+  <!-- DISABLED EMPLOYEE LARGE TABLE -->
+  <div class="Employee-list-container w-full hidden mb-6 md:block lg:w-11/12 2xl:w-3/4">
+    <h2 class="text-xl font-bold hidden md:block">Disabled Employees</h2>
+    <div class="overflow-hidden rounded-lg shadow-md mt-3">
+      <table class="min-w-full rounded-lg text-left">
+        <thead class="tertiary rounded-t-lg text-white uppercase">
+          <tr>
+            <th class="px-6 py-4">Employee ID</th>
+            <th class="px-6 py-4">First Name</th>
+            <th class="px-6 py-4">Last Name</th>
+            <th class="px-6 py-4">Phone Number</th>
+            <th class="px-6 py-4">Email Address</th>
+            <th class="px-6 py-4">Role</th>
+            <th class="px-6 py-4"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-300 font-semi-bold">
+          <tr *ngIf="isLoading" role="status" class="">
+            <td colspan="7">
+              <svg aria-hidden="true" class="p-4 w-16 h-16 text-gray-200 animate-spin dark:text-gray-400 fill-green-700"
+                viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="currentColor" />
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="currentFill" />
+              </svg>
+            </td>
+          </tr>
+          <tr *ngFor="let employee of disabledEmployees">
+            <td class="px-6 py-4">{{employee.employeeId}}</td>
+            <td class="px-6 py-4">{{employee.firstName}}</td>
+            <td class="px-6 py-4">{{employee.lastName}}</td>
+            <td class="px-6 py-4">{{employee.phoneNumber}}</td>
+            <td class="px-6 py-4">{{employee.emailAddress}}</td>
+            <td class="px-6 py-4">{{employee.role}}</td>
+            <td>
+              <!-- EDIT EMPLOYEE BTN -->
+              <button [routerLink]="['/admin/edit-employee', employee.employeeId]"
+                class="bg-transparent self-end hover:opacity-100">
+                <i class="material-icons ml-2 secondary-text hover:opacity-75">edit</i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="disabledEmployees.length === 0" class="hover:shadow-md focus:shadow focus:border-slate-500">
+            <td class="px-6 py-4" colspan="7">No Disabled Employees</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CURRENT EMPLOYEE LARGE SMALL SCREEN -->
+  <div class="block md:hidden w-full p-3">
+    <h2 class="text-xl font-bold">Current Employees</h2>
+    <div *ngFor="let employee of currentEmployees" class=" w-full border-x border-gray-300 mb-3">
+      <div class="flex justify-between font-bold primary text-white  p-2">
+        <span class="">Employee ID:</span>
+        <span>{{employee.employeeId}}</span>
+      </div>
+      <div class="flex justify-between border-b p-2">
+        <span class="font-bold">First Name:</span>
+        <span>{{employee.firstName}}</span>
+      </div>
+      <div class="flex justify-between border-b p-2">
+        <span class="font-bold">Last Name:</span>
+        <span>{{employee.lastName}}</span>
+      </div>
+      <div class="flex justify-between border-b p-2">
+        <span class="font-bold">Phone Number:</span>
+        <span>{{employee.phoneNumber}}</span>
+      </div>
+      <div class="flex justify-between border-b p-2">
+        <span class="font-bold">Email Address:</span>
+        <span>{{employee.emailAddress}}</span>
+      </div>
+      <div class="flex justify-between border-b p-2">
+        <span class="font-bold">Role:</span>
+        <span>{{employee.role}}</span>
+      </div>
+      <button [routerLink]="['/admin/edit-employee', employee.employeeId]"
+        class="w-full secondary self-end hover:opacity-100 p-2">
+        Edit
+      </button>
+    </div>
+
+    <!-- DISABLED EMPLOYEE LARGE SMALL SCREEN -->
+    <h2 class="text-xl font-bold">Disabled Employees</h2>
+    <div *ngFor="let employee of disabledEmployees" class="w-full border-x border-gray-300 mb-3">
+      <div class="flex justify-between border font-bold tertiary text-white p-2">
+        <span class="font-bold">Employee ID:</span>
+        <span>{{employee.employeeId}}</span>
+      </div>
+      <div class="flex justify-between border-b p-2">
+        <span class="font-bold">First Name:</span>
+        <span>{{employee.firstName}}</span>
+      </div>
+      <div class="flex justify-between border-b p-2">
+        <span class="font-bold">Last Name:</span>
+        <span>{{employee.lastName}}</span>
+      </div>
+      <div class="flex justify-between border-b p-2">
+        <span class="font-bold">Phone Number:</span>
+        <span>{{employee.phoneNumber}}</span>
+      </div>
+      <div class="flex justify-between border-b p-2">
+        <span class="font-bold">Email Address:</span>
+        <span>{{employee.emailAddress}}</span>
+      </div>
+      <div class="flex justify-between border-b p-2">
+        <span class="font-bold">Role:</span>
+        <span>{{employee.role}}</span>
+      </div>
+      <button [routerLink]="['/admin/edit-employee', employee.employeeId]"
+        class="w-full secondary self-end hover:opacity-100 p-2">
+        Edit
+      </button>
+    </div>
+  </div>
+</div>
