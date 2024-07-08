@@ -10,7 +10,6 @@
 import { Component } from '@angular/core';
 import { EmployeeService } from '../../shared/employee.service';
 import { Employee } from '../../shared/employee.interface';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-employee-list',
@@ -23,7 +22,7 @@ export class EmployeeListComponent {
   errorMessage: '';
   isLoading: boolean;
 
-  constructor(private employeeService: EmployeeService, private route: ActivatedRoute,) {
+  constructor(private employeeService: EmployeeService) {
     //initialize variables
     this.employees = [];
     this.errorMessage = "";

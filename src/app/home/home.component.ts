@@ -8,8 +8,15 @@
 ;===========================================
 */
 
+import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from '../shared/auth.service';
+
 // imports statements
 import { Component } from '@angular/core';
+
+export interface AppUser {
+  firstName: string;
+}
 
 @Component({
   selector: 'app-home',
@@ -17,6 +24,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  isLoggedIn : boolean = true;
-
+  isLoggedIn: boolean = false;
+  appUser: AppUser = {
+    firstName: '',
+  };
+  constructor( private cookieService: CookieService, public authService: AuthService) {
+  }
+  ngOnInit(): void {
+    // Get session_user  
+    this.isLoggedIn = this.authService.isLoggedIn();
+    console.log('Signed in as', this.appUser);
+    
+    // If signed in get/set session cookies so name can dynamically be displayed in nav
+    this.appUser.firstName = this.authService.getFirstName();
+    console.log('First Name:', this.appUser.firstName);
+  }
 }
