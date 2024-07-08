@@ -23,13 +23,13 @@ export class AuthService {
 
   getFirstName(): string {
     // Retrieve the user's first name from the session_name cookie
-    const appUser = JSON.parse(this.cookieService.get('session_user'));
+    const appUser = JSON.parse(this.cookieService.get('session_user' || ''));
     return appUser.firstName || '';
   }
 
   getRole(): string {
     // Retrieve the user's role from the session_role cookie
-    const appUser = JSON.parse(this.cookieService.get('session_user'));
+    const appUser = JSON.parse(this.cookieService.get('session_user'  || ''));
     return appUser.role || '';
   }
 }

@@ -191,7 +191,7 @@ router.post('/signin', (req, res, next) => {
           const err = new Error('Unauthorized');
           err.status = 401;
           console.log('Invalid password for user', err);
-          next(err);
+          return next(err);
         }
         // If the password matches; then return status code 200 with message "Employee sign in"
         console.log("Password matches!");
