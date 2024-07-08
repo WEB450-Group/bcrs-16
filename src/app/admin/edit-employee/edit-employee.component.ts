@@ -81,6 +81,8 @@ export class EditEmployeeComponent {
     editEmployee.role = this.editEmployeeForm.controls['role'].value;
     editEmployee.isDisabled = this.stringToBoolean(this.editEmployeeForm.controls['isDisabled'].value);
 
+    console.log('isDisable after change: ', editEmployee.isDisabled);
+
     // Call the updateEmployee API and pass in the employeeID and the new information from the employee
     this.employeeService.updateEmployeeById(this.employeeId, editEmployee).subscribe({
       next: (result: any) => {
