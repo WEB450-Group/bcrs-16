@@ -39,7 +39,7 @@ export class AuthService {
 
   getRole(): string {
     // Retrieve the user's role from the session_role cookie
-    const appUser = JSON.parse(this.cookieService.get('session_user'));
+    const appUser = JSON.parse(this.cookieService.get('session_user'  || ''));
     return appUser.role || '';
   }
 }
