@@ -13,11 +13,20 @@ export interface Employee {
     employeeId: number;
     firstName: string;
     lastName: string;
-    emailAddress: string;
+    email: string;
     password: string;
     phoneNumber: number;
     address: string;
     isDisabled: boolean;
     role: string;
-    selectedSecurityQuestion: selectedSecurityQuestion;
+    selectedSecurityQuestion: selectedSecurityQuestion[];
+}
+
+export interface CreateEmployee {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: number;
+  address: string;
+  role: string;
 }

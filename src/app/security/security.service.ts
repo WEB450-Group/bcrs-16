@@ -16,7 +16,7 @@ import { HttpClient } from '@angular/common/http';
 export class SecurityService {
 
   constructor(private http: HttpClient) {}
-  // findById API call 
+  // findById API call
   findEmployeeById(employeeId: number) {
     return this.http.get(`/api/employees/${employeeId}`);
   }
@@ -24,7 +24,7 @@ export class SecurityService {
   // Signin API call
   signIn(email: string, password: string) {
     return this.http.post('/api/security/signin', {
-      emailAddress: email, password
+      email: email, password: password
     });
   }
 

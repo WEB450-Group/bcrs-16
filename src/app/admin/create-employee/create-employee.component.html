@@ -22,46 +22,6 @@
       </div>
 
       <hr />
-      <!-- Employee ID field -->
-      <div class="py-2 px-2 flex justify-between mx-3">
-        <label for="txtEmployeeId" class="py-1 pl-2">Employee Id: </label>
-        <input
-          type="text"
-          id="txtEmployeeId"
-          formControlName="employeeId"
-          required
-          class="w-4/5 shadow-md rounded border border-gray-400"
-        />
-      </div>
-
-      <!-- Employee ID error handling -->
-      <div
-        *ngIf="
-          employeeForm.controls['employeeId'].touched &&
-          employeeForm.controls['employeeId'].hasError('required')
-        "
-      >
-        <div
-          class="py-1 text-center text-xs text-red-700 font-bold tracking-wide"
-          role="alert"
-        >
-          Employee ID is required.
-        </div>
-      </div>
-
-      <div
-        *ngIf="
-          employeeForm.controls['employeeId'].touched &&
-          employeeForm.controls['employeeId'].hasError('pattern')
-        "
-      >
-        <div
-          class="py-1 text-center text-xs text-red-700 font-bold tracking-wide"
-          role="alert"
-        >
-          Employee ID must be exactly 4 digits.
-        </div>
-      </div>
 
       <!-- First name field -->
       <div class="py-2 px-2 flex justify-between mx-3">
@@ -160,11 +120,11 @@
 
       <!-- Email address field -->
       <div class="py-2 px-2 flex justify-between mx-3">
-        <label for="txtEmailAddress" class="py-1 pl-2">Email:</label>
+        <label for="txtEmail" class="py-1 pl-2">Email:</label>
         <input
           type="text"
-          id="txtEmailAddress"
-          formControlName="emailAddress"
+          id="txtEmail"
+          formControlName="email"
           required
           class="w-4/5 shadow-md rounded"
         />
@@ -173,8 +133,8 @@
       <!-- Email address error handling -->
       <div
         *ngIf="
-          employeeForm.controls['emailAddress'].touched &&
-          employeeForm.controls['emailAddress'].hasError('required')
+          employeeForm.controls['email'].touched &&
+          employeeForm.controls['email'].hasError('required')
         "
       >
         <div
@@ -182,51 +142,6 @@
           role="alert"
         >
           Email is required.
-        </div>
-      </div>
-
-      <!-- Password field -->
-      <div class="py-2 px-2 flex justify-between mx-3">
-        <label for="txtPassword" class="py-1 pl-2">Password:</label>
-        <input
-          type="text"
-          id="txtPassword"
-          formControlName="password"
-          required
-          class="w-4/5 shadow-md rounded"
-        />
-      </div>
-
-      <div class="py-2 text-red-600 text-xs text-center italic">
-        Generic password. Employee will have to reset password.
-      </div>
-
-      <!-- Password error handling -->
-      <div
-        *ngIf="
-          employeeForm.controls['password'].touched &&
-          employeeForm.controls['password'].hasError('required')
-        "
-      >
-        <div
-          class="py-1 text-center text-xs text-red-700 font-bold tracking-wide"
-          role="alert"
-        >
-          Password is required.
-        </div>
-      </div>
-
-      <div
-        *ngIf="
-          employeeForm.controls['employeeId'].touched &&
-          employeeForm.controls['employeeId'].hasError('pattern')
-        "
-      >
-        <div
-          class="py-1 text-center text-xs text-red-700 font-bold tracking-wide"
-          role="alert"
-        >
-          Password must contain letters and numbers.
         </div>
       </div>
 
@@ -285,93 +200,6 @@
         >
           Role is required.
         </div>
-      </div>
-
-      <!-- isDisabled field -->
-      <div class="py-3 px-2 flex justify-between mx-3">
-        <label for="txtIsDisabled" class="py-1 pl-2">Disable:</label>
-        <select
-          name="isDisabled"
-          id="txtIsDisabled"
-          formControlName="isDisabled"
-          required
-          class="w-4/5 shadow-md rounded"
-        >
-          <option value="false" selected>False</option>
-          <option value="true">True</option>
-        </select>
-      </div>
-
-      <!-- Disabled error handling -->
-      <div
-        *ngIf="
-          employeeForm.controls['isDisabled'].touched &&
-          employeeForm.controls['isDisabled'].hasError('required')
-        "
-      >
-        <div
-          class="py-1 text-center text-xs text-red-700 font-bold tracking-wide"
-          role="alert"
-        >
-          Disable is required.
-        </div>
-      </div>
-
-      <!-- Security Question field -->
-      <div class="py-3 px-2 flex justify-between mx-3">
-        <label for="txtSecurityQuestion" class="py-1 pl-2"
-          >Security question:</label
-        >
-        <select
-          name="securityQuestion"
-          id="txtSecurityQuestion"
-          formControlName="selectedSecurityQuestion"
-          required
-          class="w-4/5 shadow-md rounded select-items"
-          (change)="onSelectedQuestion()"
-        >
-          <option value="0" class="p-2 select-item">Select question:</option>
-          <option value="mom-city" class="p-2 select-item">
-            What City was your mom born in?
-          </option>
-          <option value="best-friend" class="p-2 select-item">
-            What is the name of your best friend growing up?
-          </option>
-          <option value="teacher-name" class="p-2 select-item">
-            What was your favorite childhood teachers name?
-          </option>
-          <option value="home-street" class="p-2 select-item">
-            What Street did you grow up on?
-          </option>
-        </select>
-      </div>
-
-      <!-- Security Question error handling -->
-      <div
-        *ngIf="
-          employeeForm.controls['selectedSecurityQuestion'].touched &&
-          employeeForm.controls['selectedSecurityQuestion'].hasError('required')
-        "
-      >
-        <div
-          class="py-1 text-center text-xs text-red-700 font-bold tracking-wide"
-          role="alert"
-        >
-          Security question is required.
-        </div>
-      </div>
-
-      <!-- When security question is selected then pop the answer field -->
-      <!-- Answer field -->
-      <div *ngIf="showAnswerField" class="pt-2 pb-5 px-2 flex justify-between mx-3">
-        <label for="txtAnswer" class="py-1 pl-2">Answer:</label>
-        <input
-          type="text"
-          id="txtAnswer"
-          formControlName="answer"
-          required
-          class="w-4/5 shadow-md rounded"
-        />
       </div>
 
       <!-- Button field -->

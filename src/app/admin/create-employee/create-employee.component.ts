@@ -8,7 +8,7 @@
 ;===========================================
 */
 import { Component } from '@angular/core';
-import { Employee } from '../../shared/employee.interface';
+import { CreateEmployee, Employee } from '../../shared/employee.interface';
 import { EmployeeService } from '../../shared/employee.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -27,17 +27,12 @@ export class CreateEmployeeComponent {
 
   // Creating and assigning employee form
   employeeForm: FormGroup = this.fb.group({
-    employeeId: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{4}$')])],
     firstName: [null, Validators.compose([Validators.required])],
     lastName: [null, Validators.compose([Validators.required])],
+    email: [null, Validators.compose([Validators.required])],
     phoneNumber: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{10}$')])],
-    emailAddress: [null, Validators.compose([Validators.required])],
-    password: [null, Validators.compose([Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])')])],
     address: [null, Validators.compose([Validators.required])],
     role: [null, Validators.compose([Validators.required])],
-    isDisabled: [null, Validators.compose([Validators.required])],
-    selectedSecurityQuestion: [null, Validators.compose([Validators.required])],
-    answer: [null, Validators.compose([Validators.required])]
   });
 
 
@@ -51,29 +46,16 @@ export class CreateEmployeeComponent {
   // Function to create employee
   createEmployee() {
 
-    const employeeId = parseInt(this.employeeForm.controls['employeeId'].value, 10);
-    const phoneNumber = parseInt(this.employeeForm.controls['phoneNumber'].value, 10);
-    const isDisabled = this.stringToBoolean(this.employeeForm.controls['isDisabled'].value);
-
-    const selectedSecurityQuestion = {
-      question: this.employeeForm.controls['selectedSecurityQuestion'].value,
-      answer: this.employeeForm.controls['answer'].value
-    };
-
     this.isLoading = true;
 
     // Creating the new employee with the form values
-    const employee: Employee = {
-      employeeId: employeeId,
+    const employee: CreateEmployee = {
       firstName: this.employeeForm.controls['firstName'].value,
       lastName: this.employeeForm.controls['lastName'].value,
-      emailAddress: this.employeeForm.controls['emailAddress'].value,
-      phoneNumber: phoneNumber,
-      password: this.employeeForm.controls['password'].value,
+      email: this.employeeForm.controls['email'].value,
+      phoneNumber: parseInt(this.employeeForm.controls['phoneNumber'].value, 10),
       address: this.employeeForm.controls['address'].value,
       role: this.employeeForm.controls['role'].value,
-      isDisabled: isDisabled,
-      selectedSecurityQuestion: selectedSecurityQuestion
     };
 
     // Calling the createNewEmployee API passing in the employee created
@@ -90,15 +72,5 @@ export class CreateEmployeeComponent {
         this.router.navigate(['/admin/employees']);
       }
     })
-  }
-
-  onSelectedQuestion() {
-    const selectedQuestion = this.employeeForm.controls['selectedSecurityQuestion']?.value;
-    this.showAnswerField = !!selectedQuestion && selectedQuestion !== '0';
-    console.log(this.showAnswerField);
-  }
-
-  stringToBoolean(str: string): boolean {
-    return str.toLowerCase() === 'true';
   }
 }
