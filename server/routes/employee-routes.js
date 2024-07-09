@@ -11,13 +11,58 @@
 
 // Imports
 const express = require("express");
-const router = express.Router();
 const { mongo } = require("../utils/mongo");
 const createError = require('http-errors');
-const { firstValueFrom } = require("rxjs");
 const bcrypt = require('bcrypt');
+const Ajv = require('ajv');
+
+const router = express.Router();
+const ajvInstance = new Ajv();
 const saltRounds = 10;
 
+// Schemas
+const createEmployeeSchema = {
+  type: 'object',
+  properties: {
+    firstName: {
+      type: 'string'
+    },
+    lastName: {
+      type: 'string'
+    },
+    email: {
+      type: 'string'
+    },
+    phoneNumber: {
+      type: 'number'
+    },
+    address: {
+      type: 'string'
+    },
+    role: {
+      type: 'string'
+    }
+  },
+  required: [ 'firstName', 'lastName', 'email', 'phoneNumber', 'address', 'role' ],
+  additionalProperties: false
+}
+
+const updateEmployeeSchema = {
+  type: 'object',
+  properties: {
+    role: {
+      type: 'string'
+    },
+    isDisabled: {
+      type: 'boolean'
+    }
+  },
+  required: [ 'role', 'isDisabled' ],
+  additionalProperties: false
+}
+
+
+//Routes
 /**
  * findAll
  * @openapi
@@ -166,42 +211,25 @@ router.get('/:employeeId', (req, res, next) => {
  *         application/json:
  *           schema:
  *             required:
- *               - employeeId
  *               - firstName
  *               - lastName
- *               - emailAddress
+ *               - email
  *               - phoneNumber
- *               - password
  *               - address
  *               - role
- *               - isDisabled
- *               - selectedSecurityQuestion
  *             properties:
- *               employeeId:
- *                 type: number
  *               firstName:
  *                 type: string
  *               lastName:
  *                 type: string
- *               emailAddress:
+ *               email:
  *                 type: string
  *               phoneNumber:
  *                 type: number
- *               password:
- *                 type: string
  *               address:
  *                 type: string
  *               role:
  *                 type: string
- *               isDisabled:
- *                 type: boolean
- *               selectedSecurityQuestion:
- *                 type: object
- *                 properties:
- *                    question:
- *                       type: string
- *                    answer:
- *                       type: string
  *     responses:
  *       '201':
  *         description: Employee created successfully
@@ -218,61 +246,43 @@ router.post('/', (req, res, next) => {
     console.log("Starting the create employee API...");
 
     // Get the data for the new employee from the request body
-    const {
-      employeeId,
-      firstName,
-      lastName,
-      emailAddress,
-      phoneNumber,
-      password,
-      address,
-      role,
-      isDisabled,
-      selectedSecurityQuestion
-    } = req.body;
+    const employee = req.body;
+
+    // Validate the employee object against the createEmployeeSchema
+    const validate = ajvInstance.compile(createEmployeeSchema);
+    const valid = validate(employee);
+
+    // If the employee object is not valid; then return status code 400 with message 'Bad request'
+    if(!valid) {
+      console.error('Error validating employee object against schema', validate.errors);
+      return next(createError(400, `Bad request: ${validate.errors}`));
+    }
 
     // Call mongo and create the new user
     mongo(async db => {
 
-      console.log("Checking the employee ID is valid...");
+      // Get all the employees from the database and sort them by the employeeId
+      const employees = await db.collection('employees')
+      .find()
+      .sort({ employeeId: 1 }).
+      toArray();
 
-      // Check that the employeeId is a number with the parseInt function; If the checkEmployeeId is not a number it will return NaN
-      const checkEmployeeId = parseInt(employeeId, 10);
+      // Check if the employee exists already in the database
+      const existingEmployee = employees.find(emp => emp.email === employee.email);
 
-      // If the checkEmployeeId is NaN; then return a status code 400 with a message "Employee ID must be a number."
-      if (isNaN(checkEmployeeId)) {
-        console.error("Employee Id must be a number!");
-        return next(createError(400, "Employee Id must be a number!"));
-      }
-
-      // Check the employee ID is 4 digits
-      // If the employee ID length is not equal to 4; then return a status code 400 with a message "Invalid employee ID!"
-      if (checkEmployeeId.toString().length !== 4) {
-        console.error("Invalid employee ID!");
-        return next(createError(400, "Invalid employee ID!"));
-      }
-
-      console.log("Employee ID is valid!");
-
-      console.log("Checking the employee ID is not being used...");
-
-      // Check if the employeeId is not register already with another employee
-      const existingEmployee = await db.collection("employees").findOne({
-        employeeId: employeeId
-      });
-
-      // If the employee Id is being used already; then return a status code 400 with a message "Employee ID already in use!"
+      // If the employee exists; then throw an error status code 409 with message 'Employee already exists!'
       if (existingEmployee) {
-        console.error("Employee ID already in use!");
-        return next(createError(400, "Employee ID already in use!"));
+        console.error('Employee already exists!');
+        return next(createError(409, 'Employee already exists'));
       }
 
-      console.log("Employee ID is not being used!");
+      // Create the new employeeId for the registering user by getting the lastEmployee's employeeId and adding 1 to it
+      const lastEmployee = employees[employees.length - 1];
+      const newEmployeeId = lastEmployee.employeeId + 1;
 
-      console.log("Checking the phone number is valid...");
 
       // Check that the checkPhoneNumber is consists of numbers only with the parseInt function; If the checkPhoneNumber is is not a number it will return NaN
-      const checkPhoneNumber = parseInt(phoneNumber, 10);
+      const checkPhoneNumber = parseInt(employee.phoneNumber, 10);
 
       // If the checkPhoneNumber is NaN; then return a status code 400 with a message "Invalid phone number!"
       if (isNaN(checkPhoneNumber)) {
@@ -292,16 +302,16 @@ router.post('/', (req, res, next) => {
 
       // Create the new employee
       const newEmployee = {
-        employeeId: employeeId,
-        firstName: firstName,
-        lastName: lastName,
-        emailAddress: emailAddress,
-        password: bcrypt.hashSync(password, saltRounds),
-        phoneNumber: phoneNumber,
-        address: address,
-        isDisabled: isDisabled,
-        role: role,
-        selectedSecurityQuestion: selectedSecurityQuestion
+        employeeId: newEmployeeId,
+        firstName: employee.firstName,
+        lastName: employee.lastName,
+        email: employee.email,
+        password: '',
+        phoneNumber: employee.phoneNumber,
+        address: employee.address,
+        isDisabled: false,
+        role: employee.role,
+        selectedSecurityQuestion: []
       };
 
       console.log("Inserting new employee to the employees collection...");
@@ -369,7 +379,7 @@ router.put('/:employeeId', (req, res, next) =>{
 
         console.log('Updating the employee ID...');
 
-        // Get the employee ID from the request paramaters
+        // Get the employee ID from the request parameters
         let { employeeId } = req.params;
 
         console.log('Checking if the employee ID is a valid...');
@@ -404,12 +414,22 @@ router.put('/:employeeId', (req, res, next) =>{
             console.log('Getting the data that will update from the employee from the request body...');
 
             // Get the role and isDisabled from the request
-            const { role, isDisabled } = req.body;
+            const updateEmployee = req.body;
+
+            // Validate the updateEmployee object against the updateEmployeeSchema
+            const validate = ajvInstance.compile(updateEmployeeSchema);
+            const valid = validate(updateEmployee);
+
+            // If the updateEmployee object is not valid; then return a status code 400 with a message 'Bad Request'
+            if(!valid) {
+              console.error('Error validating the updateEmployee against the schema');
+              return next(createError(400, `Bad request: ${validate.errors}`));
+            }
 
             // Update the employee role and isDisable
             const result = await db.collection('employees').updateOne(
                 { employeeId: employeeId },
-                { $set: { role: role, isDisabled: isDisabled }}
+                { $set: { role: updateEmployee.role, isDisabled: updateEmployee.isDisabled }}
             );
 
             console.log('Employee is updated successfully!');
@@ -419,7 +439,7 @@ router.put('/:employeeId', (req, res, next) =>{
 
         }, next);
 
-        // Catch any databse errors
+        // Catch any database errors
     } catch (err) {
         console.error("Database Error:", err);
         next(err);
@@ -443,7 +463,7 @@ router.put('/:employeeId', (req, res, next) =>{
  *     tags:
  *       - Employees
  *     description: Disables an employee by id
- *     summary: Disables an employee document so they don't show up in contact list for currect employees (?)
+ *     summary: Disables an employee document so they don't show up in contact list for correct employees (?)
  *     parameters:
  *       - name: employeeId
  *         in: path
@@ -455,7 +475,7 @@ router.put('/:employeeId', (req, res, next) =>{
  *       '204':
  *         description: Employee document disabled
  *       '400':
- *         description: Bad Requet
+ *         description: Bad Request
  *       '404':
  *         description: Not Found
  *       '200':
@@ -465,7 +485,7 @@ router.put('/:employeeId/disable', (req, res, next) => {
   try {
     //Employee ID params
     let employeeId = req.params.employeeId;
-    //pasrse to integer
+    //parse to integer
     employeeId = parseInt(employeeId, 10);
     //if input not numerical,return 400
     if (isNaN(employeeId)) {
