@@ -81,6 +81,17 @@ const signInSchema = {
   additionalProperties: false
 }
 
+const resetPasswordSchema = {
+  type: 'object',
+  properties: {
+    password: {
+      type: 'string'
+    }
+  },
+  required: [ 'password' ],
+  additionalProperties: false
+}
+
 // Routes
 /**
  * employee Register
@@ -184,7 +195,7 @@ router.post('/register', (req, res, next) => {
 
       const newEmployeeId = lastEmployee.employeeId + 1;
       console.log('new employeeId:' + newEmployeeId);
-      
+
 
       // Create the new employee object
       const newEmployee = {
@@ -283,7 +294,7 @@ router.post('/signin', (req, res, next) => {
         // Else if the password doesn't match; then return status code 400 with message "Invalid credentials"
         if (!passwordIsValid) {
           console.error('Invalid password!');
-          return next(createError(401, "Unanthorized"));
+          return next(createError(401, "Unauthorized"));
         }
         // If the password matches; then return status code 200 with message "Employee sign in"
         console.log("Password matches!");
@@ -294,6 +305,94 @@ router.post('/signin', (req, res, next) => {
     // Catch any Database errors
   } catch (err) {
     console.error("Error: ", err);
+    next(err);
+  }
+});
+
+/**
+ * employee reset password
+ * @openapi
+ * /api/security/employees/{email}/reset-password:
+ *   post:
+ *     tags:
+ *      - Security
+ *     description: API for resetting employee's password
+ *     summary: Employee Reset Password
+ *     parameters:
+ *       - name: email
+ *         in: path
+ *         required: true
+ *         description: Employee email
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       description: Employee Information
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - password
+ *             properties:
+ *               password:
+ *                 type: string
+ *     responses:
+ *       '204':
+ *         description: Employee's password reset successful
+ *       '400':
+ *         description: Bad request
+ *       '404':
+ *         description: Not found
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
+ */
+router.post('/employees/:email/reset-password', (req, res, next) => {
+  try {
+
+    // Get the employee email from the parameters
+    const email = req.params.email;
+
+    // Get the employee data from the body
+    const employee = req.body;
+
+    // Validate the employee object against the resetPasswordSchema
+    const validate = ajvInstance.compile(resetPasswordSchema);
+    const valid = validate(employee);
+
+    // If the employee object is not valid; return a status code 400 with message 'Bad request'
+    if(!valid) {
+      console.error('Error validating employee object against schema', validators.errors);
+      return next(createError(400, `Bad request: ${validate.errors}`));
+    }
+
+    // Call mongo and update the employee's password
+    mongo(async db => {
+      // Find the employee with the email
+      const updateEmployee = db.collection('employees').findOne({ email: email });
+
+      // If the employee does not exist; then return a status code 404 with message 'Not found'
+      if(!updateEmployee) {
+        console.error('Cannot find employee with that email: ', email);
+        return next(createError(404, `Not found employee with that email: ${email}` ))
+      }
+
+      // Encrypt the new password using bcrypt
+      const hashedPassword = bcrypt.hashSync(employee.password, saltRounds);
+
+      // Update employee's password
+      const result = await db.collection('employees').updateOne(
+        { email: email },
+        { $set: { password: hashedPassword }}
+      );
+
+      // Return status code 204
+      res.status(204).send();
+    }, next);
+
+    // Catch any database errors
+  } catch (err) {
+    console.error("Error", err);
     next(err);
   }
 });
