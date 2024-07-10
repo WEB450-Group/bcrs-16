@@ -28,4 +28,8 @@ export class SecurityService {
     });
   }
 
+  // Reset password API call
+  resetPassword(email: string, password: string) {
+    return this.http.post('/api/security/employees/' + email + '/reset-password', password);
+  }
 }

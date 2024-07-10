@@ -23,7 +23,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class SigninComponent {
   errMessage: string = '';
   isLoading: boolean = false;
-  fieldTextType: boolean = false; 
+  fieldTextType: boolean = false;
 
   signinForm = this.fb.group({
     email: [null, Validators.compose([Validators.required, Validators.email])],
@@ -31,9 +31,9 @@ export class SigninComponent {
   })
 
   constructor(
-    private fb: FormBuilder, 
-    private router: Router, 
-    private cookieService: CookieService, 
+    private fb: FormBuilder,
+    private router: Router,
+    private cookieService: CookieService,
     private secService: SecurityService, private route: ActivatedRoute) {
     this.errMessage = '';
    }
@@ -43,7 +43,7 @@ export class SigninComponent {
     this.isLoading = true;
 
     // console.log('Signin Form', this.signinForm.value);
-    //get email value from signin form 
+    //get email value from signin form
     let email = this.signinForm.controls['email'].value;
     //get password from form
     let password = this.signinForm.controls['password'].value;
@@ -64,26 +64,26 @@ export class SigninComponent {
       //if succesfful set session_user cookie and redirect user to logged in homepage
       next: (employee: any) => {
         console.log('employee', employee);
-        //create the sessionCookie object 
+        //create the sessionCookie object
         const sessionCookie = {
           employeeId: employee.employeeId,
           firstName: employee.firstName,
           lastName: employee.lastName,
-          emailAddress: employee.emailAddress,
+          email: employee.email,
           phoneNumber: employee.phoneNumber,
           address: employee.address,
           isDisabled: employee.isDisabled,
           role: employee.role,
           selectedSecurityQuestions: employee.selectedSecurityQuestions
         };
-        //set session user 
+        //set session user
         this.cookieService.set('session_user', JSON.stringify(sessionCookie), 1);
 
         //check if there is a return URL, if not redirect to home page
         const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
-        //set is loading to false when logged in 
+        //set is loading to false when logged in
         this.isLoading = false;
-        //redirect user to the returnURL 
+        //redirect user to the returnURL
         this.router.navigate([returnUrl]);
       },
       error: (err) => {
