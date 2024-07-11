@@ -58,13 +58,20 @@ const registerSchema = {
       type: 'string'
     },
     phoneNumber: {
-      type: 'number'
+      type: 'string'
+    },
+    role: {
+      type: 'string'
+    },
+    isDisabled: {
+      type: 'boolean'
     },
     selectedSecurityQuestions: securityQuestionSchema
   },
-  required: [ 'firstName', 'lastName', 'email', 'password', 'address', 'phoneNumber', 'selectedSecurityQuestions' ],
+  required: ['firstName', 'lastName', 'email', 'password', 'address', 'phoneNumber', 'selectedSecurityQuestions'],
   additionalProperties: false
 };
+
 
 
 const signInSchema = {
@@ -89,6 +96,18 @@ const resetPasswordSchema = {
     }
   },
   required: [ 'password' ],
+  additionalProperties: false
+}
+
+const emailSchema = {
+  type: 'object',
+  properties: {
+    email: {
+      type: 'string',
+      pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+    }
+  },
+  required: [ 'email' ],
   additionalProperties: false
 }
 
@@ -170,6 +189,9 @@ router.post('/register', (req, res, next) => {
     // Encrypt the employee's password using bcrypt
     employee.password = bcrypt.hashSync(employee.password, saltRounds);
 
+    // Make phoneNumber number input into a number
+    employee.phoneNumber = Number(employee.phoneNumber);
+
     // Call mongo and create the new employee
     mongo(async db => {
 
@@ -214,7 +236,7 @@ router.post('/register', (req, res, next) => {
       // Insert new employee to the employee collection
       const result = await db.collection("employees").insertOne(newEmployee);
       console.log('New employee created successfully!');
-      res.status(201).send('Employee created successfully!');
+      res.status(201).send(employee);
 
     }, next);
 
@@ -362,7 +384,7 @@ router.post('/employees/:email/reset-password', (req, res, next) => {
 
     // If the employee object is not valid; return a status code 400 with message 'Bad request'
     if(!valid) {
-      console.error('Error validating employee object against schema', validators.errors);
+      console.error('Error validating employee object against schema', validate.errors);
       return next(createError(400, `Bad request: ${validate.errors}`));
     }
 
@@ -393,6 +415,150 @@ router.post('/employees/:email/reset-password', (req, res, next) => {
     // Catch any database errors
   } catch (err) {
     console.error("Error", err);
+    next(err);
+  }
+});
+
+
+/**
+ * verify employee email
+ * @openapi
+ * /api/security/verify/employees/{email}:
+ *   post:
+ *     tags:
+ *      - Security
+ *     description: API for verifying employee's email
+ *     summary: Verify Employee Email
+ *     parameters:
+ *       - name: email
+ *         in: path
+ *         required: true
+ *         description: Employee email
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Employee Email found
+ *       '400':
+ *         description: Bad request
+ *       '404':
+ *         description: Not found
+ *       '500':
+ *         description: Internal Server Exception
+ */
+router.post('/verify/employees/:email', (req, res, next) => {
+  try {
+    //email parameter 
+    const email = req.params.email
+    //log email 
+    console.log('Employee email', email);
+
+    // Validate the email against email schema with regex
+    const validate = ajvInstance.compile(emailSchema);
+    const valid = validate({email});
+
+    // If the email is not valid; return 400 bad request
+    if(!valid) {
+      console.error('Error validating email against schema', validate.errors);
+      return next(createError(400, `Bad request: ${validate.errors}`));
+    }
+    
+    //connect to databse 
+    mongo(async db => {
+      //find employee by saved email 
+      const employee = await db.collection('employees').findOne({ email: email });
+      console.log(employee);
+      //If no employees have matching email send 404 not found 
+      if (!employee) {
+        const err = new Error('Email does not exist');
+        err.status = 404; 
+        console.log('Employee not found with email', email);
+        next(err);
+        return;
+      }
+      //send status 200 with email
+      res.send(employee.email);
+    }, next);
+
+  } catch (err) {
+    console.error("Error:", err);
+    next(err);
+  }
+});
+
+/**
+ * verify employee email and get security questions
+ * @openapi
+ * /api/security/verify/employees/{email}/security-questions:
+ *   post:
+ *     tags:
+ *       - Security
+ *     description: Used for verifying employee email address and retrieving their selected security questions
+ *     summary: Verify Employee Email and Get Security Questions
+ *     parameters:
+ *       - name: email
+ *         in: path
+ *         required: true
+ *         description: Employee email
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Employee email verified and security questions retrieved
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   question:
+ *                     type: string
+ *       '400':
+ *         description: Bad request
+ *       '404':
+ *         description: Not found
+ *       '500':
+ *         description: Internal Server Exception
+ */
+router.post('/verify/employees/:email/security-questions', (req, res, next) => {
+  try {
+    //email parameter 
+    const email = req.params.email
+    //log email 
+    console.log('Employee email', email);
+
+    // Validate the email against email schema with regex
+    const validate = ajvInstance.compile(emailSchema);
+    const valid = validate({email});
+
+    // If the email is not valid; return 400 bad request
+    if(!valid) {
+      console.error('Error validating email against schema', validate.errors);
+      return next(createError(400, `Bad request: ${validate.errors}`));
+    }
+    
+    //connect to databse 
+    mongo(async db => {
+      //find employee by saved email 
+      const employee = await db.collection('employees').findOne(
+        { email },
+        { projection: { email: 1, employeeId: 1, selectedSecurityQuestions: 1 } }
+      );
+      //If no employees have matching email send 404 not found 
+      if (!employee) {
+        const err = new Error('Email does not exist');
+        err.status = 404; 
+        console.log('Employee not found with email', email);
+        next(err);
+        return;
+      }
+      //send status 200 with email
+      res.send(employee.selectedSecurityQuestions);
+    }, next);
+
+  } catch (err) {
+    console.error("Error:", err);
     next(err);
   }
 });

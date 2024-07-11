@@ -478,7 +478,7 @@ router.put('/:employeeId', (req, res, next) =>{
  *         description: Bad Request
  *       '404':
  *         description: Not Found
- *       '200':
+ *       '500':
  *         description:  Internal Server Error
  */
 router.put('/:employeeId/disable', (req, res, next) => {

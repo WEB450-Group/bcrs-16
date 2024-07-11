@@ -30,3 +30,15 @@ export interface CreateEmployee {
   address: string;
   role: string;
 }
+
+export interface Registration {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  address: string;
+  isDisabled: boolean;
+  role: string;
+  selectedSecurityQuestions: selectedSecurityQuestion[];
+}

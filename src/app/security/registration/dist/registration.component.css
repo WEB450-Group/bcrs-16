@@ -2,10 +2,10 @@
   position: relative;
   cursor: pointer;
   user-select: none;
-  padding: .75rem;
+  padding: 0.75rem;
   background-color: #fff;
 }
 
 ::ng-deep .mat-horizontal-stepper-header .mat-step-icon {
-  background-color:  rgb(34,77,49);
+  background-color: #224d31;
 }

@@ -20,15 +20,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { CookieService } from 'ngx-cookie-service';
-
-import { roleGuard } from './shared/role.guard';
-import { authGuard } from './shared/auth.guard';
+import { MatInputModule } from '@angular/material/input';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { BaseLayoutComponent } from './shared/layouts/base-layout/base-layout.component';
-import { NavComponent } from './shared/layouts/nav/nav.component';
-import { FooterComponent } from './shared/layouts/footer/footer.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { FaqComponent } from './faq/faq.component';
@@ -44,9 +41,6 @@ import { SharedModule } from './shared/shared.module';
   declarations: [
     AppComponent,
     HomeComponent,
-    //BaseLayoutComponent,
-    //NavComponent,
-    //FooterComponent,
     ContactComponent,
     AboutComponent,
     FaqComponent,
@@ -67,7 +61,10 @@ import { SharedModule } from './shared/shared.module';
     MatFormFieldModule,
     MatOptionModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    MatInputModule,
+    MatStepperModule,
+    MatButtonModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

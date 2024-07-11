@@ -9,6 +9,7 @@
 */
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,11 @@ export class SecurityService {
     return this.http.post('/api/security/signin', {
       email: email, password: password
     });
+  }
+  
+  //Register API call
+  register(employee: any): Observable<any> {
+    return this.http.post('/api/security/register', employee);
   }
 
 }
