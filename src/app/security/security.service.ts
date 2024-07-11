@@ -30,8 +30,13 @@ export class SecurityService {
   }
   
   //Register API call
-  register(employee: any): Observable<any> {
+  register(employee: any): Observable <any> {
     return this.http.post('/api/security/register', employee);
+  }
+
+  //Verify email API call
+  verifyEmail(email: string) {
+    return this.http.post(`/api/security/verify/employees/${email}`, {});
   }
 
 }

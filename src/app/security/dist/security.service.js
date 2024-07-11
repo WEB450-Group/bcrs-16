@@ -35,6 +35,10 @@ var SecurityService = /** @class */ (function () {
     SecurityService.prototype.register = function (employee) {
         return this.http.post('/api/security/register', employee);
     };
+    //Verify email API call
+    SecurityService.prototype.verifyEmail = function (email) {
+        return this.http.post("/api/security/verify/employees/" + email, {});
+    };
     SecurityService = __decorate([
         core_1.Injectable({
             providedIn: 'root'

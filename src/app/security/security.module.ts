@@ -27,13 +27,17 @@ import { SecurityComponent } from './security.component';
 import { SigninComponent } from './signin/signin.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { VerifyQuestionsComponent } from './verify-questions/verify-questions.component';
 
 @NgModule({
   declarations: [
     SecurityComponent,
     SigninComponent,
     RegistrationComponent,
-    PasswordResetComponent
+    PasswordResetComponent,
+    VerifyEmailComponent,
+    VerifyQuestionsComponent
   ],
   imports: [
     CommonModule,

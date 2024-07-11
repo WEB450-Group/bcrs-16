@@ -16,13 +16,9 @@ import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AboutComponent } from './about/about.component';
-import { ServiceGraphComponent } from './admin/service-graph/service-graph.component';
 import { ServiceRepairComponent } from './service-repair/service-repair.component';
 import { FaqComponent } from './faq/faq.component';
-import { EmployeeListComponent } from './admin/employee-list/employee-list.component';
 import { ProfileComponent } from './profile/profile.component';
-import { EditEmployeeComponent } from './admin/edit-employee/edit-employee.component';
-import { CreateEmployeeComponent } from './admin/create-employee/create-employee.component';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
 export const routes: Routes = [

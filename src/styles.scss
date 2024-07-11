@@ -33,11 +33,12 @@ $bcrs-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($bcrs-theme);
 
+@include mat.core();
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-// @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
 
 html, body {
   margin: 0;

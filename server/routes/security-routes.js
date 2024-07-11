@@ -104,7 +104,7 @@ const emailSchema = {
   properties: {
     email: {
       type: 'string',
-      pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+      // pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
     }
   },
   required: [ 'email' ],
@@ -477,7 +477,7 @@ router.post('/verify/employees/:email', (req, res, next) => {
         return;
       }
       //send status 200 with email
-      res.send(employee.email);
+      res.status(200).json({ email: employee.email });
     }, next);
 
   } catch (err) {

@@ -99,8 +99,8 @@ var emailSchema = {
   type: 'object',
   properties: {
     email: {
-      type: 'string',
-      pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+      type: 'string' // pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+
     }
   },
   required: ['email'],
@@ -530,7 +530,9 @@ router.post('/verify/employees/:email', function (req, res, next) {
 
             case 10:
               //send status 200 with email
-              res.send(employee.email);
+              res.status(200).json({
+                email: employee.email
+              });
 
             case 11:
             case "end":
