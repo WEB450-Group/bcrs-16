@@ -3,7 +3,7 @@
    <form
    [formGroup]="editEmployeeForm"
    (ngSubmit)="editEmployee(); editEmployeeForm.reset()"
-   class="form overflow-hidden rounded-lg shadow-md mt-3 w-full lg:w-1/3"
+   class="form overflow-hidden rounded-t-lg shadow-md mt-3 w-full lg:w-1/3"
    >
     <div class="primary text-white text-center uppercase font-bold tracking-wide py-3">
       Edit employee form
@@ -14,7 +14,7 @@
 
       <!-- Display error message -->
        <div *ngIf="errorMessage" class="flex justify-center py-3">
-        <div class="text-center text-red-800 bg-red-300 border rounded w-1/2">
+        <div class="text-center text-red-800 bg-red-300 border rounded w-full lg:w-1/3">
           {{ errorMessage }}
         </div>
        </div>
