@@ -36,7 +36,8 @@ const securityQuestionSchema = {
     },
     required: [ 'question', 'answer' ],
     additionalProperties: false
-  }
+  },
+  minItems: 3
 };
 
 const registerSchema = {
@@ -104,7 +105,6 @@ const emailSchema = {
   properties: {
     email: {
       type: 'string',
-      // pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
     }
   },
   required: [ 'email' ],
@@ -502,61 +502,86 @@ router.post('/verify/employees/:email', (req, res, next) => {
  *         description: Employee email
  *         schema:
  *           type: string
+ *     requestBody:
+ *       description: Security questions to be verified
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             minItems: 3
+ *             items:
+ *               type: object
+ *               properties:
+ *                 question:
+ *                   type: string
+ *                 answer:
+ *                   type: string
  *     responses:
  *       '200':
- *         description: Employee email verified and security questions retrieved
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   question:
- *                     type: string
+ *         description: Employee email verified and security questions verified
  *       '400':
  *         description: Bad request
  *       '404':
  *         description: Not found
+ *       '401':
+ *         description: Unauthorized, security answers do not match records
  *       '500':
  *         description: Internal Server Exception
  */
 router.post('/verify/employees/:email/security-questions', (req, res, next) => {
   try {
-    //email parameter 
-    const email = req.params.email
-    //log email 
+    //email parameter
+    const email = req.params.email;
+    //capture request body
+    const securityQuestions = req.body;
+
+    //log email
     console.log('Employee email', email);
+    //log security questions
+    console.log('Employee security questions', securityQuestions);
 
-    // Validate the email against email schema with regex
-    const validate = ajvInstance.compile(emailSchema);
-    const valid = validate({email});
-
-    // If the email is not valid; return 400 bad request
+    // Validate security questions against schema
+    const validate = ajvInstance.compile(securityQuestionSchema);
+    const valid = validate(securityQuestions);
+    
+    //If the email is not valid; return 400 bad request
     if(!valid) {
-      console.error('Error validating email against schema', validate.errors);
+      console.error('Error validating security questions/answers against schema', validate.errors);
       return next(createError(400, `Bad request: ${validate.errors}`));
     }
-    
-    //connect to databse 
+
+    //connect to database
     mongo(async db => {
-      //find employee by saved email 
-      const employee = await db.collection('employees').findOne(
-        { email },
-        { projection: { email: 1, employeeId: 1, selectedSecurityQuestions: 1 } }
-      );
-      //If no employees have matching email send 404 not found 
+      // Find employee by employee email
+      const employee = await db.collection('employees').findOne({ email });
+
+      //if no employees have matching email, send 404 not found
       if (!employee) {
-        const err = new Error('Email does not exist');
-        err.status = 404; 
         console.log('Employee not found with email', email);
+        return next(createError(404, 'Email does not exist'));
+      }
+      console.log("Employee", employee);
+
+      //check entered security questions against user's stored security questions
+      if (securityQuestions[0].answer !== employee.selectedSecurityQuestions[0].answer || 
+          securityQuestions[1].answer !== employee.selectedSecurityQuestions[1].answer || 
+          securityQuestions[2].answer !== employee.selectedSecurityQuestions[2].answer) {
+        
+        //Error handling for unauthorized/non-matching answers
+        const err = new Error("Unauthorized");
+        err.status = 401;
+        err.message = "Unauthorized: One or more of your security answers do not match our records";
+        console.log("Security answers do not match");
         next(err);
         return;
       }
-      //send status 200 with email
+
+      //send status 200 and employee security qustions
       res.send(employee.selectedSecurityQuestions);
     }, next);
 
+  //Mongo DB error handling
   } catch (err) {
     console.error("Error:", err);
     next(err);

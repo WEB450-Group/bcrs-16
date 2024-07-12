@@ -12,13 +12,13 @@
       <!-- FORM FIELDS -->
       <div class="my-2">
         <form [formGroup]="signinForm" (ngSubmit)="signIn()" class="md:pt-3 md:px-4 pb-8 bg-white">
-          <h4 class="text-medium 2lg:text-xl font-bold tracking-wide pb-2 text-start">Email Address</h4>
+          <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start">Email Address</label>
           <div>
             <input id="username" type="email" formControlName="email"
               [ngClass]="{'border-red-600': errMessage, 'placeholder-err': errMessage}" placeholder="Enter Your ID"
-              class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
+              class="block w-full p-2 mb-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
           </div>
-          <h4 class="text-medium 2lg:text-xl font-bold tracking-wide pb-2 text-start">Password</h4>
+          <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start">Password</label>
           <div class="flex ">
             <input id="password" [type]="fieldTextType ? 'text' : 'password'" formControlName="password"
               [ngClass]="{'border-red-600': errMessage, 'placeholder-err': errMessage}"

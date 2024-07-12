@@ -10,6 +10,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { selectedSecurityQuestion } from '../shared/selectedSecurityQuestion.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,11 @@ export class SecurityService {
   //Verify email API call
   verifyEmail(email: string) {
     return this.http.post(`/api/security/verify/employees/${email}`, {});
+  }
+
+  // Verify security questions API call
+  verifySecurityQuestions(email: string, securityQuestions: selectedSecurityQuestion[]): Observable<any> {
+    return this.http.post('/api/security/verify/employees/' + email + '/security-questions', securityQuestions);
   }
 
 }

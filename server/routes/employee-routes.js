@@ -61,7 +61,16 @@ const updateEmployeeSchema = {
   additionalProperties: false
 }
 
-
+const emailSchema = {
+  type: 'object',
+  properties: {
+    email: {
+      type: 'string',
+    }
+  },
+  required: [ 'email' ],
+  additionalProperties: false
+}
 //Routes
 /**
  * findAll
@@ -179,7 +188,7 @@ router.get('/:employeeId', (req, res, next) => {
           role: 1,
         }
       });
-      // If no emails match param send 404 employee not found error
+      // If no ID matches input param send 404 employee not found error
       if (!employee) {
         return res.status(404).json({
           error: 'Employee Not Found'
@@ -446,14 +455,6 @@ router.put('/:employeeId', (req, res, next) =>{
     }
 })
 
-//Add email pattern when creating an account as well?
-// const regEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-// //Test valid email pattern against email param, if not a valid email format send 404
-// if (!regEx.test(emailAddress)) {
-//     return res.status(400).json({error: 'Incorrect Email Format'});
-// }
-
-
 // Note: The deleteUser API does not actually remove a document from the collection. Instead, you are setting a property named “isDisabled” to true.
 /**
  * deleteUser
@@ -523,6 +524,82 @@ router.put('/:employeeId/disable', (req, res, next) => {
   //Mongo error handling
   catch (err) {
     console.error('Error: ', err);
+    next(err);
+  }
+});
+
+// findSelectedSecurityQuestions:
+// ▪ Verb: POST
+// ▪ Route: localhost:3000/api/users/:email/security-questions
+// ▪ Status: 200 – OK
+// ▪ Error Handling:
+// • 400 – Bad Request
+// • 404 – Not Found
+// • 500 – Server Error
+
+
+/**
+ * findSelectedSecurityQuestions
+ * @openapi
+ * /api/employees/{email}/security-questions:
+ *   get:
+ *     tags:
+ *       - Employees
+ *     description: Returns employees selected security questions based on user's email
+ *     summary: Returns an employee's selected security questions
+ *     parameters:
+ *       - name: email
+ *         in: path
+ *         required: true
+ *         description: Employee email
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Employee's selected security questions
+ *       '404':
+ *         description: Employee not found
+ *       '500':
+ *         description: Server exception
+ */
+router.get('/:email/security-questions', (req, res, next) => {
+  try {
+    //email parameter 
+    const email = req.params.email
+    //log email 
+    console.log('Employee email', email);
+
+    // Validate the email against email schema
+    const validate = ajvInstance.compile(emailSchema);
+    const valid = validate({email});
+
+    // If the email is not valid; return 400 bad request
+    if(!valid) {
+      console.error('Error validating email against schema', validate.errors);
+      return next(createError(400, `Bad request: ${validate.errors}`));
+    }
+    
+    //connect to databse 
+    mongo(async db => {
+      //find employee by saved email 
+      const employee = await db.collection('employees').findOne(
+        { email: email },
+        { projection: { email: 1, employeeId: 1, selectedSecurityQuestions: 1 } }
+      );
+      //If no employees have matching email send 404 not found 
+      if (!employee) {
+        const err = new Error('Email does not exist');
+        err.status = 404; 
+        console.log('Employee not found with email', email);
+        next(err);
+        return;
+      }
+      //send status 200 with email
+      res.send(employee.selectedSecurityQuestions);
+    }, next);
+
+  } catch (err) {
+    console.error("Error:", err);
     next(err);
   }
 });

@@ -7,6 +7,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 exports.__esModule = true;
 exports.VerifyEmailComponent = void 0;
+/*
+============================================
+; Title:  verify-email.component.ts
+; Author: Professor Krasso
+; Date: 11. July, 2024
+; Modified by: Joanna Brumfield and Zadkiel Rodriguez Alvarado
+; Description: Verify Emmail Component
+;===========================================
+*/
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var VerifyEmailComponent = /** @class */ (function () {

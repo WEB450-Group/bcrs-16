@@ -1,3 +1,12 @@
+/*
+============================================
+; Title:  verify-email.component.ts
+; Author: Professor Krasso
+; Date: 11. July, 2024
+; Modified by: Joanna Brumfield and Zadkiel Rodriguez Alvarado
+; Description: Verify Emmail Component
+;===========================================
+*/
 import { Component } from '@angular/core';
 import { SecurityService } from '../security.service';
 import { Router } from '@angular/router';

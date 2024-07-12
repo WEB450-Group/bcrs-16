@@ -61,6 +61,16 @@ var updateEmployeeSchema = {
   },
   required: ['role', 'isDisabled'],
   additionalProperties: false
+};
+var emailSchema = {
+  type: 'object',
+  properties: {
+    email: {
+      type: 'string'
+    }
+  },
+  required: ['email'],
+  additionalProperties: false
 }; //Routes
 
 /**
@@ -512,13 +522,7 @@ router.put('/:employeeId', function (req, res, next) {
     console.error("Database Error:", err);
     next(err);
   }
-}); //Add email pattern when creating an account as well?
-// const regEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-// //Test valid email pattern against email param, if not a valid email format send 404
-// if (!regEx.test(emailAddress)) {
-//     return res.status(400).json({error: 'Incorrect Email Format'});
-// }
-// Note: The deleteUser API does not actually remove a document from the collection. Instead, you are setting a property named “isDisabled” to true.
+}); // Note: The deleteUser API does not actually remove a document from the collection. Instead, you are setting a property named “isDisabled” to true.
 
 /**
  * deleteUser
@@ -617,6 +621,104 @@ router.put('/:employeeId/disable', function (req, res, next) {
   } //Mongo error handling
   catch (err) {
     console.error('Error: ', err);
+    next(err);
+  }
+}); // findSelectedSecurityQuestions:
+// ▪ Verb: POST
+// ▪ Route: localhost:3000/api/users/:email/security-questions
+// ▪ Status: 200 – OK
+// ▪ Error Handling:
+// • 400 – Bad Request
+// • 404 – Not Found
+// • 500 – Server Error
+
+/**
+ * findSelectedSecurityQuestions
+ * @openapi
+ * /api/employees/{email}/security-questions:
+ *   get:
+ *     tags:
+ *       - Employees
+ *     description: Returns employees selected security questions based on user's email
+ *     summary: Returns an employee's selected security questions
+ *     parameters:
+ *       - name: email
+ *         in: path
+ *         required: true
+ *         description: Employee email
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Employee's selected security questions
+ *       '404':
+ *         description: Employee not found
+ *       '500':
+ *         description: Server exception
+ */
+
+router.get('/:email/security-questions', function (req, res, next) {
+  try {
+    //email parameter 
+    var email = req.params.email; //log email 
+
+    console.log('Employee email', email); // Validate the email against email schema
+
+    var validate = ajvInstance.compile(emailSchema);
+    var valid = validate({
+      email: email
+    }); // If the email is not valid; return 400 bad request
+
+    if (!valid) {
+      console.error('Error validating email against schema', validate.errors);
+      return next(createError(400, "Bad request: ".concat(validate.errors)));
+    } //connect to databse 
+
+
+    mongo(function _callee6(db) {
+      var employee, err;
+      return regeneratorRuntime.async(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              _context6.next = 2;
+              return regeneratorRuntime.awrap(db.collection('employees').findOne({
+                email: email
+              }, {
+                projection: {
+                  email: 1,
+                  employeeId: 1,
+                  selectedSecurityQuestions: 1
+                }
+              }));
+
+            case 2:
+              employee = _context6.sent;
+
+              if (employee) {
+                _context6.next = 9;
+                break;
+              }
+
+              err = new Error('Email does not exist');
+              err.status = 404;
+              console.log('Employee not found with email', email);
+              next(err);
+              return _context6.abrupt("return");
+
+            case 9:
+              //send status 200 with email
+              res.send(employee.selectedSecurityQuestions);
+
+            case 10:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      });
+    }, next);
+  } catch (err) {
+    console.error("Error:", err);
     next(err);
   }
 }); // Export the router
