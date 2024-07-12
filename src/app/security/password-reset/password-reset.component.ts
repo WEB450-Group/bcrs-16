@@ -11,7 +11,6 @@ import { Component } from '@angular/core';
 import { SecurityService } from '../security.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Employee } from 'src/app/shared/employee.interface';
 
 @Component({
   selector: 'app-password-reset',
@@ -59,7 +58,7 @@ export class PasswordResetComponent {
         this.router.navigate(['/security/signin']);
       },
       error: (err) => {
-        console.error('Error changing password: ', err);
+        console.error('Error changing password: ', err.error.message);
         this.errorMessage = err;
         this.isLoading = false;
       }

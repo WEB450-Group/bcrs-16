@@ -30,7 +30,7 @@ export class VerifyQuestionsComponent {
   question1: string;
   question2: string;
   question3: string;
-  
+
   //Form group for security question input answers
   sqForm: FormGroup = this.fb.group({
     answer1: [null, Validators.compose([Validators.required])],
@@ -40,12 +40,12 @@ export class VerifyQuestionsComponent {
 
   constructor(
      private route: ActivatedRoute,
-     private fb: FormBuilder, 
-     private securityService: SecurityService, 
-     private employeeService: EmployeeService, 
-     private router: Router ) 
+     private fb: FormBuilder,
+     private securityService: SecurityService,
+     private employeeService: EmployeeService,
+     private router: Router )
     {
-    //initialize variables 
+    //initialize variables
     this.errMessage = '';
     this.selectedSecurityQuestions = [];
     this.question1 = '';
@@ -55,12 +55,12 @@ export class VerifyQuestionsComponent {
     this.email = this.route.snapshot.queryParamMap.get('email') ?? '';
     console.log("Email: ", this.email);
 
-    //if no email address is found redirect back to the verify-email page 
+    //if no email address is found redirect back to the verify-email page
     if(!this.email) {
       this.router.navigate(['/security/verify-email']);
       return
     }
-    //subscribe to findSelectedSecurityQuestions API and retrieve users security questions 
+    //subscribe to findSelectedSecurityQuestions API and retrieve users security questions
     this.employeeService.findSecurityQuestions(this.email).subscribe({
       next: (data: any) => {
         //assign the data to the selectedSecurityQuestions array
@@ -69,17 +69,17 @@ export class VerifyQuestionsComponent {
       },
       error: (err) => {
         console.log("Server error from findSecurityQuestions call");
-        //if error status 404, email not found 
-        if(err.satus === 404) {
+        //if error status 404, email not found
+        if(err.status === 404) {
           this.errMessage = "Email does not match any in our records";
           return
-        //if not 404, send server error  
+        //if not 404, send server error
         } else {
           this.errMessage = "There was a problem verifying your security questions, please try again"
         }
         this.isLoadingQuestions = false;
       },
-      //assign questions to question variables 
+      //assign questions to question variables
       complete: () => {
         this.question1 = this.selectedSecurityQuestions[0].question;
         this.question2 = this.selectedSecurityQuestions[1].question;
@@ -92,10 +92,12 @@ export class VerifyQuestionsComponent {
 
   submit() {
     this.isLoadingSubmit = true;
-    //log entered values 
+    //log entered values
     console.log(this.sqForm.value);
-    
-    //create array and assign input to it to compare 
+
+    const email = this.email;
+
+    //create array and assign input to it to compare
     let securityQuestions = [
       {
         question: this.question1,
@@ -112,19 +114,19 @@ export class VerifyQuestionsComponent {
     ]
     //log user input
     console.log('Provided security questions', securityQuestions)
-    
-    //subscribe to verifySecurityQuestions API to compare input answers with saved data 
+
+    //subscribe to verifySecurityQuestions API to compare input answers with saved data
     this.securityService.verifySecurityQuestions(this.email, securityQuestions).subscribe({
       next: (res: any) => {
         console.log('Response from submit call', res);
         //if answers match navigate to re-wet password page
-        this.router.navigate(['/security/password-reset']);
+        this.router.navigate(['/security/password-reset'], {queryParams: {email}, skipLocationChange: true});
       },
       error: (err: any) => {
-        //if error, log error 
+        //if error, log error
         if (err.error.message) {
           this.errMessage = err.error.message;
-          console.log('Server error from submit call', err.error.messsage);
+          console.log('Server error from submit call', err.error.message);
           this.isLoadingSubmit = false;
           return
         } else {

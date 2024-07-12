@@ -29,7 +29,7 @@ export class SecurityService {
       email: email, password: password
     });
   }
-  
+
   //Register API call
   register(employee: any): Observable <any> {
     return this.http.post('/api/security/register', employee);
@@ -41,8 +41,10 @@ export class SecurityService {
   }
 
   // Reset password API call
-  resetPassword(email: string, password: string) {
-    return this.http.post('/api/security/employees/' + email + '/reset-password', password);
+  resetPassword(email: string, password: string): Observable<any> {
+    return this.http.post('/api/security/employees/' + email + '/reset-password', {
+      password: password
+    });
   }
   // Verify security questions API call
   verifySecurityQuestions(email: string, securityQuestions: selectedSecurityQuestion[]): Observable<any> {
