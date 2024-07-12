@@ -362,7 +362,7 @@ router.post('/employees/:email/reset-password', (req, res, next) => {
 
     // If the employee object is not valid; return a status code 400 with message 'Bad request'
     if(!valid) {
-      console.error('Error validating employee object against schema', validators.errors);
+      console.error('Error validating employee object against schema', validate.errors);
       return next(createError(400, `Bad request: ${validate.errors}`));
     }
 
