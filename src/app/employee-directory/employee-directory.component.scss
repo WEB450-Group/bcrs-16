@@ -1,0 +1,23 @@
+.employee-directory-container {
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+}
+
+.bob-img {
+  background: url('../../assets/images/bob.jpg') no-repeat;
+  background-size: cover;
+  background-position: top;
+}
+
+.johann-img {
+  background: url('../../assets/images/Johann.png') no-repeat;
+  background-size: cover;
+  background-position: top;
+}
+
+.wolfgang-img {
+  background: url('../../assets/images/Wolfgang.png') no-repeat;
+  background-size: cover;
+  background-position: top;
+}
