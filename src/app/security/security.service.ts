@@ -40,6 +40,10 @@ export class SecurityService {
     return this.http.post(`/api/security/verify/employees/${email}`, {});
   }
 
+  // Reset password API call
+  resetPassword(email: string, password: string) {
+    return this.http.post('/api/security/employees/' + email + '/reset-password', password);
+  }
   // Verify security questions API call
   verifySecurityQuestions(email: string, securityQuestions: selectedSecurityQuestion[]): Observable<any> {
     return this.http.post('/api/security/verify/employees/' + email + '/security-questions', securityQuestions);

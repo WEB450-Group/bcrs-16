@@ -34,6 +34,7 @@ import { ServiceRepairComponent } from './service-repair/service-repair.componen
 import { ProfileComponent } from './profile/profile.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
+import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
 
 
 
@@ -47,6 +48,7 @@ import { SharedModule } from './shared/shared.module';
     NotFoundComponent,
     ServiceRepairComponent,
     ProfileComponent,
+    EmployeeDirectoryComponent,
   ],
   imports: [
     BrowserModule,

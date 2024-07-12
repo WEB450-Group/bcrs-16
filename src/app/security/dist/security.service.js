@@ -39,6 +39,10 @@ var SecurityService = /** @class */ (function () {
     SecurityService.prototype.verifyEmail = function (email) {
         return this.http.post("/api/security/verify/employees/" + email, {});
     };
+    // Reset password API call
+    SecurityService.prototype.resetPassword = function (email, password) {
+        return this.http.post('/api/security/employees/' + email + '/reset-password', password);
+    };
     // Verify security questions API call
     SecurityService.prototype.verifySecurityQuestions = function (email, securityQuestions) {
         return this.http.post('/api/security/verify/employees/' + email + '/security-questions', securityQuestions);

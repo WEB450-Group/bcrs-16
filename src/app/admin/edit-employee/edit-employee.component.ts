@@ -24,7 +24,6 @@ export class EditEmployeeComponent {
   // Local variables
   employeeId: number;
   employee: Employee;
-  successfulMessage: string;
   errorMessage: string;
   isLoading: boolean = false;
 
@@ -43,7 +42,6 @@ export class EditEmployeeComponent {
     let l_employeeID = this.route.snapshot.paramMap.get('employeeId') || ''; // Get the employeeId from the route
     this.employeeId = parseInt(l_employeeID, 10);
     this.employee = {} as Employee;
-    this.successfulMessage = '';
     this.errorMessage = '';
 
     // If the employeeId is not a number; then just navigate the user back to the employee list
@@ -94,6 +92,7 @@ export class EditEmployeeComponent {
         console.log(err);
         // Write the error message
         this.errorMessage = 'Failed to update employee information.';
+        this.isLoading = false;
       }
     })
   }
