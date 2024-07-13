@@ -23,6 +23,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -35,6 +36,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
+import { FaqDialogComponent } from './faq/faq-dialog/faq-dialog.component';
 
 
 
@@ -49,6 +51,7 @@ import { EmployeeDirectoryComponent } from './employee-directory/employee-direct
     ServiceRepairComponent,
     ProfileComponent,
     EmployeeDirectoryComponent,
+    FaqDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +69,8 @@ import { EmployeeDirectoryComponent } from './employee-directory/employee-direct
     SharedModule,
     MatInputModule,
     MatStepperModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
