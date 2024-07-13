@@ -547,7 +547,7 @@ router.post('/verify/employees/:email', function (req, res, next) {
   }
 });
 /**
- * verify employee email and get security questions
+ * verifySecurityQuestions
  * @openapi
  * /api/security/verify/employees/{email}/security-questions:
  *   post:
