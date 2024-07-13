@@ -61,12 +61,6 @@ const registerSchema = {
     phoneNumber: {
       type: 'string'
     },
-    role: {
-      type: 'string'
-    },
-    isDisabled: {
-      type: 'boolean'
-    },
     selectedSecurityQuestions: securityQuestionSchema
   },
   required: ['firstName', 'lastName', 'email', 'password', 'address', 'phoneNumber', 'selectedSecurityQuestions'],
@@ -143,7 +137,7 @@ const emailSchema = {
  *               password:
  *                 type: string
  *               phoneNumber:
- *                 type: number
+ *                 type: string
  *               address:
  *                 type: string
  *               selectedSecurityQuestions:
@@ -448,9 +442,9 @@ router.post('/employees/:email/reset-password', (req, res, next) => {
  */
 router.post('/verify/employees/:email', (req, res, next) => {
   try {
-    //email parameter 
+    //email parameter
     const email = req.params.email
-    //log email 
+    //log email
     console.log('Employee email', email);
 
     // Validate the email against email schema with regex
@@ -462,16 +456,16 @@ router.post('/verify/employees/:email', (req, res, next) => {
       console.error('Error validating email against schema', validate.errors);
       return next(createError(400, `Bad request: ${validate.errors}`));
     }
-    
-    //connect to databse 
+
+    //connect to databse
     mongo(async db => {
-      //find employee by saved email 
+      //find employee by saved email
       const employee = await db.collection('employees').findOne({ email: email });
       console.log(employee);
-      //If no employees have matching email send 404 not found 
+      //If no employees have matching email send 404 not found
       if (!employee) {
         const err = new Error('Email does not exist');
-        err.status = 404; 
+        err.status = 404;
         console.log('Employee not found with email', email);
         next(err);
         return;
@@ -544,7 +538,7 @@ router.post('/verify/employees/:email/security-questions', (req, res, next) => {
     // Validate security questions against schema
     const validate = ajvInstance.compile(securityQuestionSchema);
     const valid = validate(securityQuestions);
-    
+
     //If the email is not valid; return 400 bad request
     if(!valid) {
       console.error('Error validating security questions/answers against schema', validate.errors);
@@ -564,10 +558,10 @@ router.post('/verify/employees/:email/security-questions', (req, res, next) => {
       console.log("Employee", employee);
 
       //check entered security questions against user's stored security questions
-      if (securityQuestions[0].answer !== employee.selectedSecurityQuestions[0].answer || 
-          securityQuestions[1].answer !== employee.selectedSecurityQuestions[1].answer || 
+      if (securityQuestions[0].answer !== employee.selectedSecurityQuestions[0].answer ||
+          securityQuestions[1].answer !== employee.selectedSecurityQuestions[1].answer ||
           securityQuestions[2].answer !== employee.selectedSecurityQuestions[2].answer) {
-        
+
         //Error handling for unauthorized/non-matching answers
         const err = new Error("Unauthorized");
         err.status = 401;
