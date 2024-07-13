@@ -1,1 +1,30 @@
-<p>faq works!</p>
+<div class="faq-container">
+  <div class="w-full hidden mb-8 p-10 md:block lg:w-11/12 2xl:w-3/4">
+    <div class="overflow-hidden shadow-md mt-3">
+      <h2 class="primary text-4xl text-center text-white font-bold tracking-wider py-3 rounded-t-lg">FAQ</h2>
+      <hr>
+      <table class="min-w-full">
+        <thead class="primary rounded-t-lg text-white uppercase tracking-wider">
+          <tr>
+            <th class="py-4 text-right">Topics</th>
+            <th class="py-4"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-300 font-bold">
+          <tr *ngFor="let faq of faqs">
+            <td class="px-6 py-2 border-r-2 border-gray-300">
+              <div class="text-left w-full">
+                {{ faq.question }}
+              </div>
+            </td>
+            <td class="px-6 py-2">
+              <button (click)="openDialog(faq)" class="px-6 py-2 tracking-wider rounded-lg">
+                Click here for more information
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
