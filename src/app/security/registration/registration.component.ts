@@ -8,10 +8,11 @@
 ;===========================================
 */
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, AbstractControl } from '@angular/forms';
 import { SecurityService } from '../security.service';
 import { Registration } from 'src/app/shared/employee.interface';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-registration',
@@ -37,10 +38,10 @@ export class RegistrationComponent implements OnInit {
   //employee variable
   employee: Registration;
 
-  //Stepper form group assignments and validators 
+  //Stepper form group assignments and validators
   firstFormGroup: FormGroup = this._formBuilder.group({
     email: [null, [Validators.required, Validators.email]],
-    password: [null, Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)]
+    password: [null,[Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)], [this.asyncPasswordValidator.bind(this)]]
   });
   secondFormGroup: FormGroup = this._formBuilder.group({
     firstName: [null, Validators.required],
@@ -58,14 +59,14 @@ export class RegistrationComponent implements OnInit {
   });
 
   constructor(
-    private _formBuilder: FormBuilder, 
-    private router: Router, 
-    private securityService: SecurityService) 
+    private _formBuilder: FormBuilder,
+    private router: Router,
+    private securityService: SecurityService)
   {
     this.errMessage = '';
     this.isLoading = false;
 
-    //Save to database and query with an API? 
+    //Save to database and query with an API?
     //Security questions array
     this.securityQuestions = [
       "What City was your mom born in?",
@@ -81,7 +82,7 @@ export class RegistrationComponent implements OnInit {
     //Initializes third questions array to an empty array
     this.qArray3 = [];
 
-    //Initialize employee object to Employee Interface 
+    //Initialize employee object to Employee Interface
     this.employee = {} as Registration;
 
   }
@@ -90,29 +91,29 @@ export class RegistrationComponent implements OnInit {
     //subscribe to the value changes oof the security question 1
     this.thirdFormGroup.get('question1')?.valueChanges.subscribe( val => {
       console.log('Value changed from question 1', val);
-      //filter the second array of questions to remove the selected question 
+      //filter the second array of questions to remove the selected question
       this.qArray2 = this.qArray1.filter(q => q !== val )
     });
     //subscribe to the value changes oof the security question 2
     this.thirdFormGroup.get('question2')?.valueChanges.subscribe( val => {
       console.log('Value changed from question 2', val);
-      //filter the third array of questions to remove the selected question 
+      //filter the third array of questions to remove the selected question
       this.qArray3 = this.qArray2.filter(q => q !== val )
-    });  
+    });
   }
 
   //Registers new user and redirects them to login page
   register() {
-    //if form is invalid call markAsTouched and errors where they occured
-    if (this.firstFormGroup.invalid || this.secondFormGroup.invalid || this.thirdFormGroup.invalid) {
-      this.markAllAsTouched();
-      this.errMessage = 'Please complete required fields';
-      return;
-    }
+    //if form is invalid call markAsTouched and errors where they occurred
+    // if (!this.firstFormGroup.valid || !this.secondFormGroup.valid || !this.thirdFormGroup.valid) {
+    //   this.markAllAsTouched();
+    //   this.errMessage = 'Please complete required fields';
+    //   return;
+    // }
 
     this.errMessage = '';
     this.isLoading = true;
-    
+
     this.employee = {
       email: this.firstFormGroup.get('email')?.value,
       password: this.firstFormGroup.get('password')?.value,
@@ -121,21 +122,21 @@ export class RegistrationComponent implements OnInit {
       phoneNumber: this.secondFormGroup.get('phoneNumber')?.value,
       address: this.secondFormGroup.get('address')?.value,
       selectedSecurityQuestions: [
-        { 
+        {
           question: this.thirdFormGroup.get('question1')?.value,
           answer: this.thirdFormGroup.get('answer1')?.value,
-        }, 
+        },
         {
           question: this.thirdFormGroup.get('question2')?.value,
           answer: this.thirdFormGroup.get('answer2')?.value,
-        }, 
+        },
         {
           question: this.thirdFormGroup.get('question3')?.value,
           answer: this.thirdFormGroup.get('answer3')?.value,
         }
       ],
       role: 'standard',
-      isDisabled: false 
+      isDisabled: false
     };
     //This is the last log
     console.log("Registering new user", this.employee);
@@ -143,7 +144,7 @@ export class RegistrationComponent implements OnInit {
     this.securityService.register(this.employee).subscribe({
       next: (result) => {
         console.log('Result from register API call', result);
-        //after succesful registration, redirect the user to the signin page
+        //after successful registration, redirect the user to the signin page
         this.router.navigate(['/security/signin']);
       },
       //Error handling for database issues
@@ -156,11 +157,11 @@ export class RegistrationComponent implements OnInit {
           console.log(this.errMessage);
         }
       }
-    }); 
-    
+    });
+
   }
-  //Marks the control and all its descendant controls as touched 
-  //on submit if fields left empty global error occures and error messages for empty fields pop up
+  //Marks the control and all its descendant controls as touched
+  //on submit if fields left empty global error occurs and error messages for empty fields pop up
   markAllAsTouched() {
     this.firstFormGroup.markAllAsTouched();
     this.secondFormGroup.markAllAsTouched();
@@ -169,5 +170,20 @@ export class RegistrationComponent implements OnInit {
   //Toggle show/hide password
   toggleFieldTextType() {
     this.fieldTextType = !this.fieldTextType;
+  }
+
+  asyncPasswordValidator(control: AbstractControl): Observable<{ [key: string]: any } | null> {
+    // Return a new Observable
+    return new Observable(observer => {
+      // Simulate an async operation with a 1-second delay
+      setTimeout(() => {
+        // Validation logic
+        const valid = control.value !== 'invalid';
+        // Emit validation result
+        observer.next(valid ? null : { 'asyncInvalid': true });
+        // Signal that the observable is complete
+        observer.complete();
+      }, 1000);
+    });
   }
 }

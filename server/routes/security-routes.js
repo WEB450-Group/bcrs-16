@@ -61,6 +61,12 @@ const registerSchema = {
     phoneNumber: {
       type: 'string'
     },
+    role: {
+      type: 'string'
+    },
+    isDisabled: {
+      type: 'boolean'
+    },
     selectedSecurityQuestions: securityQuestionSchema
   },
   required: ['firstName', 'lastName', 'email', 'password', 'address', 'phoneNumber', 'selectedSecurityQuestions'],
