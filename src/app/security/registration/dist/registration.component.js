@@ -86,6 +86,14 @@ var RegistrationComponent = /** @class */ (function () {
     RegistrationComponent.prototype.register = function () {
         var _this = this;
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+        //if form is invalid call markAsTouched and errors where they occured
+        if (this.firstFormGroup.invalid || this.secondFormGroup.invalid || this.thirdFormGroup.invalid) {
+            this.markAllAsTouched();
+            this.errMessage = 'Please complete required fields';
+            return;
+        }
+        this.errMessage = '';
+        this.isLoading = true;
         this.employee = {
             email: (_a = this.firstFormGroup.get('email')) === null || _a === void 0 ? void 0 : _a.value,
             password: (_b = this.firstFormGroup.get('password')) === null || _b === void 0 ? void 0 : _b.value,
@@ -131,6 +139,13 @@ var RegistrationComponent = /** @class */ (function () {
                 }
             }
         });
+    };
+    //Marks the control and all its descendant controls as touched 
+    //on submit if fields left empty global error occures and error messages for empty fields pop up
+    RegistrationComponent.prototype.markAllAsTouched = function () {
+        this.firstFormGroup.markAllAsTouched();
+        this.secondFormGroup.markAllAsTouched();
+        this.thirdFormGroup.markAllAsTouched();
     };
     //Toggle show/hide password
     RegistrationComponent.prototype.toggleFieldTextType = function () {

@@ -91,6 +91,12 @@ export class VerifyQuestionsComponent {
   }
 
   submit() {
+    //if form is invalid call markAsTouched and errors where they occured
+    if (this.sqForm.invalid) {
+      this.sqForm.markAllAsTouched();
+      this.errMessage = 'Please complete required fields';
+      return;
+    }
     this.isLoadingSubmit = true;
     //log entered values
     console.log(this.sqForm.value);

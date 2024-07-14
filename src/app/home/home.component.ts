@@ -12,7 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../shared/auth.service';
 
 // imports statements
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild  } from '@angular/core';
 
 export interface AppUser {
   firstName: string;
@@ -39,5 +39,11 @@ export class HomeComponent implements OnInit {
      // If signed in get/set session cookies so name can dynamically be displayed in nav
      this.appUser.firstName = this.authService.getFirstName();
      console.log('First Name:', this.appUser.firstName);
+  }
+  @ViewChild('serviceCards') serviceCards!: ElementRef;
+
+  scrollToServiceCards(event: Event) {
+    event.preventDefault();
+    this.serviceCards.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 }

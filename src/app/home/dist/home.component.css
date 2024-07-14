@@ -1,9 +1,9 @@
 .home-container {
   min-height: 90vh;
   background-color: white;
-  h1 {
-    line-height: 200%;
-  }
+}
+.home-container h1 {
+  line-height: 200%;
 }
 
 mat-icon {

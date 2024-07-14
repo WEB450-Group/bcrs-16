@@ -103,6 +103,16 @@ export class RegistrationComponent implements OnInit {
 
   //Registers new user and redirects them to login page
   register() {
+    //if form is invalid call markAsTouched and errors where they occured
+    if (this.firstFormGroup.invalid || this.secondFormGroup.invalid || this.thirdFormGroup.invalid) {
+      this.markAllAsTouched();
+      this.errMessage = 'Please complete required fields';
+      return;
+    }
+
+    this.errMessage = '';
+    this.isLoading = true;
+    
     this.employee = {
       email: this.firstFormGroup.get('email')?.value,
       password: this.firstFormGroup.get('password')?.value,
@@ -147,8 +157,15 @@ export class RegistrationComponent implements OnInit {
         }
       }
     }); 
+    
   }
-  
+  //Marks the control and all its descendant controls as touched 
+  //on submit if fields left empty global error occures and error messages for empty fields pop up
+  markAllAsTouched() {
+    this.firstFormGroup.markAllAsTouched();
+    this.secondFormGroup.markAllAsTouched();
+    this.thirdFormGroup.markAllAsTouched();
+  }
   //Toggle show/hide password
   toggleFieldTextType() {
     this.fieldTextType = !this.fieldTextType;

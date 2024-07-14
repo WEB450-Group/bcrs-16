@@ -1,13 +1,14 @@
-<div class="page-container flex-col">
+<div class="flex flex-col min-h-screen w-full items-center py-6 lg:py-10">
+  <div class="m-auto">
   <!-- CREATE NEW EMPLOYEE -->
-  <a routerLink="/admin/create-employee"
-    class="pt-8  xl:mt-0 md:pl-16 text-xl primary-text font-bold hover:underline">
-    Create New Employee +
-  </a>
-
-  <!-- CURRENT EMPLOYEE LARGE TABLE -->
-  <div class="Employee-list-container w-full hidden mb-8 md:block lg:w-11/12 2xl:w-3/4">
+  <div class="flex justify-between items-center pt-4 lg:pt-18">
     <h2 class="text-xl font-bold hidden md:block">Current Employees</h2>
+    <a routerLink="/admin/create-employee" class="text-xl primary-text font-bold hover:underline">
+      Create New Employee +
+    </a>
+  </div>
+  <!-- CURRENT EMPLOYEE LARGE TABLE -->
+  <div class="Employee-list-container hidden mb-8 md:block">
     <div class="overflow-hidden rounded-lg shadow-md mt-3">
       <table class="min-w-full rounded-lg text-left">
         <thead class="primary rounded-t-lg text-white uppercase">
@@ -59,7 +60,7 @@
   </div>
 
   <!-- DISABLED EMPLOYEE LARGE TABLE -->
-  <div class="Employee-list-container w-full hidden mb-8 md:block lg:w-11/12 2xl:w-3/4">
+  <div class="Employee-list-container hidden mb-8 md:block">
     <h2 class="text-xl font-bold hidden md:block">Disabled Employees</h2>
     <div class="overflow-hidden rounded-lg shadow-md mt-3">
       <table class="min-w-full rounded-lg text-left">
@@ -178,4 +179,5 @@
       </button>
     </div>
   </div>
+</div>
 </div>

@@ -23,23 +23,39 @@
                 fill="currentFill" />
             </svg>
           </span>
+
           <p class="text-medium 2lg:text-xl font-bold tracking-wide text-start">
             <span>{{question1}}</span>
           </p>
           <input id="answer1" type="text" formControlName="answer1" placeholder="Question 1 Answer"
             class="mb-3 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
+          <div *ngIf="sqForm.controls['answer1'].invalid && sqForm.controls['answer1'].touched" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
+            <div *ngIf="sqForm.controls['answer1'].errors?.['required']">
+              Answer is required.
+            </div>
+          </div>
 
           <p class="text-medium 2lg:text-xl font-bold tracking-wide text-start">
             <span>{{question2}}</span>
           </p>
           <input id="answer2" type="text" formControlName="answer2" placeholder="Question 2 Answer"
             class="mb-3 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
+          <div *ngIf="sqForm.controls['answer2'].invalid && sqForm.controls['answer2'].touched" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
+            <div *ngIf="sqForm.controls['answer2'].errors?.['required']">
+              Answer is required.
+            </div>
+          </div>
 
           <p class="text-medium 2lg:text-xl font-bold tracking-wide text-start">
             <span>{{question3}}</span>
           </p>
           <input id="answer3" type="text" formControlName="answer3" placeholder="Question 3 Answer"
             class="mb-3 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
+          <div *ngIf="sqForm.controls['answer3'].invalid && sqForm.controls['answer3'].touched" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
+            <div *ngIf="sqForm.controls['answer3'].errors?.['required']">
+              Answer is required.
+            </div>
+          </div>
 
           <!-- ERROR MESSAGE -->
           <div *ngIf="errMessage" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
@@ -78,4 +94,5 @@
         </div>
       </div>
     </div>
-
+  </div>
+</div>

@@ -38,7 +38,7 @@ var VerifyQuestionsComponent = /** @class */ (function () {
             answer2: [null, forms_1.Validators.compose([forms_1.Validators.required])],
             answer3: [null, forms_1.Validators.compose([forms_1.Validators.required])]
         });
-        //initialize variables 
+        //initialize variables
         this.errMessage = '';
         this.selectedSecurityQuestions = [];
         this.question1 = '';
@@ -47,12 +47,12 @@ var VerifyQuestionsComponent = /** @class */ (function () {
         //get email from query string
         this.email = (_a = this.route.snapshot.queryParamMap.get('email')) !== null && _a !== void 0 ? _a : '';
         console.log("Email: ", this.email);
-        //if no email address is found redirect back to the verify-email page 
+        //if no email address is found redirect back to the verify-email page
         if (!this.email) {
             this.router.navigate(['/security/verify-email']);
             return;
         }
-        //subscribe to findSelectedSecurityQuestions API and retrieve users security questions 
+        //subscribe to findSelectedSecurityQuestions API and retrieve users security questions
         this.employeeService.findSecurityQuestions(this.email).subscribe({
             next: function (data) {
                 //assign the data to the selectedSecurityQuestions array
@@ -61,18 +61,18 @@ var VerifyQuestionsComponent = /** @class */ (function () {
             },
             error: function (err) {
                 console.log("Server error from findSecurityQuestions call");
-                //if error status 404, email not found 
-                if (err.satus === 404) {
+                //if error status 404, email not found
+                if (err.status === 404) {
                     _this.errMessage = "Email does not match any in our records";
                     return;
-                    //if not 404, send server error  
+                    //if not 404, send server error
                 }
                 else {
                     _this.errMessage = "There was a problem verifying your security questions, please try again";
                 }
                 _this.isLoadingQuestions = false;
             },
-            //assign questions to question variables 
+            //assign questions to question variables
             complete: function () {
                 _this.question1 = _this.selectedSecurityQuestions[0].question;
                 _this.question2 = _this.selectedSecurityQuestions[1].question;
@@ -83,10 +83,17 @@ var VerifyQuestionsComponent = /** @class */ (function () {
     }
     VerifyQuestionsComponent.prototype.submit = function () {
         var _this = this;
+        //if form is invalid call markAsTouched and errors where they occured
+        if (this.sqForm.invalid) {
+            this.sqForm.markAllAsTouched();
+            this.errMessage = 'Please complete required fields';
+            return;
+        }
         this.isLoadingSubmit = true;
-        //log entered values 
+        //log entered values
         console.log(this.sqForm.value);
-        //create array and assign input to it to compare 
+        var email = this.email;
+        //create array and assign input to it to compare
         var securityQuestions = [
             {
                 question: this.question1,
@@ -103,18 +110,18 @@ var VerifyQuestionsComponent = /** @class */ (function () {
         ];
         //log user input
         console.log('Provided security questions', securityQuestions);
-        //subscribe to verifySecurityQuestions API to compare input answers with saved data 
+        //subscribe to verifySecurityQuestions API to compare input answers with saved data
         this.securityService.verifySecurityQuestions(this.email, securityQuestions).subscribe({
             next: function (res) {
                 console.log('Response from submit call', res);
                 //if answers match navigate to re-wet password page
-                _this.router.navigate(['/security/password-reset']);
+                _this.router.navigate(['/security/password-reset'], { queryParams: { email: email }, skipLocationChange: true });
             },
             error: function (err) {
-                //if error, log error 
+                //if error, log error
                 if (err.error.message) {
                     _this.errMessage = err.error.message;
-                    console.log('Server error from submit call', err.error.messsage);
+                    console.log('Server error from submit call', err.error.message);
                     _this.isLoadingSubmit = false;
                     return;
                 }
