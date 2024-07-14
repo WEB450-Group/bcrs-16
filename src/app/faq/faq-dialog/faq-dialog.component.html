@@ -1,0 +1,15 @@
+<div class="p-6 bg-white rounded-lg shadow-md">
+  <h1 class="text-xl font-bold mb-4">
+    {{ data.question }}
+  </h1>
+  <div class="pb-4">
+    <p class="pb-2" *ngFor="let step of data.answer.split('\n')">
+      {{ step }}
+    </p>
+  </div>
+  <div class="flex justify-end">
+    <button mat-button mat-dialog-close class="hover:bg-gray-200 font-bold py-2 px-4 rounded">
+      Close
+    </button>
+  </div>
+</div>
