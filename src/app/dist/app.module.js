@@ -31,6 +31,7 @@ var ngx_cookie_service_1 = require("ngx-cookie-service");
 var input_1 = require("@angular/material/input");
 var stepper_1 = require("@angular/material/stepper");
 var button_1 = require("@angular/material/button");
+var dialog_1 = require("@angular/material/dialog");
 var app_component_1 = require("./app.component");
 var home_component_1 = require("./home/home.component");
 var contact_component_1 = require("./contact/contact.component");
@@ -41,6 +42,8 @@ var service_repair_component_1 = require("./service-repair/service-repair.compon
 var profile_component_1 = require("./profile/profile.component");
 var app_routing_module_1 = require("./app-routing.module");
 var shared_module_1 = require("./shared/shared.module");
+var employee_directory_component_1 = require("./employee-directory/employee-directory.component");
+var faq_dialog_component_1 = require("./faq/faq-dialog/faq-dialog.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -55,6 +58,8 @@ var AppModule = /** @class */ (function () {
                 not_found_component_1.NotFoundComponent,
                 service_repair_component_1.ServiceRepairComponent,
                 profile_component_1.ProfileComponent,
+                employee_directory_component_1.EmployeeDirectoryComponent,
+                faq_dialog_component_1.FaqDialogComponent,
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -72,7 +77,8 @@ var AppModule = /** @class */ (function () {
                 shared_module_1.SharedModule,
                 input_1.MatInputModule,
                 stepper_1.MatStepperModule,
-                button_1.MatButtonModule
+                button_1.MatButtonModule,
+                dialog_1.MatDialogModule
             ],
             providers: [ngx_cookie_service_1.CookieService],
             bootstrap: [app_component_1.AppComponent]

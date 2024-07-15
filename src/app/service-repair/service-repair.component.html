@@ -1,1 +1,129 @@
-<p>service-repair works!</p>
+<div class="service-repair-container  lg:p-8">
+  <!-- <div class="flex justify-between mx-auto w-full md:w-3/4 lg:w-1/3 2xl:w-1/4">
+    <button id="serviceRequest" class="w-full md:w-48 px-1.5 py-3 rounded-md hover:opacity-90">Create Service Request</button>
+    <button id="invoice" class="w-full md:w-48 px-1.5 py-3 rounded-md hover:opacity-90">Create Invoice</button>
+  </div> -->
+  <div class="flex flex-col lg:flex-row base-container">
+
+    <!-- SERVICE REQUEST CONTAINER -->
+    <div class="service-form-container w-full lg:w-1/2 py-4 px-8 lg:py-8">
+      <h2 class="pt-6 lg:pt-16 2xl:pt-24 text-3xl lg:text-4xl pb-4 primary-text font-light">Service Request</h2>
+      <form action="submit">
+        <label class="font-semibold">First Name</label>
+        <input id="firstName" type="text" placeholder="First Name"
+          class="mb-3 block w-full p-2 border border-gray-300 rounded-md lg:w-3/4 focus:outline-none focus:shadow focus:border-blue-200">
+
+        <label class="font-semibold">Last Name</label>
+        <input id="lastName" type="text" placeholder="Last Name"
+          class="mb-3 block w-full p-2 border border-gray-300 rounded-md lg:w-3/4 focus:outline-none focus:shadow focus:border-blue-200">
+
+        <label class="font-semibold">Phone Number</label>
+        <input id="phoneNumber" type="text" placeholder="(555)123-4567"
+          class="mb-6 block w-full p-2 border border-gray-300 rounded-md lg:w-3/4 focus:outline-none focus:shadow focus:border-blue-200">
+
+        <div class="flex items-center mb-6">
+          <input type="checkbox" id="passwordReset" name="service" value="Password Reset" class="w-6 h-6">
+          <label class="font-semibold ml-2" for="passwordReset">Password Reset ($39.99)</label>
+        </div>
+
+        <div class="flex items-center mb-6">
+          <input type="checkbox" id="spywareRemoval" name="service" value="Spyware Removal" class="w-6 h-6">
+          <label class="font-semibold ml-2" for="spywareRemoval">Spyware Removal ($99.99)</label>
+        </div>
+
+        <div class="flex items-center mb-6">
+          <input type="checkbox" id="ramUpgrade" name="service" value="RAM Upgrade" class="w-6 h-6 ">
+          <label class="font-semibold ml-2" for="ramUpgrade">RAM Upgrade ($129.99)</label>
+        </div>
+
+        <div class="flex items-center mb-6">
+          <input type="checkbox" id="softwareInstallation" name="service" value="Software Installation" class="w-6 h-6">
+          <label class="font-semibold ml-2" for="softwareInstallation">Software Installation ($49.99)</label>
+        </div>
+
+        <div class="flex items-center mb-6">
+          <input type="checkbox" id="pcTuneup" name="service" value="PC Tune-up" class="w-6 h-6">
+          <label class="font-semibold ml-2" for="pcTuneup">PC Tune-up ($89.99)</label>
+        </div>
+
+        <div class="flex items-center mb-6">
+          <input type="checkbox" id="keyboardCleaning" name="service" value="Keyboard Cleaning" class="w-6 h-6">
+          <label class="font-semibold ml-2" for="keyboardCleaning">Keyboard Cleaning ($45.00)</label>
+        </div>
+
+        <div class="flex items-center mb-6">
+          <input type="checkbox" id="diskCleanup" name="service" value="Disk Clean-up" class="w-6 h-6">
+          <label class="font-semibold ml-2" for="diskCleanup">Disk Clean-up ($129.99)</label>
+        </div>
+
+        <label class="font-semibold">Custom Service ($50/hour)</label>
+        <textarea id="customOrder" placeholder="Describe the custom item"
+          class="mb-3 block w-full lg:w-2/3 p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200"></textarea>
+
+        <button type="submit" id="submit" class="w-full md:w-48 px-1.5 py-3 rounded-md hover:opacity-90">Create Service
+          Request</button>
+      </form>
+    </div>
+
+    <!-- INVOICE CONTAINER -->
+    <div class="invoice-container w-full lg:w-1/2 py-4 px-8 lg:py-8">
+      <img src="./assets/images/logo.png" alt="Bob's Computer Repair Shop Logo" width="300px" class="hidden">
+      <h2 class="pt-6 lg:pt-16 2xl:pt-24 text-3xl lg:text-4xl pb-4 primary-text font-light">Invoice</h2>
+      <div id="invoice">
+        <div class="flex justify-between items-center mb-4">
+          <label class="font-semibold">Date:</label>
+          <p id="invoiceDate">7/15/2024</p>
+        </div>
+
+        <div class="flex justify-between items-center mb-4">
+          <label class="font-semibold">Full Name:</label>
+          <p id="fullName">Jo Brumfield</p>
+        </div>
+
+        <div class="flex justify-between items-center mb-4">
+          <label class="font-semibold">Phone Number:</label>
+          <p id="invoicePhoneNumber">(555)123-4567</p>
+        </div>
+
+        <br>
+        <br>
+        <div class="flex justify-between items-center mb-4">
+          <label class="font-semibold">Services:</label>
+          <ul class="list-disc list-inside">
+            <li id="service1" class="list-none text-right">Password Reset ($39.99)</li>
+            <li id="service2" class="list-none text-right">Spyware Removal ($99.99)</li>
+          </ul>
+        </div>
+
+        <br>
+        <br>
+        <div class="flex justify-between items-center mb-4">
+          <label class="font-semibold">Tax:</label>
+          <p id="taxAmount">$12.60</p>
+        </div>
+
+        <div class="flex justify-between items-center mb-4">
+          <label class="font-semibold">Total:</label>
+          <p id="totalAmount" class="font-bold">$152.58</p>
+        </div>
+
+        <br>
+        <br>
+        <div class="flex  items-center mb-8">
+          <label class="font-semibold">Signature:</label>
+          <p> ______________________________________________</p>
+        </div>
+
+        <br>
+        <div class="flex items-center mb-8">
+          <label class="font-semibold">Date:</label>
+          <p> ________________________</p>
+        </div>
+
+      </div>
+      <a href="">
+        <i class="fa-solid fa-print fa-2xl primary-text"></i>
+      </a>
+    </div>
+  </div>
+</div>
