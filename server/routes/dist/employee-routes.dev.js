@@ -71,6 +71,22 @@ var emailSchema = {
   },
   required: ['email'],
   additionalProperties: false
+};
+var updateProfileSchema = {
+  type: 'object',
+  properties: {
+    lastName: {
+      type: 'string'
+    },
+    phoneNumber: {
+      type: 'number'
+    },
+    address: {
+      type: 'string'
+    }
+  },
+  required: ['lastName', 'phoneNumber', 'address'],
+  additionalProperties: false
 }; //Routes
 
 /**
@@ -719,6 +735,138 @@ router.get('/:email/security-questions', function (req, res, next) {
     }, next);
   } catch (err) {
     console.error("Error:", err);
+    next(err);
+  }
+});
+/**
+ * updateProfile
+ * @openapi
+ * /api/employees/profile/{employeeId}:
+ *   put:
+ *     tags:
+ *       - Employees
+ *     description: Updating employee demographic including last name, phone number, and address 
+ *     summary: Update employee profile
+ *     parameters:
+ *       - name: employeeId
+ *         in: path
+ *         description: Employee ID
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       description: Updating employee lastName, phoneNumber, and/or address
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - lastName
+ *               - phoneNumber
+ *               - address
+ *             properties:
+ *               lastName:
+ *                 type: string
+ *               phoneNumber:
+ *                 type: number
+ *               address:
+ *                 type: string
+ *     responses:
+ *       '201':
+ *         description: Profile updated successfully
+ *       '400':
+ *         description: Bad Request
+ *       '404':
+ *         description: Employee not found
+ *       '500':
+ *         description: Internal Server Error
+ */
+
+router.put('/profile/:employeeId', function (req, res, next) {
+  try {
+    var employeeId = req.params.employeeId;
+    console.log(employeeId); // Check if the employee ID is a number
+
+    employeeId = parseInt(employeeId, 10); // If the employee ID is not a number return status code 400
+
+    if (isNaN(employeeId)) {
+      console.error("Employee ID must be a number!");
+      return next(createError(400, "Employee ID must be a number: ".concat(employeeId)));
+    }
+
+    console.log('The employee ID is valid'); // Call mongo and update the employee
+
+    mongo(function _callee7(db) {
+      var employee, updateProfile, validate, valid, result, details;
+      return regeneratorRuntime.async(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              _context7.next = 2;
+              return regeneratorRuntime.awrap(db.collection('employees').findOne({
+                employeeId: employeeId
+              }));
+
+            case 2:
+              employee = _context7.sent;
+              console.log('Employee found'); // If the employee is not found send 404 Not found
+
+              if (employee) {
+                _context7.next = 7;
+                break;
+              }
+
+              console.error('Employee not found with employee ID: ', employeeId);
+              return _context7.abrupt("return", next(createError(404, "Employee not found with employee ID: ".concat(employeeId))));
+
+            case 7:
+              // Get lastName, phoneNumber, and address from request body
+              updateProfile = req.body; // Validate the updateEmployee object against the updateProfileSchema
+
+              validate = ajvInstance.compile(updateProfileSchema);
+              valid = validate(updateProfile); // If the updateProfileSchema is not valid, send 400 
+
+              if (valid) {
+                _context7.next = 13;
+                break;
+              }
+
+              console.error('Error validating the updateEmployee against the schema');
+              return _context7.abrupt("return", next(createError(400, "Bad request: ".concat(validate.errors))));
+
+            case 13:
+              _context7.next = 15;
+              return regeneratorRuntime.awrap(db.collection('employees').updateOne({
+                employeeId: employeeId
+              }, {
+                $set: {
+                  lastName: updateProfile.lastName,
+                  phoneNumber: updateProfile.phoneNumber,
+                  address: updateProfile.address
+                }
+              }));
+
+            case 15:
+              result = _context7.sent;
+              //count modified fields for sending result 
+              details = {
+                modifiedCount: result.modifiedCount,
+                matchedCount: result.matchedCount
+              }; // Send 201 success and modified count for confirmation 
+
+              res.status(201).json({
+                message: "Profile updated",
+                details: details
+              });
+
+            case 18:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      });
+    }, next); // Mongo DB error handling 
+  } catch (err) {
+    console.error("Database Error:", err);
     next(err);
   }
 }); // Export the router

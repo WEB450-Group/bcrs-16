@@ -71,6 +71,24 @@ const emailSchema = {
   required: [ 'email' ],
   additionalProperties: false
 }
+
+const updateProfileSchema = {
+  type: 'object',
+  properties: {
+    lastName: {
+      type: 'string'
+    },
+    phoneNumber: {
+      type: 'number'
+    },
+    address: {
+      type: 'string'
+    }
+  },
+  required: [ 'lastName', 'phoneNumber', 'address' ],
+  additionalProperties: false
+}
+
 //Routes
 /**
  * findAll
@@ -604,5 +622,118 @@ router.get('/:email/security-questions', (req, res, next) => {
   }
 });
 
+
+/**
+ * updateProfile
+ * @openapi
+ * /api/employees/profile/{employeeId}:
+ *   put:
+ *     tags:
+ *       - Employees
+ *     description: Updating employee demographic including last name, phone number, and address 
+ *     summary: Update employee profile
+ *     parameters:
+ *       - name: employeeId
+ *         in: path
+ *         description: Employee ID
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       description: Updating employee lastName, phoneNumber, and/or address
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - lastName
+ *               - phoneNumber
+ *               - address
+ *             properties:
+ *               lastName:
+ *                 type: string
+ *               phoneNumber:
+ *                 type: number
+ *               address:
+ *                 type: string
+ *     responses:
+ *       '201':
+ *         description: Profile updated successfully
+ *       '400':
+ *         description: Bad Request
+ *       '404':
+ *         description: Employee not found
+ *       '500':
+ *         description: Internal Server Error
+ */
+router.put('/profile/:employeeId', (req, res, next) =>{
+  try {
+      let { employeeId } = req.params;
+
+      console.log(employeeId);
+
+      // Check if the employee ID is a number
+      employeeId = parseInt(employeeId, 10);
+
+      // If the employee ID is not a number return status code 400
+      if(isNaN(employeeId)) {
+          console.error("Employee ID must be a number!");
+          return next(createError(400, `Employee ID must be a number: ${employeeId}`));
+      }
+
+      console.log('The employee ID is valid');
+
+      // Call mongo and update the employee
+      mongo(async db => {
+          // Get the employee document with the employee ID
+          const employee = await db.collection('employees').findOne({ employeeId: employeeId });
+          console.log('Employee found');
+
+          // If the employee is not found send 404 Not found
+          if(!employee) {
+              console.error('Employee not found with employee ID: ', employeeId);
+              return next(createError(404, `Employee not found with employee ID: ${employeeId}`));
+          }
+          // Get lastName, phoneNumber, and address from request body
+          const updateProfile = req.body;
+
+          // Validate the updateEmployee object against the updateProfileSchema
+          const validate = ajvInstance.compile(updateProfileSchema);
+          const valid = validate(updateProfile);
+
+          // If the updateProfileSchema is not valid, send 400 
+          if(!valid) {
+            console.error('Error validating the updateEmployee against the schema');
+            return next(createError(400, `Bad request: ${validate.errors}`));
+          }
+
+          // Update the users lastName, phoneNumber, and/or address 
+          const result = await db.collection('employees').updateOne(
+              { employeeId: employeeId },
+              { $set: 
+                { 
+                  lastName: updateProfile.lastName, 
+                  phoneNumber: updateProfile.phoneNumber,
+                  address: updateProfile.address
+                }
+              }
+          );
+  
+          //count modified fields for sending result 
+          const details = {
+            modifiedCount: result.modifiedCount,
+            matchedCount: result.matchedCount
+          };
+
+          // Send 201 success and modified count for confirmation 
+          res.status(201).json({ message: "Profile updated", details })
+
+      }, next);
+
+      // Mongo DB error handling 
+  } catch (err) {
+      console.error("Database Error:", err);
+      next(err);
+  }
+})
 // Export the router
 module.exports = router;
