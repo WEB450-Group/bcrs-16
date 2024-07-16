@@ -1,1 +1,27 @@
-/*# sourceMappingURL=about.component.css.map */
+.about-container {
+  min-height: 90vh;
+}
+
+.bg-repair2 {
+  background-image: url("../../assets/images/repair2.jpg");
+}
+
+.bg-team {
+  background-image: url("../../assets/images/team.jpg");
+}
+
+.bg-repair1 {
+  background-image: url("../../assets/images/repair1.jpg");
+}
+
+.bg-cover {
+  background-size: cover;
+}
+
+.bg-center {
+  background-position: center;
+}
+
+.bg-top {
+  background-position: top;
+}/*# sourceMappingURL=about.component.css.map */

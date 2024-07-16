@@ -1,0 +1,47 @@
+.employee-directory-container {
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+}
+
+.bob-img {
+  background: url("../../assets/images/bob.jpg") no-repeat;
+  background-size: cover;
+  background-position: top;
+}
+
+.johann-img {
+  background: url("../../assets/images/Johann.png") no-repeat;
+  background-size: cover;
+  background-position: top;
+}
+
+.wolfgang-img {
+  background: url("../../assets/images/Wolfgang.png") no-repeat;
+  background-size: cover;
+  background-position: top;
+}
+
+.jackie-img {
+  background: url("../../assets/images/Jackie.jpg") no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.nick-img {
+  background: url("../../assets/images/Nick.jpg") no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.connor-img {
+  background: url("../../assets/images/Connor.jpg") no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.rosalia-img {
+  background: url("../../assets/images/Rosalia.jpg") no-repeat;
+  background-size: cover;
+  background-position: center;
+}/*# sourceMappingURL=employee-directory.component.css.map */

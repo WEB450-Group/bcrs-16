@@ -1,4 +1,11 @@
 .home-container {
   min-height: 90vh;
   background-color: white;
+}
+.home-container h1 {
+  line-height: 200%;
+}
+
+mat-icon {
+  transform: scale(3);
 }/*# sourceMappingURL=home.component.css.map */

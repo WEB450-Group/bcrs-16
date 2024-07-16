@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","file":"faq.component.css"}
+{"version":3,"sources":["faq.component.scss","faq.component.css"],"names":[],"mappings":"AAAA;EACE,YAAA;EACA,aAAA;EACA,uBAAA;ACCF","file":"faq.component.css"}
