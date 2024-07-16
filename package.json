@@ -26,6 +26,8 @@
     "chart.js": "^4.3.3",
     "express": "^4.19.2",
     "http-errors": "^2.0.0",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.5.45",
     "mongodb": "^5.7.0",
     "ngx-cookie-service": "^16.0.0",
     "rxjs": "~7.8.0",
