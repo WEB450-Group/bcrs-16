@@ -6,38 +6,38 @@
   </div>
 
   <div class="flex justify-center mx-6 pt-8 lg:pt-16 lg:pb-8">
-    <div class="w-full lg:w-1/2 2xl:w-1/3 md:px-8 lg:px-12 md:py-10 2xl:py-20 md:pb-8 border rounded-lg bg-white shadow-lg">
+    <div class="w-full md:w-3/4 lg:w-1/2 2xl:w-1/3 md:px-8 lg:px-12 md:py-10 2xl:py-20 md:pb-8 border rounded-lg bg-white shadow-lg">
       <h2 class="pl-6 pt-6 lg: text-3xl 3xl:text-4xl font-semibold">Create a New Account</h2>
 
       <mat-horizontal-stepper [linear]="isLinear" #stepper>
         <!-- STEP 1 -->
         <mat-step [stepControl]="firstFormGroup" label="Personal Information">
-          <form [formGroup]="firstFormGroup" class="space-y-4">
-            <!-- EMAIL VALIDATION ERRORS -->
+          <form [formGroup]="firstFormGroup">
+            <!-- EMAIL -->
             <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Email</label>
             <div>
               <input id="email" formControlName="email" placeholder="Enter Your Email" required
                 [ngClass]="{'border-red-600 placeholder-err': firstFormGroup.controls['email'].invalid && (firstFormGroup.controls['email'].dirty || firstFormGroup.controls['email'].touched)}"
-                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
+                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200 mb-4">
             </div>
             <div *ngIf="firstFormGroup.controls['email'].invalid && (firstFormGroup.controls['email'].dirty || firstFormGroup.controls['email'].touched)" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
-              <div *ngIf="firstFormGroup.controls['email'].errors?.['required']">
+              <div *ngIf="firstFormGroup.controls['email'].hasError('required')">
                 Email is required.
               </div>
-              <div *ngIf="firstFormGroup.controls['email'].errors?.['email']">
+              <div *ngIf="firstFormGroup.controls['email'].hasError('email')">
                 Must be a valid email address.
               </div>
             </div>
 
-            <!-- PASSWORD VALIDATION ERRORS -->
+            <!-- PASSWORD  -->
             <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Password</label>
             <div class="flex">
               <input id="password" [type]="fieldTextType ? 'text' : 'password'" formControlName="password"
                 [ngClass]="{'border-red-600 placeholder-err': firstFormGroup.controls['password'].invalid && (firstFormGroup.controls['password'].dirty || firstFormGroup.controls['password'].touched)}"
                 placeholder="Enter Your Password"
-                class="block w-full p-2 border border-gray-300 rounded-l-md focus:outline-none focus:shadow focus:border-blue-200">
+                class="block w-full p-2 border border-gray-300 rounded-l-md focus:outline-none focus:shadow focus:border-blue-200 mb-4">
               <span
-                class="px-4 inline-flex items-center rounded-r-lg border border-gray-300 bg-gray-300 focus:outline-none focus:shadow focus:border-blue-200">
+                class="px-4 inline-flex items-center rounded-r-lg border border-gray-300 bg-gray-300 focus:outline-none focus:shadow focus:border-blue-200 mb-4">
                 <i class="fa" [ngClass]="{
                   'fa-eye-slash': !fieldTextType,
                   'fa-eye': fieldTextType 
@@ -46,31 +46,31 @@
               </span>
             </div>
             <div *ngIf="firstFormGroup.controls['password'].invalid && (firstFormGroup.controls['password'].dirty || firstFormGroup.controls['password'].touched)" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
-              <div *ngIf="firstFormGroup.controls['password'].errors?.['required']">
+              <div *ngIf="firstFormGroup.controls['password'].hasError('required')">
                 Password is required.
               </div>
-              <div *ngIf="firstFormGroup.controls['password'].errors?.['pattern']">
-                Password must contain numbers, letters, and symbols and be at least 8 characters long.
+              <div *ngIf="firstFormGroup.controls['password'].hasError('pattern')">
+                Password must contain uppercase and lowercase letters, numbers, and be at least 8 characters long.
               </div>
             </div>
 
             <div>
-              <button matStepperNext class="py-2 px-3 rounded-md w-full md:w-auto">Next ></button>
+              <button matStepperNext [disabled]="firstFormGroup.invalid" class="mt-2 py-2 px-3 rounded-md w-full md:w-auto">Next ></button>
             </div>
           </form>
         </mat-step>
 
         <!-- STEP 2 -->
         <mat-step [stepControl]="secondFormGroup" label="Contact Information">
-          <form [formGroup]="secondFormGroup" class="space-y-4">
-            <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">First Name</label>
+          <form [formGroup]="secondFormGroup">
+            <label for="firstName" class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">First Name</label>
             <div>
               <input id="firstName" formControlName="firstName" placeholder="Enter Your First Name" required
                 [ngClass]="{'border-red-600 placeholder-err': secondFormGroup.controls['firstName'].invalid && (secondFormGroup.controls['firstName'].dirty || secondFormGroup.controls['firstName'].touched)}"
-                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
+                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200 mb-4">
             </div>
             <div *ngIf="secondFormGroup.controls['firstName'].invalid && (secondFormGroup.controls['firstName'].dirty || secondFormGroup.controls['firstName'].touched)" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
-              <div *ngIf="secondFormGroup.controls['firstName'].errors?.['required']">
+              <div *ngIf="secondFormGroup.controls['firstName'].hasError('required')">
                 First Name is required.
               </div>
             </div>
@@ -79,10 +79,10 @@
             <div>
               <input id="lastName" formControlName="lastName" placeholder="Enter Your Last Name" required
                 [ngClass]="{'border-red-600 placeholder-err': secondFormGroup.controls['lastName'].invalid && (secondFormGroup.controls['lastName'].dirty || secondFormGroup.controls['lastName'].touched)}"
-                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
+                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200 mb-4">
             </div>
             <div *ngIf="secondFormGroup.controls['lastName'].invalid && (secondFormGroup.controls['lastName'].dirty || secondFormGroup.controls['lastName'].touched)" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
-              <div *ngIf="secondFormGroup.controls['lastName'].errors?.['required']">
+              <div *ngIf="secondFormGroup.controls['lastName'].hasError('required')">
                 Last Name is required.
               </div>
             </div>
@@ -91,10 +91,10 @@
             <div>
               <input id="phone" formControlName="phoneNumber" placeholder="(555)123-4567" required
                 [ngClass]="{'border-red-600 placeholder-err': secondFormGroup.controls['phoneNumber'].invalid && (secondFormGroup.controls['phoneNumber'].dirty || secondFormGroup.controls['phoneNumber'].touched)}"
-                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
+                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200 mb-4">
             </div>
-            <div *ngIf="secondFormGroup.controls['phoneNumber'].invalid && (secondFormGroup.controls['phoneNumber'].dirty || secondFormGroup.controls['phoneNumber'].touched)" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
-              <div *ngIf="secondFormGroup.controls['phoneNumber'].errors?.['required']">
+            <div *ngIf="secondFormGroup.controls['phoneNumber'].invalid && (secondFormGroup.controls['phoneNumber'].dirty || secondFormGroup.controls['phoneNumber'].touched)" class="ml-2 bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
+              <div *ngIf="secondFormGroup.controls['phoneNumber'].hasError('required')">
                 Phone Number is required.
               </div>
             </div>
@@ -103,25 +103,25 @@
             <div>
               <input id="address" formControlName="address" placeholder="Enter Your Address" required
                 [ngClass]="{'border-red-600 placeholder-err': secondFormGroup.controls['address'].invalid && (secondFormGroup.controls['address'].dirty || secondFormGroup.controls['address'].touched)}"
-                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
+                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200 mb-4">
             </div>
             <div *ngIf="secondFormGroup.controls['address'].invalid && (secondFormGroup.controls['address'].dirty || secondFormGroup.controls['address'].touched)" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
-              <div *ngIf="secondFormGroup.controls['address'].errors?.['required']">
+              <div *ngIf="secondFormGroup.controls['address'].hasError('required')">
                 Address is required.
               </div>
             </div>
 
             <div>
-              <button matStepperPrevious class="opacity-90 py-2 px-3 rounded-md w-full md:w-auto">< Back</button>
-              <button matStepperNext class="mt-3 md:mt-0 md:ml-2 py-2 px-3 rounded-md w-full md:w-auto">Next ></button>
+              <button matStepperPrevious class="opacity-90 py-2 px-3 rounded-md w-full mt-2  md:w-auto">< Back</button>
+              <button matStepperNext [disabled]="secondFormGroup.invalid" class="ml-2 py-2 px-3 rounded-md w-full md:w-auto">Next ></button>
             </div>
           </form>
         </mat-step>
 
         <!-- STEP 3 -->
         <mat-step [stepControl]="thirdFormGroup" label="Security Questions">
-          <form [formGroup]="thirdFormGroup" class="space-y-4">
-            <label class="text-medium 2lg:text-xl font-bold tracking-wide pb-2 text-start pt-4">Select Security Question 1</label>
+          <form [formGroup]="thirdFormGroup">
+            <label class="text-medium 2lg:text-xl font-bold tracking-wide text-start pt-4">Select Security Question 1</label>
             <mat-form-field class="w-full">
               <mat-select placeholder="Select question" formControlName="question1" required>
                 <mat-option *ngFor="let question of qArray1" [value]="question">{{ question }}</mat-option>
@@ -130,15 +130,15 @@
             <div>
               <input id="answer1" formControlName="answer1" placeholder="Security Question Answer" required
                 [ngClass]="{'border-red-600 placeholder-err': thirdFormGroup.controls['answer1'].invalid && (thirdFormGroup.controls['answer1'].dirty || thirdFormGroup.controls['answer1'].touched)}"
-                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
+                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200 mb-4">
             </div>
             <div *ngIf="thirdFormGroup.controls['answer1'].invalid && (thirdFormGroup.controls['answer1'].dirty || thirdFormGroup.controls['answer1'].touched)" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
-              <div *ngIf="thirdFormGroup.controls['answer1'].errors?.['required']">
+              <div *ngIf="thirdFormGroup.controls['answer1'].hasError('required')">
                 Answer is required.
               </div>
             </div>
 
-            <label class="text-medium 2lg:text-xl font-bold tracking-wide pb-2 text-start pt-4">Select Security Question 2</label>
+            <label class="text-medium 2lg:text-xl font-bold tracking-wide text-start pt-4">Select Security Question 2</label>
             <mat-form-field class="w-full">
               <mat-select placeholder="Select question" formControlName="question2" required>
                 <mat-option *ngFor="let question of qArray2" [value]="question">{{ question }}</mat-option>
@@ -147,15 +147,15 @@
             <div>
               <input id="answer2" formControlName="answer2" placeholder="Security Question Answer" required
                 [ngClass]="{'border-red-600 placeholder-err': thirdFormGroup.controls['answer2'].invalid && (thirdFormGroup.controls['answer2'].dirty || thirdFormGroup.controls['answer2'].touched)}"
-                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
+                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200 mb-4">
             </div>
             <div *ngIf="thirdFormGroup.controls['answer2'].invalid && (thirdFormGroup.controls['answer2'].dirty || thirdFormGroup.controls['answer2'].touched)" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
-              <div *ngIf="thirdFormGroup.controls['answer2'].errors?.['required']">
+              <div *ngIf="thirdFormGroup.controls['answer2'].hasError('required')">
                 Answer is required.
               </div>
             </div>
 
-            <label class="text-medium 2lg:text-xl font-bold tracking-wide pb-2 text-start pt-4">Select Security Question 3</label>
+            <label class="text-medium 2lg:text-xl font-bold tracking-wide text-start pt-4">Select Security Question 3</label>
             <mat-form-field class="w-full">
               <mat-select placeholder="Select question" formControlName="question3" required>
                 <mat-option *ngFor="let question of qArray3" [value]="question">{{ question }}</mat-option>
@@ -164,17 +164,17 @@
             <div>
               <input id="answer3" formControlName="answer3" placeholder="Security Question Answer" required
                 [ngClass]="{'border-red-600 placeholder-err': thirdFormGroup.controls['answer3'].invalid && (thirdFormGroup.controls['answer3'].dirty || thirdFormGroup.controls['answer3'].touched)}"
-                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
+                class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200 mb-4">
             </div>
             <div *ngIf="thirdFormGroup.controls['answer3'].invalid && (thirdFormGroup.controls['answer3'].dirty || thirdFormGroup.controls['answer3'].touched)" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
-              <div *ngIf="thirdFormGroup.controls['answer3'].errors?.['required']">
+              <div *ngIf="thirdFormGroup.controls['answer3'].hasError('required')">
                 Answer is required.
               </div>
             </div>
 
             <div>
-              <button matStepperPrevious class="opacity-90 py-2 px-3 rounded-md w-full md:w-auto">< Back</button>
-              <button (click)="register()" class="mt-3 md:mt-0 md:ml-2 py-2 px-3 rounded-md w-full md:w-auto">
+              <button matStepperPrevious class="opacity-90 py-2 px-3 rounded-md w-full mt-2 md:w-auto">< Back</button>
+              <button (click)="register()" [disabled]="thirdFormGroup.invalid" class="ml-2 py-2 px-3 rounded-md w-full md:w-auto">
                 <span *ngIf="!isLoading">Create Account</span>
                 <span *ngIf="isLoading" role="status">
                   <svg aria-hidden="true"
@@ -198,7 +198,7 @@
       <div *ngIf="errMessage" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
         {{ errMessage }}
       </div>
-      <div class="flex flex-col pl-2">
+      <div class="flex flex-col pl-2 pb-6">
         <a [routerLink]="['/security/signin']" routerLinkActive="router-link-active"
           class="pl-4 font-semibold hover:underline">Sign In
         </a>

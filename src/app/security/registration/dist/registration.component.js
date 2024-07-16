@@ -18,6 +18,7 @@ exports.RegistrationComponent = void 0;
 */
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
+var rxjs_1 = require("rxjs");
 var RegistrationComponent = /** @class */ (function () {
     function RegistrationComponent(_formBuilder, router, securityService) {
         this._formBuilder = _formBuilder;
@@ -27,17 +28,17 @@ var RegistrationComponent = /** @class */ (function () {
         this.isLinear = false;
         //variable for hide/show password
         this.fieldTextType = false;
-        //Stepper form group assignments and validators 
+        //Stepper form group assignments and validators
         this.firstFormGroup = this._formBuilder.group({
             email: [null, [forms_1.Validators.required, forms_1.Validators.email]],
-            password: [null, forms_1.Validators.required, forms_1.Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)]
-        });
+            password: [null, [forms_1.Validators.required, forms_1.Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)], [this.asyncPasswordValidator.bind(this)]]
+        }, { updateOn: 'blur' });
         this.secondFormGroup = this._formBuilder.group({
             firstName: [null, forms_1.Validators.required],
             lastName: [null, forms_1.Validators.required],
             phoneNumber: [null, forms_1.Validators.required],
             address: [null, forms_1.Validators.required]
-        });
+        }, { updateOn: 'blur' });
         this.thirdFormGroup = this._formBuilder.group({
             question1: [null, forms_1.Validators.required],
             answer1: [null, forms_1.Validators.required],
@@ -45,10 +46,10 @@ var RegistrationComponent = /** @class */ (function () {
             answer2: [null, forms_1.Validators.required],
             question3: [null, forms_1.Validators.required],
             answer3: [null, forms_1.Validators.required]
-        });
+        }, { updateOn: 'blur' });
         this.errMessage = '';
         this.isLoading = false;
-        //Save to database and query with an API? 
+        //Save to database and query with an API?
         //Security questions array
         this.securityQuestions = [
             "What City was your mom born in?",
@@ -62,7 +63,7 @@ var RegistrationComponent = /** @class */ (function () {
         this.qArray2 = [];
         //Initializes third questions array to an empty array
         this.qArray3 = [];
-        //Initialize employee object to Employee Interface 
+        //Initialize employee object to Employee Interface
         this.employee = {};
     }
     //Cascading for dropdown menus
@@ -72,13 +73,13 @@ var RegistrationComponent = /** @class */ (function () {
         //subscribe to the value changes oof the security question 1
         (_a = this.thirdFormGroup.get('question1')) === null || _a === void 0 ? void 0 : _a.valueChanges.subscribe(function (val) {
             console.log('Value changed from question 1', val);
-            //filter the second array of questions to remove the selected question 
+            //filter the second array of questions to remove the selected question
             _this.qArray2 = _this.qArray1.filter(function (q) { return q !== val; });
         });
         //subscribe to the value changes oof the security question 2
         (_b = this.thirdFormGroup.get('question2')) === null || _b === void 0 ? void 0 : _b.valueChanges.subscribe(function (val) {
             console.log('Value changed from question 2', val);
-            //filter the third array of questions to remove the selected question 
+            //filter the third array of questions to remove the selected question
             _this.qArray3 = _this.qArray2.filter(function (q) { return q !== val; });
         });
     };
@@ -86,12 +87,6 @@ var RegistrationComponent = /** @class */ (function () {
     RegistrationComponent.prototype.register = function () {
         var _this = this;
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
-        //if form is invalid call markAsTouched and errors where they occured
-        if (this.firstFormGroup.invalid || this.secondFormGroup.invalid || this.thirdFormGroup.invalid) {
-            this.markAllAsTouched();
-            this.errMessage = 'Please complete required fields';
-            return;
-        }
         this.errMessage = '';
         this.isLoading = true;
         this.employee = {
@@ -124,7 +119,7 @@ var RegistrationComponent = /** @class */ (function () {
         this.securityService.register(this.employee).subscribe({
             next: function (result) {
                 console.log('Result from register API call', result);
-                //after succesful registration, redirect the user to the signin page
+                //after successful registration, redirect the user to the signin page
                 _this.router.navigate(['/security/signin']);
             },
             //Error handling for database issues
@@ -137,19 +132,30 @@ var RegistrationComponent = /** @class */ (function () {
                     _this.errMessage = "Something went wrong, please contact the system administrator";
                     console.log(_this.errMessage);
                 }
+                _this.isLoading = false;
+            },
+            complete: function () {
+                alert("Registration successful");
             }
         });
-    };
-    //Marks the control and all its descendant controls as touched 
-    //on submit if fields left empty global error occures and error messages for empty fields pop up
-    RegistrationComponent.prototype.markAllAsTouched = function () {
-        this.firstFormGroup.markAllAsTouched();
-        this.secondFormGroup.markAllAsTouched();
-        this.thirdFormGroup.markAllAsTouched();
     };
     //Toggle show/hide password
     RegistrationComponent.prototype.toggleFieldTextType = function () {
         this.fieldTextType = !this.fieldTextType;
+    };
+    RegistrationComponent.prototype.asyncPasswordValidator = function (control) {
+        // Return a new Observable
+        return new rxjs_1.Observable(function (observer) {
+            // Simulate an async operation with a 1-second delay
+            setTimeout(function () {
+                // Validation logic
+                var valid = control.value !== 'invalid';
+                // Emit validation result
+                observer.next(valid ? null : { 'asyncInvalid': true });
+                // Signal that the observable is complete
+                observer.complete();
+            }, 1000);
+        });
     };
     RegistrationComponent = __decorate([
         core_1.Component({

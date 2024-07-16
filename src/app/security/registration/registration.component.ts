@@ -41,14 +41,14 @@ export class RegistrationComponent implements OnInit {
   //Stepper form group assignments and validators
   firstFormGroup: FormGroup = this._formBuilder.group({
     email: [null, [Validators.required, Validators.email]],
-    password: [null,[Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)], [this.asyncPasswordValidator.bind(this)]]
-  });
+    password: [null,[Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)], [this.asyncPasswordValidator.bind(this)]]}, { updateOn: 'blur' }
+  );
   secondFormGroup: FormGroup = this._formBuilder.group({
     firstName: [null, Validators.required],
     lastName: [null, Validators.required],
     phoneNumber: [null, Validators.required],
     address: [null, Validators.required]
-  });
+  }, { updateOn: 'blur' });
   thirdFormGroup: FormGroup = this._formBuilder.group({
     question1: [null, Validators.required],
     answer1: [null, Validators.required],
@@ -56,7 +56,7 @@ export class RegistrationComponent implements OnInit {
     answer2: [null, Validators.required],
     question3: [null, Validators.required],
     answer3: [null, Validators.required]
-  });
+  }, { updateOn: 'blur' });
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -104,12 +104,6 @@ export class RegistrationComponent implements OnInit {
 
   //Registers new user and redirects them to login page
   register() {
-    //if form is invalid call markAsTouched and errors where they occurred
-    // if (!this.firstFormGroup.valid || !this.secondFormGroup.valid || !this.thirdFormGroup.valid) {
-    //   this.markAllAsTouched();
-    //   this.errMessage = 'Please complete required fields';
-    //   return;
-    // }
 
     this.errMessage = '';
     this.isLoading = true;
@@ -156,17 +150,14 @@ export class RegistrationComponent implements OnInit {
           this.errMessage = "Something went wrong, please contact the system administrator";
           console.log(this.errMessage);
         }
+      this.isLoading = false;
+      },
+      complete: () => {
+        alert("Registration successful")
       }
     });
+  }
 
-  }
-  //Marks the control and all its descendant controls as touched
-  //on submit if fields left empty global error occurs and error messages for empty fields pop up
-  markAllAsTouched() {
-    this.firstFormGroup.markAllAsTouched();
-    this.secondFormGroup.markAllAsTouched();
-    this.thirdFormGroup.markAllAsTouched();
-  }
   //Toggle show/hide password
   toggleFieldTextType() {
     this.fieldTextType = !this.fieldTextType;

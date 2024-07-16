@@ -9,7 +9,6 @@
 */
 import { Component } from '@angular/core';
 import { SecurityService } from '../security.service';
-import { Employee } from 'src/app/shared/employee.interface';
 import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -28,7 +27,7 @@ export class SigninComponent {
   signinForm = this.fb.group({
     email: [null, Validators.compose([Validators.required, Validators.email])],
     password: [null, Validators.compose([Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)])],
-  })
+  }, { updateOn: 'submit' })
 
   constructor(
     private fb: FormBuilder,
@@ -87,14 +86,15 @@ export class SigninComponent {
         this.router.navigate([returnUrl]);
       },
       error: (err) => {
-        this.isLoading = false;
-
-        console.log('err', err);
-        if (err.error.status === 400) {
-          this.errMessage = 'Invalid email and/or password. Please try again.'
-          return;
+        console.log('Server error from API call', err);
+        if(err.status === 400 || 401 ) {
+          this.errMessage = "The email address and/or password you provided are not valid";
+          this.isLoading = false;
+          return
         }
-      }
+        this.errMessage = "There was a problem verifying your email address, please try again or contact the system administrator";
+        this.isLoading = false;
+      },
     })
   }
   toggleFieldTextType() {

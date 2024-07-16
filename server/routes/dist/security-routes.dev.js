@@ -138,7 +138,7 @@ var emailSchema = {
  *               password:
  *                 type: string
  *               phoneNumber:
- *                 type: number
+ *                 type: string
  *               address:
  *                 type: string
  *               selectedSecurityQuestions:
@@ -318,8 +318,17 @@ router.post('/signin', function (req, res, next) {
             case 3:
               employee = _context2.sent;
 
+              if (employee) {
+                _context2.next = 7;
+                break;
+              }
+
+              console.log("No employee with that email");
+              return _context2.abrupt("return", next(createError(401, "Unauthorized")));
+
+            case 7:
               if (!employee) {
-                _context2.next = 13;
+                _context2.next = 16;
                 break;
               }
 
@@ -329,19 +338,19 @@ router.post('/signin', function (req, res, next) {
               passwordIsValid = bcrypt.compareSync(signIn.password, employee.password); // Else if the password doesn't match; then return status code 400 with message "Invalid credentials"
 
               if (passwordIsValid) {
-                _context2.next = 11;
+                _context2.next = 14;
                 break;
               }
 
               console.error('Invalid password!');
               return _context2.abrupt("return", next(createError(401, "Unauthorized")));
 
-            case 11:
+            case 14:
               // If the password matches; then return status code 200 with message "Employee sign in"
               console.log("Password matches!");
               res.send(employee);
 
-            case 13:
+            case 16:
             case "end":
               return _context2.stop();
           }
@@ -486,8 +495,8 @@ router.post('/employees/:email/reset-password', function (req, res, next) {
 
 router.post('/verify/employees/:email', function (req, res, next) {
   try {
-    //email parameter 
-    var email = req.params.email; //log email 
+    //email parameter
+    var email = req.params.email; //log email
 
     console.log('Employee email', email); // Validate the email against email schema with regex
 
@@ -499,7 +508,7 @@ router.post('/verify/employees/:email', function (req, res, next) {
     if (!valid) {
       console.error('Error validating email against schema', validate.errors);
       return next(createError(400, "Bad request: ".concat(validate.errors)));
-    } //connect to databse 
+    } //connect to databse
 
 
     mongo(function _callee4(db) {
@@ -515,7 +524,7 @@ router.post('/verify/employees/:email', function (req, res, next) {
 
             case 2:
               employee = _context4.sent;
-              console.log(employee); //If no employees have matching email send 404 not found 
+              console.log(employee); //If no employees have matching email send 404 not found
 
               if (employee) {
                 _context4.next = 10;

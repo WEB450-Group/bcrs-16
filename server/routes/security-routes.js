@@ -305,7 +305,11 @@ router.post('/signin', (req, res, next) => {
       const employee = await db.collection("employees").findOne({
         email: signIn.email
       });
-
+      // If the employee is not found; Return 401
+      if (!employee) {
+        console.log("No employee with that email");
+        return next(createError(401, "Unauthorized"));
+      }
       // If the employee is found; Then compare password passed in from the body with the password in the database
       if (employee) {
         console.log("Employee found!");

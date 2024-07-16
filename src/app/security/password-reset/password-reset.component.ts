@@ -61,6 +61,9 @@ export class PasswordResetComponent {
         console.error('Error changing password: ', err.error.message);
         this.errorMessage = err;
         this.isLoading = false;
+      },
+      complete: () => {
+        alert("Password reset successful!")
       }
     })
   }

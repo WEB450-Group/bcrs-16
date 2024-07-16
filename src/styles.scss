@@ -103,7 +103,7 @@ button {
 
 @media only screen and (max-width: 768px) {
   .page-container {
-    min-height: auto;
+    min-height:fit-content;
     .page-container {
       width: 100%;
       overflow-x: hidden;
