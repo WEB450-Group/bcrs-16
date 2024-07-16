@@ -17,6 +17,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const employeeRoutes = require('./routes/employee-routes');
 const securityRoutes = require('./routes/security-routes');
+const invoicesRoutes = require('./routes/invoice-routes');
 
 // Create the Express app
 const app = express()
@@ -35,7 +36,7 @@ const options = {
       version: '1.0.0',
     },
   },
-  apis: ['./server/routes/employee-routes.js', './server/routes/security-routes.js']    
+  apis: ['./server/routes/employee-routes.js', './server/routes/security-routes.js', './server/routes/invoice-routes.js']
 };
 
 //Create a new variable name openapiSpecification and call the swaggerJsdoc library using the options object literal.  For example, const openapiSpecification = swaggerJsdoc(options);
@@ -47,6 +48,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 //connect APIs
 app.use("/api/employees", employeeRoutes);
 app.use("/api/security", securityRoutes);
+app.use("/api/invoices", invoicesRoutes);
 
 // error handler for 404 errors
 app.use(function(req, res, next) {
