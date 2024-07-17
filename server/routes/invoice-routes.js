@@ -214,25 +214,59 @@ router.post('/:employeeId', (req, res, next) => {
   }
 });
 
-
-router.put('/profile/:employeeId', (req, res, next) =>{
+/**
+ * @openapi
+ * /api/invoices/service-graph:
+ *   get:
+ *     tags:
+ *       - Invoices
+ *     summary: Retrieves all service requests from all invoices and retruns an array of with itemName and count for each service
+ *     description: Returns an array of services requests and amount from all invoices
+ *     responses:
+ *       200:
+ *         description: Success
+ *       404:
+ *         description: Not Found
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/service-graph', async (req, res, next) => {
   try {
-    //find all invoices
+      //connect to database and look up all invoices
+      mongo(async (db) => {
+          const services = await db.collection('invoices').aggregate([            
+              //use mongodb aggregates to filter and collect itemNames and how many there are of each item in all invoices 
+              //$unwind deconstructs an array field from the input documents to output a document for each element
+              { $unwind: "$lineItems" },
+              //$group stage separates documents into groups according to a "group key" ie itemName
+              { $group: {
+                  //Get items names from line items 
+                  _id: "$lineItems.itemName",
+                  //count and return the amount of items in each group by name
+                  itemCount: { $sum: 1 },
+                  // //push items into an array 
+                  // details: { $push: "$lineItems"}
+              }}
+          // return an array of the grouped items for graphing   
+          ]).toArray();
 
-    //get result projections (ID's and quanity of each item)
-
-    //go through all invoices and check for itemId and quantity
-
-    //add total for each line item and save results for each in array
-
-    //send results
-
-  // Mongo DB error handling
+          //If there is no service data send 404, no services found
+          if(services.length <= 0) {
+            res.status(404).json({
+              error:'No services found in invoices'
+            });
+          }
+          //send array to client 
+          res.status(200).json(services);
+      });
+  // Catch any database errors
   } catch (err) {
-    console.error("Database Error:", err);
+    console.error(err);
     next(err);
   }
-})
+});
+
+
 
 // Export the router
 module.exports = router;
