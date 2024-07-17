@@ -47,6 +47,6 @@ export class EmployeeService {
   }
 
   updateProfile(employeeId: number, employee: UpdateProfile): Observable<any> {
-    return this.http.post('/api/employees/profile/' + employeeId, employee);
+    return this.http.put('/api/employees/profile/' + employeeId, employee);
   }
 }

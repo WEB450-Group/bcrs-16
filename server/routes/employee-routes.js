@@ -668,6 +668,7 @@ router.get('/:email/security-questions', (req, res, next) => {
  */
 router.put('/profile/:employeeId', (req, res, next) =>{
   try {
+      console.log('Updating the profile...');
       let { employeeId } = req.params;
 
       console.log(employeeId);

@@ -26,7 +26,7 @@ export class ProfileComponent {
   errorMessage: string;
   successfulMessage: string;
   isLoading: boolean = false;
-  editModeCheck: boolean = false;
+  editModeCheck: boolean = true;
 
   updateProfileForm: FormGroup = this.fb.group({
     lastName: [null, Validators.compose([Validators.required])],
@@ -93,13 +93,47 @@ export class ProfileComponent {
       next: (result: any) => {
         console.log(result);
         this.isLoading = false;
+        this.editModeCheck = false;
+        console.log(this.editModeCheck);
         this.successfulMessage = 'Profile updated successfully';
+
+        // Set a timer for the successful message
+        setTimeout(() => {
+          this.successfulMessage = '';
+        }, 1500);
+
+        // Re-fetch the employee data
+        this.employeeService.findEmployeeById(this.employeeId).subscribe({
+          next: (employee: any) => {
+            console.log(employee);
+            // Update the employee data
+            this.employee = employee;
+            // Update the form with the new data
+            this.updateProfileForm.patchValue({
+              lastName: this.employee.lastName,
+              phoneNumber: this.employee.phoneNumber,
+              address: this.employee.address
+            });
+          },
+          error: (err) => {
+            console.error(err);
+            this.errorMessage = `Cannot find the employee with ID ${this.employeeId}`;
+            // Set a timer for the error message
+            setTimeout(() => {
+              this.errorMessage = '';
+            }, 1500);
+          }
+        });
       },
       error: (err) => {
         console.error(err);
         this.isLoading = false;
         this.errorMessage = 'Failed to update profile information';
-      }
+        // Set a timer for the error message
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 1500);
+      },
     })
   }
 
