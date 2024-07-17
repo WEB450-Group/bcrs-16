@@ -42,3 +42,9 @@ export interface Registration {
   role: string;
   selectedSecurityQuestions: selectedSecurityQuestion[];
 }
+
+export interface UpdateProfile {
+  lastName: string;
+  phoneNumber: number;
+  address: string;
+}

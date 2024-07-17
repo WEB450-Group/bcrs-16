@@ -54,7 +54,7 @@ export const routes: Routes = [
         component: FaqComponent
       },
       {
-        path: 'profile',
+        path: 'profile/:employeeId',
         component: ProfileComponent
       },
       {

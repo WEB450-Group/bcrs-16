@@ -51,7 +51,7 @@ export class NavComponent implements OnInit {
 
   constructor(private router: Router, private cookieService: CookieService, public authService: AuthService) {
   }
-  
+
   ngOnInit(): void {
     // Get session_user
     this.isSignedIn = this.authService.isLoggedIn();
@@ -65,6 +65,14 @@ export class NavComponent implements OnInit {
     // Get session_user role
     this.isAdmin = this.authService.getRole() === 'admin';
     console.log('isAdmin:', this.isAdmin);
+  }
+
+  // Get employee Id for the profile page
+  getProfileLink(): string {
+    console.log('Getting the profile page...');
+    const employeeId = this.authService.getEmployeeId();
+    console.log('Employee Id for Profile page', employeeId);
+    return employeeId ? `/profile/${employeeId}` : '/not-found';
   }
 
   // Sign out function

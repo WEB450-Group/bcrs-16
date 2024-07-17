@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/shared/auth.service';
 /*
 ============================================
 ; Title:  sign-in.component.ts
@@ -34,7 +35,10 @@ export class SigninComponent {
     private fb: FormBuilder,
     private router: Router,
     private cookieService: CookieService,
-    private secService: SecurityService, private route: ActivatedRoute) {
+    private secService: SecurityService,
+    private route: ActivatedRoute,
+    private authService: AuthService
+  ) {
     this.errMessage = '';
    }
 
@@ -61,7 +65,7 @@ export class SigninComponent {
     }
     //call signin function from security service
     this.secService.signIn(email, password).subscribe({
-      //if succesfful set session_user cookie and redirect user to logged in homepage
+      //if successful set session_user cookie and redirect user to logged in homepage
       next: (employee: any) => {
         console.log('employee', employee);
         //create the sessionCookie object
@@ -78,6 +82,9 @@ export class SigninComponent {
         };
         //set session user
         this.cookieService.set('session_user', JSON.stringify(sessionCookie), 1);
+
+        // Set the employeeId in AuthService
+        this.authService.setEmployeeId(employee.employeeId);
 
         //check if there is a return URL, if not redirect to home page
         const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';

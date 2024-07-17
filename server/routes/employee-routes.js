@@ -202,6 +202,7 @@ router.get('/:employeeId', (req, res, next) => {
           employeeId: 1,
           email: 1,
           phoneNumber: 1,
+          address: 1,
           isDisabled: 1,
           role: 1,
         }
@@ -582,9 +583,9 @@ router.put('/:employeeId/disable', (req, res, next) => {
  */
 router.get('/:email/security-questions', (req, res, next) => {
   try {
-    //email parameter 
+    //email parameter
     const email = req.params.email
-    //log email 
+    //log email
     console.log('Employee email', email);
 
     // Validate the email against email schema
@@ -596,18 +597,18 @@ router.get('/:email/security-questions', (req, res, next) => {
       console.error('Error validating email against schema', validate.errors);
       return next(createError(400, `Bad request: ${validate.errors}`));
     }
-    
-    //connect to databse 
+
+    //connect to database
     mongo(async db => {
-      //find employee by saved email 
+      //find employee by saved email
       const employee = await db.collection('employees').findOne(
         { email: email },
         { projection: { email: 1, employeeId: 1, selectedSecurityQuestions: 1 } }
       );
-      //If no employees have matching email send 404 not found 
+      //If no employees have matching email send 404 not found
       if (!employee) {
         const err = new Error('Email does not exist');
-        err.status = 404; 
+        err.status = 404;
         console.log('Employee not found with email', email);
         next(err);
         return;
@@ -630,7 +631,7 @@ router.get('/:email/security-questions', (req, res, next) => {
  *   put:
  *     tags:
  *       - Employees
- *     description: Updating employee demographic including last name, phone number, and address 
+ *     description: Updating employee demographic including last name, phone number, and address
  *     summary: Update employee profile
  *     parameters:
  *       - name: employeeId
@@ -700,36 +701,36 @@ router.put('/profile/:employeeId', (req, res, next) =>{
           const validate = ajvInstance.compile(updateProfileSchema);
           const valid = validate(updateProfile);
 
-          // If the updateProfileSchema is not valid, send 400 
+          // If the updateProfileSchema is not valid, send 400
           if(!valid) {
             console.error('Error validating the updateEmployee against the schema');
             return next(createError(400, `Bad request: ${validate.errors}`));
           }
 
-          // Update the users lastName, phoneNumber, and/or address 
+          // Update the users lastName, phoneNumber, and/or address
           const result = await db.collection('employees').updateOne(
               { employeeId: employeeId },
-              { $set: 
-                { 
-                  lastName: updateProfile.lastName, 
+              { $set:
+                {
+                  lastName: updateProfile.lastName,
                   phoneNumber: updateProfile.phoneNumber,
                   address: updateProfile.address
                 }
               }
           );
-  
-          //count modified fields for sending result 
+
+          //count modified fields for sending result
           const details = {
             modifiedCount: result.modifiedCount,
             matchedCount: result.matchedCount
           };
 
-          // Send 201 success and modified count for confirmation 
+          // Send 201 success and modified count for confirmation
           res.status(201).json({ message: "Profile updated", details })
 
       }, next);
 
-      // Mongo DB error handling 
+      // Mongo DB error handling
   } catch (err) {
       console.error("Database Error:", err);
       next(err);

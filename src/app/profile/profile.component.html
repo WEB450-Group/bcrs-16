@@ -1,1 +1,71 @@
-<p>profile works!</p>
+<div class="profile-container">
+
+  <h1 class="pt-6 lg:pt-16 2xl:pt-24 text-3xl lg:text-4xl pl-6 pb-3 primary-text text-center font-bold uppercase">{{employee.firstName}} {{employee.lastName}}</h1>
+
+  <div class="w-full flex justify-center py-6 px-2 lg:py-10 lg:mx-0">
+    <!-- Profile Update Form -->
+     <form
+     [formGroup]="updateProfileForm"
+     (ngSubmit)="updateProfile()"
+     class="form overflow-hidden rounded-t-lg shadow-md mt-3 w-full py-6 lg:w-1/3"
+     >
+      <fieldset class="form-group">
+        <div class="primary text-white uppercase py-3 flex justify-between">
+          <div class="pl-4 pt-1 text-xl font-bold tracking-wide">Profile</div>
+          <div class="pr-6">
+            <div class="flex hover:cursor-pointer hover:opacity-75" (click)="editMode()">
+              <div class="text-lg">
+                Edit
+              </div>
+              <div>
+                <i class="material-icons text-lg">edit</i>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Display error/successful message -->
+        <div *ngIf="errorMessage || successfulMessage" class="flex justify-center py-3">
+          <div *ngIf="errorMessage" class="text-center text-red-800 bg-red-300 border rounded w-full lg:w-1/3">
+            {{ errorMessage }}
+          </div>
+          <div *ngIf="successfulMessage" class="text-center text-green-800 bg-green-300 border rounded w-full lg:w-1/3">
+            {{ successfulMessage }}
+          </div>
+        </div>
+
+       <!-- First Name field -->
+       <div class="pb-4 pt-8 px-2 flex justify-between">
+        <label for="txtFistName" class="py-1 pl-2 font-bold">First Name: </label>
+        <div id="txtFistName" class="pr-10"> {{ employee.firstName }} </div>
+       </div>
+
+       <hr />
+
+       <!-- Last Name field -->
+       <div class="py-4 px-2 flex justify-between">
+        <label for="txtLastName" class="py-1 pl-2 font-bold">Last Name: </label>
+        <div id="txtLastName" class="pr-10"> {{ employee.lastName }} </div>
+       </div>
+
+       <hr />
+
+       <!-- Last Name field -->
+       <div class="py-4 px-2 flex justify-between">
+        <label for="txtLastName" class="py-1 pl-2 font-bold">Phone Number: </label>
+        <div id="txtLastName" class="pr-10"> {{ employee.phoneNumber }} </div>
+       </div>
+
+       <hr />
+
+       <!-- Last Name field -->
+       <div class="py-4 px-2 flex justify-between">
+        <label for="txtLastName" class="py-1 pl-2 font-bold">Address: </label>
+        <div id="txtLastName" class="pr-10"> {{ employee.address }} </div>
+       </div>
+
+      </fieldset>
+     </form>
+  </div>
+</div>

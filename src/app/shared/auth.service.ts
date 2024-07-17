@@ -52,4 +52,12 @@ export class AuthService {
       return '';
     }
   }
+
+  setEmployeeId(employeeId: string) {
+    this.cookieService.set('employee_id', employeeId);
+  }
+
+  getEmployeeId(): string {
+    return this.cookieService.get('employee_id');
+  }
 }
