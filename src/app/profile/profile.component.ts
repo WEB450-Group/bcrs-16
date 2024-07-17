@@ -26,7 +26,7 @@ export class ProfileComponent {
   errorMessage: string;
   successfulMessage: string;
   isLoading: boolean = false;
-  editModeCheck: boolean = true;
+  editModeCheck: boolean = false;
 
   updateProfileForm: FormGroup = this.fb.group({
     lastName: [null, Validators.compose([Validators.required])],
