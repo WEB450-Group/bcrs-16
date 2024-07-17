@@ -123,7 +123,7 @@ const invoiceSchema = {
 router.post('/:employeeId', (req, res, next) => {
   try {
     // Get the employee ID from the request parameters
-    let employeeId = req.params.employeeId;
+    let { employeeId } = req.params.employeeId;
 
     // ParseInt the employee ID
     employeeId = parseInt(employeeId, 10);

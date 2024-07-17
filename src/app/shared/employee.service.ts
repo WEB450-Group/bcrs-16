@@ -10,7 +10,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CreateEmployee, Employee } from './employee.interface';
+import { CreateEmployee, UpdateProfile } from './employee.interface';
 import { EmployeeEdit } from './employeeEdit.interface';
 import { Observable } from 'rxjs';
 
@@ -44,5 +44,9 @@ export class EmployeeService {
   // Find Selected Security Questions
   findSecurityQuestions(email: string): Observable<any> {
     return this.http.get(`/api/employees/${email}/security-questions`);
+  }
+
+  updateProfile(employeeId: number, employee: UpdateProfile): Observable<any> {
+    return this.http.put('/api/employees/profile/' + employeeId, employee);
   }
 }

@@ -47,7 +47,7 @@
               <a routerLink="/faq" class="block w-full text-left py-2 px-4 tracking-wider">FAQ</a>
             </li>
             <li>
-              <a routerLink="/profile" class="block w-full text-left py-2 px-4 tracking-wider">Profile</a>
+              <a [routerLink]="getProfileLink()" class="block w-full text-left py-2 px-4 tracking-wider">Profile</a>
             </li>
             <li [ngClass]="{'hidden': !isAdmin, 'visible': isAdmin}">
               <a routerLink="/admin/service-graph" class="block w-full text-left py-2 px-4 tracking-wider">Service Graph</a>

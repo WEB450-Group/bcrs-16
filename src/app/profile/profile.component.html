@@ -1,1 +1,133 @@
-<p>profile works!</p>
+<div class="profile-container">
+
+  <h1 class="pt-6 lg:pt-16 2xl:pt-24 text-3xl lg:text-4xl pl-6 pb-3 primary-text text-center font-bold uppercase">{{employee.firstName}} {{employee.lastName}}</h1>
+
+  <div class="w-full flex justify-center py-6 px-2 lg:py-10 lg:mx-0">
+    <!-- Profile Update Form -->
+     <form
+     [formGroup]="updateProfileForm"
+     (ngSubmit)="updateProfile()"
+     class="form overflow-hidden rounded-t-lg shadow-md mt-3 w-full py-6 lg:w-1/3"
+     >
+      <fieldset class="form-group">
+        <div class="primary text-white uppercase py-3 flex justify-between">
+          <div class="pl-4 pt-1 text-xl font-bold tracking-wide">Profile</div>
+          <div class="pr-6">
+            <div class="flex hover:cursor-pointer hover:opacity-75" (click)="editMode()">
+              <div class="text-lg">
+                Edit
+              </div>
+              <div>
+                <i class="material-icons text-lg">edit</i>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Display error/successful message -->
+        <div *ngIf="errorMessage || successfulMessage" class="flex justify-center py-3">
+          <div *ngIf="errorMessage" class="text-center text-red-800 bg-red-300 border rounded w-full lg:w-1/3">
+            {{ errorMessage }}
+          </div>
+          <div *ngIf="successfulMessage" class="text-center text-green-800 bg-green-300 border rounded w-full lg:w-1/3">
+            {{ successfulMessage }}
+          </div>
+        </div>
+      
+       <div *ngIf="!editModeCheck">
+         <!-- First Name field -->
+         <div class="pb-4 pt-8 px-2 flex justify-between">
+          <label for="txtFistName" class="py-1 pl-2 font-bold">First Name: </label>
+          <div id="txtFistName" class="pr-10"> {{ employee.firstName }} </div>
+         </div>
+  
+         <hr />
+  
+         <!-- Last Name field -->
+         <div class="py-4 px-2 flex justify-between">
+          <label for="txtLastName" class="py-1 pl-2 font-bold">Last Name: </label>
+          <div id="txtLastName" class="pr-10"> {{ employee.lastName }} </div>
+         </div>
+  
+         <hr />
+  
+         <!-- Phone number field -->
+         <div class="py-4 px-2 flex justify-between">
+          <label for="txtLastName" class="py-1 pl-2 font-bold">Phone Number: </label>
+          <div id="txtLastName" class="pr-10"> {{ employee.phoneNumber }} </div>
+         </div>
+  
+         <hr />
+  
+         <!-- Address field -->
+         <div class="py-4 px-2 flex justify-between">
+          <label for="txtLastName" class="py-1 pl-2 font-bold">Address: </label>
+          <div id="txtLastName" class="pr-10"> {{ employee.address }} </div>
+         </div>
+       </div>
+
+       <div *ngIf="editModeCheck">
+        <!-- First Name field -->
+        <div class="pb-4 pt-8 px-2 flex justify-between">
+         <label for="txtFistName" class="py-1 pl-2 font-bold">First Name: </label>
+         <div id="txtFistName" class="pr-10"> {{ employee.firstName }} </div>
+        </div>
+ 
+        <hr />
+ 
+        <!-- Last Name field -->
+        <div class="py-4 px-2 flex justify-between">
+         <label for="txtLastName" class="py-1 pl-2 font-bold">Last Name: </label>
+         <input type="text" formControlName="lastName" required class="shadow-md py-2 px-2 border rounded w-fit" />
+        </div>
+ 
+        <hr />
+ 
+        <!-- Phone Number field -->
+        <div class="py-4 px-2 flex justify-between">
+         <label for="txtLastName" class="py-1 pl-2 font-bold">Phone Number: </label>
+         <input type="text" formControlName="phoneNumber" required class="shadow-md py-2 px-2 border rounded w-fit" />
+        </div>
+ 
+        <hr />
+ 
+        <!-- Address field -->
+        <div class="py-4 px-2 flex justify-between">
+         <label for="txtLastName" class="py-1 pl-2 font-bold">Address: </label>
+         <input type="text" formControlName="address" required class="shadow-md py-2 px-2 border rounded w-fit" />
+        </div>
+
+        <!-- Confirm button field -->
+        <div class="flex justify-center">
+          <button
+          type="submit"
+          class="py-3 px-2 my-5 w-2/3 font-bold rounded tracking-wide flex items-center justify-center"
+        >
+          <span *ngIf="!isLoading">Update Profile</span>
+          <span *ngIf="isLoading">
+            <svg
+              aria-hidden="true"
+              class="w-8 h-8 text-gray-300 animate-spin dark:text-gray-400 fill-green-800"
+              viewBox="0 0 100 101"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                fill="currentColor"
+              />
+              <path
+                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                fill="currentFill"
+              />
+            </svg>
+          </span>
+        </button>
+        </div>
+      </div>
+
+      </fieldset>
+     </form>
+  </div>
+</div>
