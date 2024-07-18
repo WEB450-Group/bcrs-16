@@ -16,7 +16,17 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./service-graph.component.scss']
 })
 export class ServiceGraphComponent {
+  // local variables
+  pieChartCheck: boolean = false;
+  stackedChartCheck: boolean = true;
+
   constructor(private route: ActivatedRoute,) {
 
+  }
+
+
+  changeChartView() {
+    this.pieChartCheck = !this.pieChartCheck;
+    this.stackedChartCheck = !this.stackedChartCheck;
   }
 }

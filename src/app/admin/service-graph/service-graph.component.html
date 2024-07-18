@@ -1,1 +1,32 @@
-<p>service-graph works!</p>
+<div class="service-graph-container">
+    <h1 class="text-center text-3xl primary-text pt-10">Service Charts</h1>
+    <p class="text-center text-sm py-1 italic">Here you can access the charts to see what has been the popular sellers and the not so popular ones.</p>
+    <div class="flex justify-center py-10">
+        <div class="px-5 py-2">
+            <button 
+            type="button" class="p-3 px-7 rounded-lg" 
+            (click)="changeChartView()" 
+            [disabled]="pieChartCheck"
+            [ngClass]="{'bg-gray-300 text-white cursor-default': pieChartCheck, 'primary text-white': !pieChartCheck}"
+            >
+            Pie Chart
+        </button>
+
+            <!-- Pie Chart -->
+
+        </div>
+        <div class="px-5 py-2">
+            <button 
+            type="button" class="p-3 rounded-lg" 
+            (click)="changeChartView()" 
+            [disabled]="stackedChartCheck"
+            [ngClass]="{'bg-gray-300 text-white cursor-default': stackedChartCheck, 'primary text-white': !stackedChartCheck}"
+            >
+            Stacked Chart
+        </button>
+
+            <!-- Stacked Chart -->
+
+        </div>
+    </div>
+</div>
