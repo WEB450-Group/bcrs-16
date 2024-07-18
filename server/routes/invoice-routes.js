@@ -241,12 +241,18 @@ router.get('/service-graph', async (req, res, next) => {
               //$group stage separates documents into groups according to a "group key" ie itemName
               { $group: {
                   //Get items names from line items 
-                  _id: "$lineItems.itemName",
+                  '_id': {
+                    title: "$lineItems.itemName",
+                    price: "$lineItems.price"
+                  },
                   //count and return the amount of items in each group by name
-                  itemCount: { $sum: 1 },
+                  'itemCount': { $sum: 1 },
                   // //push items into an array 
                   // details: { $push: "$lineItems"}
-              }}
+              }},
+              {
+                $sort: { '_id.title': 1 }
+              }
           // return an array of the grouped items for graphing   
           ]).toArray();
 
