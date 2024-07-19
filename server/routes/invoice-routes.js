@@ -220,7 +220,7 @@ router.post('/:employeeId', (req, res, next) => {
  *   get:
  *     tags:
  *       - Invoices
- *     summary: Retrieves all service requests from all invoices and retruns an array of with itemName and count for each service
+ *     summary: Retrieves all service requests from all invoices and returns an array of with itemName and count for each service
  *     description: Returns an array of services requests and amount from all invoices
  *     responses:
  *       200:
@@ -234,26 +234,25 @@ router.get('/service-graph', async (req, res, next) => {
   try {
       //connect to database and look up all invoices
       mongo(async (db) => {
-          const services = await db.collection('invoices').aggregate([            
-              //use mongodb aggregates to filter and collect itemNames and how many there are of each item in all invoices 
+          const services = await db.collection('invoices').aggregate([
+              //use mongodb aggregates to filter and collect itemNames and how many there are of each item in all invoices
               //$unwind deconstructs an array field from the input documents to output a document for each element
               { $unwind: "$lineItems" },
               //$group stage separates documents into groups according to a "group key" ie itemName
               { $group: {
-                  //Get items names from line items 
+                  //Get items names from line items
                   '_id': {
-                    title: "$lineItems.itemName",
-                    price: "$lineItems.price"
+                    title: "$lineItems.itemName"
                   },
                   //count and return the amount of items in each group by name
                   'itemCount': { $sum: 1 },
-                  // //push items into an array 
+                  // //push items into an array
                   // details: { $push: "$lineItems"}
               }},
               {
                 $sort: { '_id.title': 1 }
               }
-          // return an array of the grouped items for graphing   
+          // return an array of the grouped items for graphing
           ]).toArray();
 
           //If there is no service data send 404, no services found
@@ -262,7 +261,7 @@ router.get('/service-graph', async (req, res, next) => {
               error:'No services found in invoices'
             });
           }
-          //send array to client 
+          //send array to client
           res.status(200).json(services);
       });
   // Catch any database errors
