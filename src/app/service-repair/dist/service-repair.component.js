@@ -74,14 +74,16 @@ var ServiceRepairComponent = /** @class */ (function () {
         }
         return total;
     };
-    //print invoice function
+    //printer function for invoices 
     ServiceRepairComponent.prototype.printInvoice = function () {
-        var print = document.getElementById('printArea');
-        var content = document.body.innerHTML;
-        if (print) {
-            document.body.innerHTML = print.innerHTML;
-            window.print();
-            document.body.innerHTML = content;
+        var printArea = document.getElementById('printArea');
+        if (printArea) {
+            var printWindow = window.open('', '_blank', 'width=800,height=600');
+            printWindow === null || printWindow === void 0 ? void 0 : printWindow.document.open();
+            printWindow === null || printWindow === void 0 ? void 0 : printWindow.document.write("\n        <html>\n          <head>\n            <title>Print Invoice</title>\n            <style>\n              @media print {\n                body {\n                  font-family: Arial, sans-serif;\n                  padding: 20px;\n                }\n                .print-area {\n                  padding: 2rem;\n                }\n                .print-area img {\n                  display: block;\n                  margin: 0 auto;\n                }\n                .print-area h2 {\n                  margin-top: 2rem;\n                  color: rgb(34, 77, 49);\n                  font-size: 2.25rem;\n                  font-weight: 300;\n                  font-family: \"Inter var\", sans-serif;\n                }\n                .print-area div.flex {\n                  display: flex;\n                  justify-content: space-between;\n                  align-items: center;\n                  margin-bottom: 10px;\n                }\n                .print-area label {\n                  font-weight: bold;\n                  text-align: left;\n                  flex-basis: 30%;\n                }\n                .print-area p,\n                .print-area ul {\n                  text-align: right;\n                  flex-basis: 70%;\n                  margin: 0;\n                }\n                .print-area ul {\n                  list-style-type: none;\n                }\n              }\n            </style>\n          </head>\n          <body>\n            <div class=\"print-area\">\n              " + printArea.innerHTML + "\n            </div>\n          </body>\n        </html>\n        ");
+            printWindow === null || printWindow === void 0 ? void 0 : printWindow.document.close();
+            printWindow === null || printWindow === void 0 ? void 0 : printWindow.print();
+            printWindow === null || printWindow === void 0 ? void 0 : printWindow.close();
         }
     };
     //create invoice

@@ -2,11 +2,3 @@
   min-height: 90vh;
   background-color: #fff;
 }
-
-@media print {
-  #printArea {
-    padding-top: 12rem;
-    margin: 0 auto;
-    width: 80%;
-  }
-}

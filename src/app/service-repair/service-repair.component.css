@@ -1,12 +1,4 @@
 .service-repair-container {
   min-height: 90vh;
   background-color: #fff;
-}
-
-@media print {
-  #printArea {
-    padding-top: 12rem;
-    margin: 0 auto;
-    width: 80%;
-  }
 }/*# sourceMappingURL=service-repair.component.css.map */
