@@ -35,6 +35,7 @@ var ServiceRepairComponent = /** @class */ (function () {
         }, { updateOn: 'blur' });
         //initialize variables
         this.errMessage = '';
+        this.successMessage = '';
         this.isLoading = false;
         this.lineItems = [];
         this.customItem = 0;
@@ -91,6 +92,10 @@ var ServiceRepairComponent = /** @class */ (function () {
         var _this = this;
         var _a, _b, _c, _d;
         this.isLoading = true;
+        // Get session user employee ID for invoice 
+        var sessionUserString = this.cookieService.get('session_user');
+        var sessionUser = JSON.parse(sessionUserString);
+        var employeeId = sessionUser.employeeId;
         //check if at least one item is checked or a custom item is provided
         var isAnyItemChecked = this.lineItems.some(function (item) { return item.checked; });
         var isCustomItemProvided = !!this.customItem;
@@ -100,10 +105,12 @@ var ServiceRepairComponent = /** @class */ (function () {
             this.isLoading = false;
             return;
         }
-        // Get session user employee ID for invoice 
-        var sessionUserString = this.cookieService.get('session_user');
-        var sessionUser = JSON.parse(sessionUserString);
-        var employeeId = sessionUser.employeeId;
+        // //If email and password fields empty display error message
+        // if (!this.invoice.fullName || !this.invoice.customerEmail || !this.invoice.phoneNumber) {
+        //   this.errMessage = 'Please provide customer\'s name, email address, and phone number';
+        //   this.isLoading = false;
+        //   return;
+        // }
         // Create invoice 
         this.invoice = {
             employeeId: parseInt(employeeId, 10),
@@ -118,11 +125,16 @@ var ServiceRepairComponent = /** @class */ (function () {
             orderDate: this.date,
             customOrderDescription: (_d = this.serviceForm.get('customOrder')) === null || _d === void 0 ? void 0 : _d.value
         };
-        console.log('Invoice', this.invoice);
         // send the invoice to the server
         this.invoiceService.createInvoice(this.invoice).subscribe({
             next: function (response) {
+                //store response for populating invoice
+                _this.invoice = response;
                 console.log('Result from register API call', response);
+                //sucess message
+                _this.successMessage = "Invoice Sucessfully Created";
+                //scroll to top of page where sucess message is displayed 
+                window.scrollTo(0, 0);
                 _this.isLoading = false;
             },
             error: function (err) {
@@ -138,6 +150,22 @@ var ServiceRepairComponent = /** @class */ (function () {
                 return;
             }
         });
+        this.clearForm();
+    };
+    //clear form for next invoice creation 
+    ServiceRepairComponent.prototype.clearForm = function () {
+        // Reset form controls
+        this.serviceForm.reset({
+            fullName: null,
+            phoneNumber: null,
+            customerEmail: null,
+            customOrder: null
+        });
+        this.lineItems.forEach(function (item) { return item.checked = false; });
+        this.customItem = 0;
+        this.errMessage = '';
+        this.total = 0;
+        this.isLoading = false;
     };
     ServiceRepairComponent = __decorate([
         core_1.Component({

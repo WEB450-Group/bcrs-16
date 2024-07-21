@@ -1,10 +1,10 @@
 <div class="service-repair-container lg:p-8">
-  <!-- <div class="flex justify-between mx-auto w-full md:w-3/4 lg:w-1/3 2xl:w-1/4">
-    <button id="serviceRequest" class="w-full md:w-48 px-1.5 py-3 rounded-md hover:opacity-90">Create Service Request</button>
-    <button id="invoice" class="w-full md:w-48 px-1.5 py-3 rounded-md hover:opacity-90">Create Invoice</button>
-  </div> -->
+  <div class="flex justify-center">
+    <div *ngIf="successMessage" class="bg-green-50 text-green-900 text-center p-4 mt-2 rounded w-full lg:w-1/4" role="alert">
+      {{ successMessage }}
+    </div>
+  </div>
   <div class="flex flex-col lg:flex-row base-container justify-center lg:px-8">
-
     <!-- SERVICE REQUEST CONTAINER -->
     <div class="service-form-container w-full lg:w-1/2 py-4 px-8 lg:py-8">
       <h2 class="text-3xl lg:text-4xl pb-4 primary-text font-light">Service Request</h2>
@@ -63,7 +63,8 @@
           {{ errMessage }}
         </div>
 
-        <button (click)="createInvoice()" type="submit" [disabled]="serviceForm.invalid" class="w-full md:w-48 px-1.5 py-3 rounded-md hover:opacity-90">
+        <button (click)="createInvoice()" type="submit" [disabled]="serviceForm.invalid" [ngClass]="{'opacity-30': serviceForm.invalid, 'hover:opacity-90': !serviceForm.invalid}"
+        class="w-full md:w-48 px-1.5 py-3 rounded-md">
           <span *ngIf="!isLoading">Create Service</span>
           <span *ngIf="isLoading" role="status">
             <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-300 fill-green-500 m-auto"
@@ -87,8 +88,9 @@
     <!-- INVOICE CONTAINER -->
     <div class="invoice-container w-full lg:w-1/2 py-4 lg:py-8">
       <form id="printArea" action="submit" class="print-area px-8">
-        <img src="./assets/images/logo.png" alt="Bob's Computer Repair Shop Logo" width="260px" class="m-auto p-6 hidden">
-        <h2 class="text-3xl lg:text-4xl pb-4 primary-text font-light">Invoice</h2>
+        <img src="./assets/images/logo.png" alt="Bob's Computer Repair Shop Logo" width="260px"
+          class="m-auto p-6 hidden">
+        <h2 class="text-3xl lg:text-4xl pb-4 primary-text font-light">Invoice {{ invoice.invoiceId }}</h2>
         <div id="invoice">
           <div class="flex justify-between items-center mb-4">
             <label class="font-semibold">Date:</label>
@@ -146,15 +148,13 @@
 
           <br>
           <br>
-          <div class="flex items-center mb-8">
-            <label class="font-semibold">Signature:</label>
-            <p> ______________________________________________</p>
+          <div class="mb-8">
+            <label class="font-semibold">Signature: ______________________________________________</label>
           </div>
 
           <br>
-          <div class="flex items-center mb-8">
-            <label class="font-semibold">Date:</label>
-            <p> ________________________</p>
+          <div class="mb-8">
+            <label class="font-semibold"> Date:________________________</label>
           </div>
         </div>
 

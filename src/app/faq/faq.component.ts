@@ -70,6 +70,14 @@ export class FaqComponent {
         2. Click on the 'Service Graph' link.
         3. Choose either 'Pie Chart' or 'Bar Chart' to view the data in each graphical representation.`
       },
+      {
+        question: 'How to update User Profile?',
+        answer: `To learn how to update your profile follow these streps:
+        1. Once logged in, click on your name in the top right navigation to access the dropdown menu.
+        2. Click on the 'Profile' link
+        3. Click on the 'Edit' button in the top right of the profile information.
+        4. Change desired fields and click the 'Update Profile' button.`
+      },
       
     ];
   }

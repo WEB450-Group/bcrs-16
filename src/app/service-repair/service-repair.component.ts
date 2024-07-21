@@ -25,6 +25,7 @@ export class ServiceRepairComponent implements OnInit {
   //create invoice variables 
   lineItems: LineItem[];
   errMessage: string;
+  successMessage: string;
   isLoading: boolean;
   invoice: Invoice;
   customItem: number;
@@ -51,6 +52,7 @@ export class ServiceRepairComponent implements OnInit {
   ) {
     //initialize variables
     this.errMessage = '';
+    this.successMessage = '';
     this.isLoading = false;
     this.lineItems = [];
     this.customItem = 0;
@@ -163,27 +165,31 @@ export class ServiceRepairComponent implements OnInit {
       printWindow?.close();
     }
   }
-  
-    
+   
   //create invoice
   createInvoice() {
     this.isLoading = true;
-
+    
+    // Get session user employee ID for invoice 
+    const sessionUserString = this.cookieService.get('session_user');
+    const sessionUser = JSON.parse(sessionUserString); 
+    const employeeId = sessionUser.employeeId;
     //check if at least one item is checked or a custom item is provided
     const isAnyItemChecked = this.lineItems.some(item => item.checked);
     const isCustomItemProvided = !!this.customItem;
-    
+
     if (!isAnyItemChecked && !isCustomItemProvided) {
       //error message if not items or labor checked
       this.errMessage = 'Please select at least one service or provide a custom order.';
       this.isLoading = false;
       return;
     }
-    // Get session user employee ID for invoice 
-    const sessionUserString = this.cookieService.get('session_user');
-    const sessionUser = JSON.parse(sessionUserString); 
-    const employeeId = sessionUser.employeeId;
-
+    // //If email and password fields empty display error message
+    // if (!this.invoice.fullName || !this.invoice.customerEmail || !this.invoice.phoneNumber) {
+    //   this.errMessage = 'Please provide customer\'s name, email address, and phone number';
+    //   this.isLoading = false;
+    //   return;
+    // }
     // Create invoice 
     this.invoice = {
       employeeId: parseInt(employeeId, 10),
@@ -199,12 +205,17 @@ export class ServiceRepairComponent implements OnInit {
       customOrderDescription: this.serviceForm.get('customOrder')?.value 
     }
 
-    console.log('Invoice', this.invoice);
 
     // send the invoice to the server
     this.invoiceService.createInvoice(this.invoice).subscribe({
       next: (response) => {
+        //store response for populating invoice
+        this.invoice = response;
         console.log('Result from register API call', response);
+        //sucess message
+        this.successMessage = "Invoice Sucessfully Created";
+        //scroll to top of page where sucess message is displayed 
+        window.scrollTo(0, 0);
         this.isLoading = false;
       },
       error: (err) => {
@@ -219,5 +230,22 @@ export class ServiceRepairComponent implements OnInit {
           return;
       }
     });
+    this.clearForm();
   }
+
+  //clear form for next invoice creation 
+  clearForm() {
+    // Reset form controls
+    this.serviceForm.reset({
+      fullName: null,
+      phoneNumber: null,
+      customerEmail: null,
+      customOrder: null
+    });
+    this.lineItems.forEach(item => item.checked = false);
+    this.customItem = 0;
+    this.errMessage = '';
+    this.total = 0;
+    this.isLoading = false;
+  } 
 }

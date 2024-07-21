@@ -47,6 +47,10 @@ var FaqComponent = /** @class */ (function () {
                 question: 'How to use Service Graph?',
                 answer: "To learn how to use the service graph, follow these steps:\n        1. Once logged in, click on your name in the top right navigation to access the dropdown menu.\n        2. Click on the 'Service Graph' link.\n        3. Choose either 'Pie Chart' or 'Bar Chart' to view the data in each graphical representation."
             },
+            {
+                question: 'How to update User Profile?',
+                answer: "To learn how to update your profile follow these streps:\n        1. Once logged in, click on your name in the top right navigation to access the dropdown menu.\n        2. Click on the 'Profile' link\n        3. Click on the 'Edit' button in the top right of the profile information.\n        4. Change desired fields and click the 'Update Profile' button."
+            },
         ];
     }
     FaqComponent.prototype.openDialog = function (faq) {
