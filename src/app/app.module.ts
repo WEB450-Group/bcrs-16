@@ -37,6 +37,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
 import { FaqDialogComponent } from './faq/faq-dialog/faq-dialog.component';
+import { InvoiceComponent } from './invoice/invoice.component';
 
 
 
@@ -52,6 +53,7 @@ import { FaqDialogComponent } from './faq/faq-dialog/faq-dialog.component';
     ProfileComponent,
     EmployeeDirectoryComponent,
     FaqDialogComponent,
+    InvoiceComponent,
   ],
   imports: [
     BrowserModule,

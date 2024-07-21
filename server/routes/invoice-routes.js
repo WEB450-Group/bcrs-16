@@ -37,6 +37,7 @@ const lineItemSchema = {
 const invoiceSchema = {
   type: 'object',
   properties: {
+    employeeId: { type: 'number' },
     customerEmail: { type: 'string' },
     phoneNumber: { type: 'number' },
     fullName: { type: 'string' },
@@ -44,9 +45,11 @@ const invoiceSchema = {
     partsAmount: { type: 'number' },
     laborAmount: { type: 'number' },
     lineItemTotal: { type: 'number' },
-    invoiceTotal: { type: 'number' }
+    invoiceTotal: { type: 'number' },
+    orderDate: { type: 'string' },
+    customOrderDescription: { type: 'string', nullable: true } 
   },
-  required: [ 'customerEmail', 'phoneNumber', 'fullName', 'lineItems', 'partsAmount', 'laborAmount', 'lineItemTotal', 'invoiceTotal' ],
+  required: [ 'employeeId', 'customerEmail', 'phoneNumber', 'fullName', 'lineItems', 'partsAmount', 'laborAmount', 'lineItemTotal', 'invoiceTotal' ],
   additionalProperties: false
 };
 
@@ -123,7 +126,7 @@ const invoiceSchema = {
 router.post('/:employeeId', (req, res, next) => {
   try {
     // Get the employee ID from the request parameters
-    let { employeeId } = req.params.employeeId;
+    let employeeId  = req.params.employeeId;
 
     // ParseInt the employee ID
     employeeId = parseInt(employeeId, 10);
@@ -199,7 +202,8 @@ router.post('/:employeeId', (req, res, next) => {
         laborAmount: invoice.laborAmount,
         lineItemTotal: invoice.lineItemTotal,
         invoiceTotal: invoice.invoiceTotal,
-        orderDate: moment().tz('America/Chicago').format('dddd MM-DD-YYYY') // CST
+        orderDate: moment().tz('America/Chicago').format('dddd MM-DD-YYYY'), // CST
+        customOrderDescription: invoice.customOrderDescription,
       };
 
       // Insert the new invoice into the invoices collection

@@ -20,7 +20,7 @@ export class InvoiceService {
   constructor(private http: HttpClient) { }
 
   createInvoice(invoice: Invoice) {
-    this.http.post('/api/invoices/' + invoice.employeeId, invoice);
+    return this.http.post('/api/invoices/' + invoice.employeeId, invoice);
   }
 
   findAllServiceRequests() {

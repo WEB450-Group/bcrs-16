@@ -1,129 +1,164 @@
-<div class="service-repair-container  lg:p-8">
+<div class="service-repair-container lg:p-8">
   <!-- <div class="flex justify-between mx-auto w-full md:w-3/4 lg:w-1/3 2xl:w-1/4">
     <button id="serviceRequest" class="w-full md:w-48 px-1.5 py-3 rounded-md hover:opacity-90">Create Service Request</button>
     <button id="invoice" class="w-full md:w-48 px-1.5 py-3 rounded-md hover:opacity-90">Create Invoice</button>
   </div> -->
-  <div class="flex flex-col lg:flex-row base-container">
+  <div class="flex flex-col lg:flex-row base-container justify-center lg:px-8">
 
     <!-- SERVICE REQUEST CONTAINER -->
     <div class="service-form-container w-full lg:w-1/2 py-4 px-8 lg:py-8">
-      <h2 class="pt-6 lg:pt-16 2xl:pt-24 text-3xl lg:text-4xl pb-4 primary-text font-light">Service Request</h2>
-      <form action="submit">
-        <label class="font-semibold">First Name</label>
-        <input id="firstName" type="text" placeholder="First Name"
+      <h2 class="text-3xl lg:text-4xl pb-4 primary-text font-light">Service Request</h2>
+      <form [formGroup]="serviceForm">
+        <label class="font-semibold">Full Name</label>
+        <input id="fullName" type="text" formControlName="fullName" placeholder="Full Name" required
+          [ngClass]="{'border-red-600 placeholder-err': serviceForm.controls['fullName'].invalid && (serviceForm.controls['fullName'].dirty || serviceForm.controls['fullName'].touched)}"
           class="mb-3 block w-full p-2 border border-gray-300 rounded-md lg:w-3/4 focus:outline-none focus:shadow focus:border-blue-200">
 
-        <label class="font-semibold">Last Name</label>
-        <input id="lastName" type="text" placeholder="Last Name"
-          class="mb-3 block w-full p-2 border border-gray-300 rounded-md lg:w-3/4 focus:outline-none focus:shadow focus:border-blue-200">
+        <div
+          *ngIf="serviceForm.controls['fullName'].invalid && (serviceForm.controls['fullName'].dirty || serviceForm.controls['fullName'].touched)"
+          class="bg-red-50 text-red-800 p-2 mt-2 rounded w-full lg:w-3/4" role="alert">
+          <div *ngIf="serviceForm.controls['fullName'].hasError('required')">Full Name is required.</div>
+        </div>
 
         <label class="font-semibold">Phone Number</label>
-        <input id="phoneNumber" type="text" placeholder="(555)123-4567"
+        <input id="phoneNumber" type="text" formControlName="phoneNumber" placeholder="(555)123-4567" required
+          [ngClass]="{'border-red-600 placeholder-err': serviceForm.controls['phoneNumber'].invalid && (serviceForm.controls['phoneNumber'].dirty || serviceForm.controls['phoneNumber'].touched)}"
           class="mb-6 block w-full p-2 border border-gray-300 rounded-md lg:w-3/4 focus:outline-none focus:shadow focus:border-blue-200">
 
-        <div class="flex items-center mb-6">
-          <input type="checkbox" id="passwordReset" name="service" value="Password Reset" class="w-6 h-6">
-          <label class="font-semibold ml-2" for="passwordReset">Password Reset ($39.99)</label>
+        <div
+          *ngIf="serviceForm.controls['phoneNumber'].invalid && (serviceForm.controls['phoneNumber'].dirty || serviceForm.controls['phoneNumber'].touched)"
+          class="bg-red-50 text-red-800 p-2 mt-2 rounded w-full lg:w-3/4" role="alert">
+          <div *ngIf="serviceForm.controls['phoneNumber'].hasError('required')">Phone Number is required.</div>
         </div>
 
-        <div class="flex items-center mb-6">
-          <input type="checkbox" id="spywareRemoval" name="service" value="Spyware Removal" class="w-6 h-6">
-          <label class="font-semibold ml-2" for="spywareRemoval">Spyware Removal ($99.99)</label>
+        <label class="font-semibold">Email</label>
+        <input id="customerEmail" type="text" formControlName="customerEmail" placeholder="customer@example.com"
+          required
+          [ngClass]="{'border-red-600 placeholder-err': serviceForm.controls['customerEmail'].invalid && (serviceForm.controls['customerEmail'].dirty || serviceForm.controls['customerEmail'].touched)}"
+          class="mb-6 block w-full p-2 border border-gray-300 rounded-md lg:w-3/4 focus:outline-none focus:shadow focus:border-blue-200">
+
+        <div
+          *ngIf="serviceForm.controls['customerEmail'].invalid && (serviceForm.controls['customerEmail'].dirty || serviceForm.controls['customerEmail'].touched)"
+          class="bg-red-50 text-red-800 p-2 mt-2 rounded w-full lg:w-3/4" role="alert">
+          <div *ngIf="serviceForm.controls['customerEmail'].hasError('required')">Email is required.</div>
+          <div *ngIf="serviceForm.controls['customerEmail'].hasError('email')">Must be a valid email address.</div>
         </div>
 
-        <div class="flex items-center mb-6">
-          <input type="checkbox" id="ramUpgrade" name="service" value="RAM Upgrade" class="w-6 h-6 ">
-          <label class="font-semibold ml-2" for="ramUpgrade">RAM Upgrade ($129.99)</label>
+        <div *ngFor="let service of lineItems; let i = index" class="flex items-center mb-6">
+          <input type="checkbox" [(ngModel)]="service.checked" [ngModelOptions]="{standalone: true}"
+            [id]="service.itemId" class="w-6 h-6">
+          <label class="font-semibold ml-2" [for]="service.itemId">{{ service.itemName }} (${{ service.price }})</label>
         </div>
 
-        <div class="flex items-center mb-6">
-          <input type="checkbox" id="softwareInstallation" name="service" value="Software Installation" class="w-6 h-6">
-          <label class="font-semibold ml-2" for="softwareInstallation">Software Installation ($49.99)</label>
-        </div>
+        <label class="font-semibold">Custom Order/Labor</label>
+        <input id="labor" type="number" [(ngModel)]="customItem" [ngModelOptions]="{standalone: true}"
+          placeholder="Enter hours"
+          class="mb-6 block w-full p-2 border border-gray-300 rounded-md lg:w-3/4 focus:outline-none focus:shadow focus:border-blue-200">
 
-        <div class="flex items-center mb-6">
-          <input type="checkbox" id="pcTuneup" name="service" value="PC Tune-up" class="w-6 h-6">
-          <label class="font-semibold ml-2" for="pcTuneup">PC Tune-up ($89.99)</label>
-        </div>
-
-        <div class="flex items-center mb-6">
-          <input type="checkbox" id="keyboardCleaning" name="service" value="Keyboard Cleaning" class="w-6 h-6">
-          <label class="font-semibold ml-2" for="keyboardCleaning">Keyboard Cleaning ($45.00)</label>
-        </div>
-
-        <div class="flex items-center mb-6">
-          <input type="checkbox" id="diskCleanup" name="service" value="Disk Clean-up" class="w-6 h-6">
-          <label class="font-semibold ml-2" for="diskCleanup">Disk Clean-up ($129.99)</label>
-        </div>
-
-        <label class="font-semibold">Custom Service ($50/hour)</label>
-        <textarea id="customOrder" placeholder="Describe the custom item"
+        <label class="font-semibold">Notes/Custom Order</label>
+        <textarea id="customOrder" formControlName="customOrder" placeholder="Notes/Description of order"
           class="mb-3 block w-full lg:w-2/3 p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200"></textarea>
 
-        <button type="submit" id="submit" class="w-full md:w-48 px-1.5 py-3 rounded-md hover:opacity-90">Create Service
-          Request</button>
+        <div *ngIf="errMessage" class="bg-red-50 text-red-800 p-2 mt-2 rounded w-full lg:w-1/2" role="alert">
+          {{ errMessage }}
+        </div>
+
+        <button (click)="createInvoice()" type="submit" [disabled]="serviceForm.invalid" class="w-full md:w-48 px-1.5 py-3 rounded-md hover:opacity-90">
+          <span *ngIf="!isLoading">Create Service</span>
+          <span *ngIf="isLoading" role="status">
+            <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-300 fill-green-500 m-auto"
+              viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                fill="currentColor" />
+              <path
+                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                fill="currentFill" />
+            </svg>
+          </span>
+        </button>
       </form>
     </div>
 
+
+    <!-- DIVIDER -->
+    <div class="border-l border-green-900 lg:my-24 pr-8"></div>
+
     <!-- INVOICE CONTAINER -->
-    <div class="invoice-container w-full lg:w-1/2 py-4 px-8 lg:py-8">
-      <img src="./assets/images/logo.png" alt="Bob's Computer Repair Shop Logo" width="300px" class="hidden">
-      <h2 class="pt-6 lg:pt-16 2xl:pt-24 text-3xl lg:text-4xl pb-4 primary-text font-light">Invoice</h2>
-      <div id="invoice">
-        <div class="flex justify-between items-center mb-4">
-          <label class="font-semibold">Date:</label>
-          <p id="invoiceDate">7/15/2024</p>
+    <div class="invoice-container w-full lg:w-1/2 py-4 lg:py-8">
+      <form id="printArea" action="submit" class="px-8">
+        <img src="./assets/images/logo.png" alt="Bob's Computer Repair Shop Logo" width="260px" class="m-auto p-6 hidden">
+        <h2 class="text-3xl lg:text-4xl pb-4 primary-text font-light">Invoice</h2>
+        <div id="invoice">
+          <div class="flex justify-between items-center mb-4">
+            <label class="font-semibold">Date:</label>
+            <p id="invoiceDate">{{ invoice.orderDate }}</p>
+          </div>
+
+          <div class="flex justify-between items-center mb-4">
+            <label class="font-semibold">Full Name:</label>
+            <p id="fullName">{{ invoice.fullName }}</p>
+          </div>
+
+          <div class="flex justify-between items-center mb-4">
+            <label class="font-semibold">Phone Number:</label>
+            <p id="invoicePhoneNumber">{{ invoice.phoneNumber }}</p>
+          </div>
+
+          <div class="flex justify-between items-center mb-4">
+            <label class="font-semibold">Email:</label>
+            <p id="invoiceEmail">{{ invoice.customerEmail }}</p>
+          </div>
+
+          <br>
+          <br>
+          <div class="flex justify-between items-center mb-4">
+            <label class="font-semibold">Services:</label>
+            <ul class="list-disc list-inside">
+              <li *ngFor="let item of invoice?.lineItems" class="list-none text-right">
+                {{ item.itemName }} ({{ item.price | currency:'USD' }})
+              </li>
+            </ul>
+          </div>
+
+          <div class="flex justify-between items-center mb-4">
+            <label class="font-semibold">Notes:</label>
+            <p id="invoiceEmail">{{ invoice.customOrderDescription }}</p>
+          </div>
+
+          <br>
+          <br>
+          <div class="flex justify-between items-center mb-4">
+            <label class="font-semibold">Tax:</label>
+            <p id="taxAmount">{{ ((invoice.laborAmount || 0) + (invoice.lineItemTotal || 0)) * 0.09 | currency:'USD' }}
+            </p>
+          </div>
+
+          <div class="flex justify-between items-center mb-4">
+            <label class="font-semibold">Total:</label>
+            <p id="totalAmount" class="font-bold">{{ invoice.invoiceTotal | currency:'USD' }}</p>
+          </div>
+
+          <br>
+          <br>
+          <div class="flex items-center mb-8">
+            <label class="font-semibold">Signature:</label>
+            <p> ______________________________________________</p>
+          </div>
+
+          <br>
+          <div class="flex items-center mb-8">
+            <label class="font-semibold">Date:</label>
+            <p> ________________________</p>
+          </div>
         </div>
 
-        <div class="flex justify-between items-center mb-4">
-          <label class="font-semibold">Full Name:</label>
-          <p id="fullName">Jo Brumfield</p>
+      </form>
+      <button (click)="printInvoice()" class="mt-4 ml-8 flex py-3 px-4 rounded-lg">
+        <p class=" font-semi-bold text-white pr-2">Print Invoice</p>
+        <div>
+          <i class="fa-solid fa-print text-white"></i>
         </div>
-
-        <div class="flex justify-between items-center mb-4">
-          <label class="font-semibold">Phone Number:</label>
-          <p id="invoicePhoneNumber">(555)123-4567</p>
-        </div>
-
-        <br>
-        <br>
-        <div class="flex justify-between items-center mb-4">
-          <label class="font-semibold">Services:</label>
-          <ul class="list-disc list-inside">
-            <li id="service1" class="list-none text-right">Password Reset ($39.99)</li>
-            <li id="service2" class="list-none text-right">Spyware Removal ($99.99)</li>
-          </ul>
-        </div>
-
-        <br>
-        <br>
-        <div class="flex justify-between items-center mb-4">
-          <label class="font-semibold">Tax:</label>
-          <p id="taxAmount">$12.60</p>
-        </div>
-
-        <div class="flex justify-between items-center mb-4">
-          <label class="font-semibold">Total:</label>
-          <p id="totalAmount" class="font-bold">$152.58</p>
-        </div>
-
-        <br>
-        <br>
-        <div class="flex  items-center mb-8">
-          <label class="font-semibold">Signature:</label>
-          <p> ______________________________________________</p>
-        </div>
-
-        <br>
-        <div class="flex items-center mb-8">
-          <label class="font-semibold">Date:</label>
-          <p> ________________________</p>
-        </div>
-
-      </div>
-      <a href="">
-        <i class="fa-solid fa-print fa-2xl primary-text"></i>
-      </a>
+      </button>
     </div>
   </div>
-</div>

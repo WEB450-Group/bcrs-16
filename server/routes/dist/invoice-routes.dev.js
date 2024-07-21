@@ -45,6 +45,9 @@ var lineItemSchema = {
 var invoiceSchema = {
   type: 'object',
   properties: {
+    employeeId: {
+      type: 'number'
+    },
     customerEmail: {
       type: 'string'
     },
@@ -66,9 +69,16 @@ var invoiceSchema = {
     },
     invoiceTotal: {
       type: 'number'
+    },
+    orderDate: {
+      type: 'string'
+    },
+    customOrderDescription: {
+      type: 'string',
+      nullable: true
     }
   },
-  required: ['customerEmail', 'phoneNumber', 'fullName', 'lineItems', 'partsAmount', 'laborAmount', 'lineItemTotal', 'invoiceTotal'],
+  required: ['employeeId', 'customerEmail', 'phoneNumber', 'fullName', 'lineItems', 'partsAmount', 'laborAmount', 'lineItemTotal', 'invoiceTotal'],
   additionalProperties: false
 }; // Routes
 
@@ -225,8 +235,9 @@ router.post('/:employeeId', function (req, res, next) {
                 laborAmount: invoice.laborAmount,
                 lineItemTotal: invoice.lineItemTotal,
                 invoiceTotal: invoice.invoiceTotal,
-                orderDate: moment().tz('America/Chicago').format('dddd MM-DD-YYYY') // CST
-
+                orderDate: moment().tz('America/Chicago').format('dddd MM-DD-YYYY'),
+                // CST
+                customOrderDescription: invoice.customOrderDescription
               }; // Insert the new invoice into the invoices collection
 
               _context.next = 16;

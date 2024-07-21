@@ -15,7 +15,7 @@ interface lineItem {
 }
 
 export interface Invoice {
-    invoiceId: number;
+    invoiceId?: number;
     employeeId: number;
     customerEmail: string;
     phoneNumber: number;
@@ -26,4 +26,5 @@ export interface Invoice {
     lineItemTotal: number;
     invoiceTotal: number;
     orderDate: string;
+    customOrderDescription?: string;
 }

@@ -43,3 +43,40 @@ const items =
   }
 ]
 db.lineItems.insertMany(items);
+
+
+invoiceOne = {
+  "invoiceId": 300,
+  "employeeId": 1016,
+  "fullName": "test",
+  "phoneNumber": "1234567890",
+  "customerEmail": "email@email.com",
+  "lineItems": [
+    {
+      "itemId": 1,
+      "itemName": "Password Reset",
+      "price": 39.99,
+      "checked": true
+    },
+    {
+      "itemId": 2,
+      "itemName": "Spyware Removal",
+      "price": 99.99,
+      "checked": true
+    },
+    {
+      "itemId": 3,
+      "itemName": "RAM Upgrade",
+      "price": 129.99,
+      "checked": true
+    }
+  ],
+  "partsAmount": 0,
+  "laborAmount": 100,
+  "lineItemTotal": 269.97,
+  "invoiceTotal": 369.97,
+  "orderDate": "7/20/2024",
+  "customOrderDescription": "Some interesting service text"
+}
+
+db.invoices.insertOne(invoiceOne);

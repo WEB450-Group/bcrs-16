@@ -1,0 +1,72 @@
+<form action="submit" class="px-8">
+  <img src="./assets/images/logo.png" alt="Bob's Computer Repair Shop Logo" width="300px" class="hidden">
+  <h2 class="text-3xl lg:text-4xl pb-4 primary-text font-light">Invoice</h2>
+  <div id="invoice">
+    <div class="flex justify-between items-center mb-4">
+      <label class="font-semibold">Date:</label>
+      <p id="invoiceDate">{{ invoice?.orderDate }}</p>
+    </div>
+
+    <div class="flex justify-between items-center mb-4">
+      <label class="font-semibold">Full Name:</label>
+      <p id="fullName">{{ invoice?.fullName }}</p>
+    </div>
+
+    <div class="flex justify-between items-center mb-4">
+      <label class="font-semibold">Phone Number:</label>
+      <p id="invoicePhoneNumber">{{ invoice?.phoneNumber }}</p>
+    </div>
+
+    <div class="flex justify-between items-center mb-4">
+      <label class="font-semibold">Email:</label>
+      <p id="invoiceEmail">{{ invoice?.customerEmail }}</p>
+    </div>
+
+    <br>
+    <br>
+    <div class="flex justify-between items-center mb-4">
+      <label class="font-semibold">Services:</label>
+      <ul class="list-disc list-inside">
+        <li *ngFor="let item of invoice?.lineItems" class="list-none text-right">
+          {{ item.itemName }} ({{ item.price | currency:'USD' }})
+        </li>
+      </ul>
+    </div>
+
+    <div class="flex justify-between items-center mb-4">
+      <label class="font-semibold">Notes:</label>
+      <p id="invoiceEmail">{{ invoice?.customOrderDescription }}</p>
+    </div>
+
+    <br>
+    <br>
+    <div class="flex justify-between items-center mb-4">
+      <label class="font-semibold">Tax:</label>
+      <p id="taxAmount">{{ ((invoice?.laborAmount || 0) + (invoice?.lineItemTotal || 0)) * 0.09 | currency:'USD' }}</p>
+    </div>
+
+    <div class="flex justify-between items-center mb-4">
+      <label class="font-semibold">Total:</label>
+      <p id="totalAmount" class="font-bold">{{ invoice?.invoiceTotal | currency:'USD' }}</p>
+    </div>
+
+    <br>
+    <br>
+    <div class="flex items-center mb-8">
+      <label class="font-semibold">Signature:</label>
+      <p> ______________________________________________</p>
+    </div>
+
+    <br>
+    <div class="flex items-center mb-8">
+      <label class="font-semibold">Date:</label>
+      <p> ________________________</p>
+    </div>
+  </div>
+  <button class="mt-4 flex py-3 px-4 rounded-lg">
+    <p class=" font-semi-bold text-white pr-2">Print Invoice</p>
+    <div>
+      <i class="fa-solid fa-print text-white"></i>
+    </div>
+  </button>
+</form>

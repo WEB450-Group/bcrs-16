@@ -20,6 +20,7 @@ import { ServiceRepairComponent } from './service-repair/service-repair.componen
 import { FaqComponent } from './faq/faq.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
+import { InvoiceComponent } from './invoice/invoice.component';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
 export const routes: Routes = [
@@ -47,7 +48,11 @@ export const routes: Routes = [
       },
       {
         path: 'service-repair',
-        component: ServiceRepairComponent
+        component: ServiceRepairComponent,
+      },
+      {
+        path: 'invoice',
+        component: InvoiceComponent
       },
       {
         path: 'faq',

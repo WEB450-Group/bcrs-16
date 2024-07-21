@@ -44,6 +44,7 @@ var app_routing_module_1 = require("./app-routing.module");
 var shared_module_1 = require("./shared/shared.module");
 var employee_directory_component_1 = require("./employee-directory/employee-directory.component");
 var faq_dialog_component_1 = require("./faq/faq-dialog/faq-dialog.component");
+var invoice_component_1 = require("./invoice/invoice.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -60,6 +61,7 @@ var AppModule = /** @class */ (function () {
                 profile_component_1.ProfileComponent,
                 employee_directory_component_1.EmployeeDirectoryComponent,
                 faq_dialog_component_1.FaqDialogComponent,
+                invoice_component_1.InvoiceComponent,
             ],
             imports: [
                 platform_browser_1.BrowserModule,

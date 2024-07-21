@@ -1,0 +1,6 @@
+.invoice-container {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}/*# sourceMappingURL=invoice.component.css.map */
