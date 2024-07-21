@@ -19,7 +19,7 @@ export class InvoiceService {
 
   constructor(private http: HttpClient) { }
 
-  createInvoice(invoice: Invoice) {
+  createInvoice(invoice: Invoice): Observable<any> {
     return this.http.post('/api/invoices/' + invoice.employeeId, invoice);
   }
 
