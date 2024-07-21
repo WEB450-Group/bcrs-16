@@ -1,3 +1,4 @@
+import { ChartModule } from 'primeng/chart';
 /*
 ============================================
 ; Title:  app.module.ts
@@ -12,7 +13,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule, FormsModule, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
@@ -72,7 +73,8 @@ import { InvoiceComponent } from './invoice/invoice.component';
     MatInputModule,
     MatStepperModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    ChartModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
