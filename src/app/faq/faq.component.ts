@@ -49,10 +49,28 @@ export class FaqComponent {
         4. Click on 'Employee Directory'.`
       },
       {
-        question: 'How to know information about our location?',
-        answer: `To know information about our location, follow these steps:
-        1. Navigate to the about page by clicking 'About' in the top right of the home page.`
+        question: 'How create service request?',
+        answer: `To learn how to create a service request, follow these steps:
+        1. Navigate to 'Service Repair' in the Navigation bar or, when logged in, click the 'Create New Service' button on the home screen.
+        2. Fill out the 'Service Request' form on the left side of the page (NOTE: Full Name, Phone Number, Email, and at least one service must be marked or the form will not submit).
+        3. Click on the 'Create Service' button at the bottom of the Service Request form; all data should populate in the 'Invoice' section on the right.`
       },
+      {
+        question: 'How print an invoice?',
+        answer: `To learn how to print an invoice, follow these steps:
+        1. After creating a service request, the data should populate on the right-hand side in the 'Invoice' section.
+        2. Go over the information carefully with the client and make sure fields are correct.
+        3. If all fields are correct, click on the 'Print' button at the bottom of the form.
+        4. Print the document and give it to the client to bring back to retrieve their order upon completion.`
+      },
+      {
+        question: 'How to use Service Graph?',
+        answer: `To learn how to use the service graph, follow these steps:
+        1. Once logged in, click on your name in the top right navigation to access the dropdown menu.
+        2. Click on the 'Service Graph' link.
+        3. Choose either 'Pie Chart' or 'Bar Chart' to view the data in each graphical representation.`
+      },
+      
     ];
   }
 
