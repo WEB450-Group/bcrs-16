@@ -88,21 +88,23 @@ var invoiceSchema = {
  * /api/invoices/{employeeId}:
  *   post:
  *     tags:
- *      - Invoices
+ *       - Invoices
  *     description: API for creating new Invoices
  *     summary: Customer Invoices
  *     parameters:
  *       - name: employeeId
  *         in: path
  *         required: true
- *         description: Employee Id
+ *         description: Employee Id used to identify the employee creating the invoice.
  *         schema:
  *           type: string
  *     requestBody:
- *       description: Invoice Information
+ *       description: Invoice Information required to create a new invoice entry.
+ *       required: true
  *       content:
  *         application/json:
  *           schema:
+ *             type: object
  *             required:
  *               - customerEmail
  *               - phoneNumber
@@ -115,40 +117,57 @@ var invoiceSchema = {
  *             properties:
  *               customerEmail:
  *                 type: string
+ *                 description: The customer's email address.
  *               phoneNumber:
- *                 type: number
+ *                 type: string
+ *                 description: The customer's phone number.
  *               fullName:
  *                 type: string
+ *                 description: The full name of the customer.
  *               lineItems:
  *                 type: array
+ *                 description: List of services and products included in the invoice.
  *                 items:
  *                   type: object
  *                   properties:
  *                     itemId:
  *                       type: number
+ *                       description: Unique identifier for an item.
  *                     itemName:
  *                       type: string
+ *                       description: Name of the item or service.
  *                     price:
  *                       type: number
+ *                       description: Price of the item or service.
+ *                     checked:
+ *                       type: boolean
+ *                       description: Indicates whether the item is selected.
  *               partsAmount:
  *                 type: number
+ *                 description: Total cost of parts used in the service.
  *               laborAmount:
  *                 type: number
+ *                 description: Total labor cost.
  *               lineItemTotal:
  *                 type: number
+ *                 description: Total of all line items.
  *               invoiceTotal:
  *                 type: number
+ *                 description: Final total of the invoice including all additions.
+ *               customOrderDescription:
+ *                 type: string
+ *                 description: Additional description or notes about the order.
  *     responses:
  *       '201':
- *         description: Invoice created
+ *         description: Invoice created successfully.
  *       '400':
- *         description: Bad request
+ *         description: Bad request due to invalid inputs or malformed data.
  *       '404':
- *         description: Employee not found
+ *         description: Employee not found with the given ID.
  *       '500':
- *         description: Server Exception
+ *         description: Internal server error.
  *       '501':
- *         description: MongoDB Exception
+ *         description: Database handling exception.
  */
 
 router.post('/:employeeId', function (req, res, next) {
@@ -265,7 +284,7 @@ router.post('/:employeeId', function (req, res, next) {
  *   get:
  *     tags:
  *       - Invoices
- *     summary: Retrieves all service requests from all invoices and retruns an array of with itemName and count for each service
+ *     summary: Retrieves all service requests from all invoices and returns an array of with itemName and count for each service
  *     description: Returns an array of services requests and amount from all invoices
  *     responses:
  *       200:
@@ -290,23 +309,29 @@ router.get('/service-graph', function _callee3(req, res, next) {
                   switch (_context2.prev = _context2.next) {
                     case 0:
                       _context2.next = 2;
-                      return regeneratorRuntime.awrap(db.collection('invoices').aggregate([//use mongodb aggregates to filter and collect itemNames and how many there are of each item in all invoices 
+                      return regeneratorRuntime.awrap(db.collection('invoices').aggregate([//use mongodb aggregates to filter and collect itemNames and how many there are of each item in all invoices
                       //$unwind deconstructs an array field from the input documents to output a document for each element
                       {
                         $unwind: "$lineItems"
                       }, //$group stage separates documents into groups according to a "group key" ie itemName
                       {
                         $group: {
-                          //Get items names from line items 
-                          _id: "$lineItems.itemName",
+                          //Get items names from line items
+                          '_id': {
+                            title: "$lineItems.itemName"
+                          },
                           //count and return the amount of items in each group by name
-                          itemCount: {
+                          'itemCount': {
                             $sum: 1
-                          } // //push items into an array 
+                          } // //push items into an array
                           // details: { $push: "$lineItems"}
 
                         }
-                      } // return an array of the grouped items for graphing   
+                      }, {
+                        $sort: {
+                          '_id.title': 1
+                        }
+                      } // return an array of the grouped items for graphing
                       ]).toArray());
 
                     case 2:
@@ -317,7 +342,7 @@ router.get('/service-graph', function _callee3(req, res, next) {
                         res.status(404).json({
                           error: 'No services found in invoices'
                         });
-                      } //send array to client 
+                      } //send array to client
 
 
                       res.status(200).json(services);

@@ -61,21 +61,23 @@ const invoiceSchema = {
  * /api/invoices/{employeeId}:
  *   post:
  *     tags:
- *      - Invoices
+ *       - Invoices
  *     description: API for creating new Invoices
  *     summary: Customer Invoices
  *     parameters:
  *       - name: employeeId
  *         in: path
  *         required: true
- *         description: Employee Id
+ *         description: Employee Id used to identify the employee creating the invoice.
  *         schema:
  *           type: string
  *     requestBody:
- *       description: Invoice Information
+ *       description: Invoice Information required to create a new invoice entry.
+ *       required: true
  *       content:
  *         application/json:
  *           schema:
+ *             type: object
  *             required:
  *               - customerEmail
  *               - phoneNumber
@@ -88,40 +90,57 @@ const invoiceSchema = {
  *             properties:
  *               customerEmail:
  *                 type: string
+ *                 description: The customer's email address.
  *               phoneNumber:
- *                 type: number
+ *                 type: string
+ *                 description: The customer's phone number.
  *               fullName:
  *                 type: string
+ *                 description: The full name of the customer.
  *               lineItems:
  *                 type: array
+ *                 description: List of services and products included in the invoice.
  *                 items:
  *                   type: object
  *                   properties:
  *                     itemId:
  *                       type: number
+ *                       description: Unique identifier for an item.
  *                     itemName:
  *                       type: string
+ *                       description: Name of the item or service.
  *                     price:
  *                       type: number
+ *                       description: Price of the item or service.
+ *                     checked:
+ *                       type: boolean
+ *                       description: Indicates whether the item is selected.
  *               partsAmount:
  *                 type: number
+ *                 description: Total cost of parts used in the service.
  *               laborAmount:
  *                 type: number
+ *                 description: Total labor cost.
  *               lineItemTotal:
  *                 type: number
+ *                 description: Total of all line items.
  *               invoiceTotal:
  *                 type: number
+ *                 description: Final total of the invoice including all additions.
+ *               customOrderDescription:
+ *                 type: string
+ *                 description: Additional description or notes about the order.
  *     responses:
  *       '201':
- *         description: Invoice created
+ *         description: Invoice created successfully.
  *       '400':
- *         description: Bad request
+ *         description: Bad request due to invalid inputs or malformed data.
  *       '404':
- *         description: Employee not found
+ *         description: Employee not found with the given ID.
  *       '500':
- *         description: Server Exception
+ *         description: Internal server error.
  *       '501':
- *         description: MongoDB Exception
+ *         description: Database handling exception.
  */
 router.post('/:employeeId', (req, res, next) => {
   try {
