@@ -27,11 +27,12 @@ const lineItemSchema = {
     properties: {
       itemId: { type: 'number' },
       itemName: { type: 'string' },
-      price: { type: 'number' }
+      price: { type: 'number' },
+      checked: { type: 'boolean'}
     },
+    required: [ 'itemId', 'itemName' , 'price', 'checked' ],
+    additionalProperties: false
   },
-  required: [ 'itemId', 'itemName' , 'price' ],
-  additionalProperties: false
 };
 
 const invoiceSchema = {
@@ -47,7 +48,7 @@ const invoiceSchema = {
     lineItemTotal: { type: 'number' },
     invoiceTotal: { type: 'number' },
     orderDate: { type: 'string' },
-    customOrderDescription: { type: 'string', nullable: true } 
+    customOrderDescription: { type: 'string', nullable: true }
   },
   required: [ 'employeeId', 'customerEmail', 'phoneNumber', 'fullName', 'lineItems', 'partsAmount', 'laborAmount', 'lineItemTotal', 'invoiceTotal' ],
   additionalProperties: false
@@ -217,10 +218,10 @@ router.post('/:employeeId', (req, res, next) => {
         phoneNumber: invoice.phoneNumber,
         fullName: invoice.fullName,
         lineItems: invoice.lineItems,
-        partsAmount: invoice.partsAmount,
-        laborAmount: invoice.laborAmount,
-        lineItemTotal: invoice.lineItemTotal,
-        invoiceTotal: invoice.invoiceTotal,
+        partsAmount: parseFloat(invoice.partsAmount.toFixed(2)),
+        laborAmount: parseFloat(invoice.laborAmount.toFixed(2)),
+        lineItemTotal: parseFloat(invoice.lineItemTotal.toFixed(2)),
+        invoiceTotal: parseFloat(invoice.invoiceTotal.toFixed(2)),
         orderDate: moment().tz('America/Chicago').format('dddd MM-DD-YYYY'), // CST
         customOrderDescription: invoice.customOrderDescription,
       };
