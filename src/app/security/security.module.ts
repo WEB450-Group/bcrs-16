@@ -21,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
+import { ChartModule } from 'primeng/chart';
 
 import { SecurityRoutingModule } from './security-routing.module';
 import { SecurityComponent } from './security.component';
@@ -43,7 +44,7 @@ import { VerifyQuestionsComponent } from './verify-questions/verify-questions.co
     CommonModule,
     SecurityRoutingModule,
     FormsModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
     MatInputModule,
@@ -52,7 +53,8 @@ import { VerifyQuestionsComponent } from './verify-questions/verify-questions.co
     MatSelectModule,
     MatIconModule,
     MatFormFieldModule,
-    MatOptionModule 
+    MatOptionModule,
+    ChartModule
   ]
 })
 export class SecurityModule { }

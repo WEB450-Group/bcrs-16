@@ -20,7 +20,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent implements OnInit {
-  //stepper valiables
+  //stepper variables
   errMessage: string;
   isLoading: boolean;
 
