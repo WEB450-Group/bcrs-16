@@ -21,8 +21,6 @@ import { Observable } from 'rxjs';
 })
 export class RegistrationComponent implements OnInit {
   //stepper valiables
-  isLinear = false;
-
   errMessage: string;
   isLoading: boolean;
 

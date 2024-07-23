@@ -1,4 +1,3 @@
-import { ChartModule } from 'primeng/chart';
 /*
 ============================================
 ; Title:  app.module.ts
@@ -25,6 +24,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ChartModule } from 'primeng/chart';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
