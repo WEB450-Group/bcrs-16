@@ -51,7 +51,7 @@
         </div>
 
         <label class="font-semibold">Custom Order/Labor</label>
-        <input id="labor" type="number" [(ngModel)]="customItem" [ngModelOptions]="{standalone: true}"
+        <input id="labor" type="number" type="number" min="0" [(ngModel)]="customItem" [ngModelOptions]="{standalone: true}"
           placeholder="Enter hours"
           class="mb-6 block w-full p-2 border border-gray-300 rounded-md lg:w-3/4 focus:outline-none focus:shadow focus:border-blue-200">
 
@@ -80,7 +80,7 @@
         </button>
       </form>
     </div>
-
+    <app-invoice></app-invoice>
 
     <!-- DIVIDER -->
     <div class="border-l border-green-900 lg:my-24 pr-8"></div>

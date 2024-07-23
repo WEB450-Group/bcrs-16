@@ -1,10 +1,10 @@
   <!-- Home page when not logged in -->
   <div *ngIf="!isLoggedIn" class="w-full flex flex-col justify-center bg-white">
-    <div class="py-8 lg:py-12 2xl:py-20">
-      <h1 class="m-auto py-4 lg:w-1/2 2xl:w-1/3 leading-10 text-center text-3xl lg:text-5xl uppercase font-black pb-3">
+    <div class="py-8 lg:py-12 2xl:py-32">
+      <h1 class="m-auto py-4 lg:pt-20 lg:w-1/2 2xl:w-1/2 leading-10 text-center text-3xl lg:text-5xl uppercase font-black pb-3">
         Welcome to Bob's Computer
         Repair Shop</h1>
-      <div class="px-4 lg:px-0 lg:w-3/4 2xl:w-1/2 flex-row mx-auto pb-4 lg:pb-6 text-center text-lg">
+      <div class="px-4 lg:px-0 lg:w-3/4 2xl:w-1/2 flex-row mx-auto pb-4 lg:pb-6 lg:pt-4 text-center text-lg">
         <p class="py-2">Welcome to Bob's Computer Repair Shop, your trusted destination for efficient and reliable
           computer repair services. We understand your devices' crucial role in your daily life, and our mission is to
           get
@@ -22,7 +22,7 @@
           find their perfect fix.</p>
       </div>
 
-      <div class="text-center">
+      <div class="text-center lg:mt-12">
         <a (click)="scrollToServiceCards($event)" class="cursor-pointer">
           <i class="fas fa-angle-down animate-pulse text-4xl primary-text"></i>
         </a>

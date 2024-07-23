@@ -79,6 +79,7 @@ export class ServiceRepairComponent implements OnInit {
     ];
 
   }
+  
 
   //calculate the total invoice amount
   private calculateTotal(): number {
@@ -205,7 +206,6 @@ export class ServiceRepairComponent implements OnInit {
       customOrderDescription: this.serviceForm.get('customOrder')?.value 
     }
 
-
     // send the invoice to the server
     this.invoiceService.createInvoice(this.invoice).subscribe({
       next: (response) => {
@@ -214,6 +214,7 @@ export class ServiceRepairComponent implements OnInit {
         console.log('Result from register API call', response);
         //sucess message
         this.successMessage = "Invoice Sucessfully Created";
+        
         //scroll to top of page where sucess message is displayed 
         window.scrollTo(0, 0);
         this.isLoading = false;
