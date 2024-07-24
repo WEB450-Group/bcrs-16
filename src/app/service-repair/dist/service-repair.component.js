@@ -35,7 +35,6 @@ var ServiceRepairComponent = /** @class */ (function () {
         }, { updateOn: 'blur' });
         //initialize variables
         this.errMessage = '';
-        this.successMessage = '';
         this.isLoading = false;
         this.lineItems = [];
         this.customItem = 0;
@@ -75,18 +74,6 @@ var ServiceRepairComponent = /** @class */ (function () {
         }
         return total;
     };
-    //printer function for invoices 
-    ServiceRepairComponent.prototype.printInvoice = function () {
-        var printArea = document.getElementById('printArea');
-        if (printArea) {
-            var printWindow = window.open('', '_blank', 'width=800,height=600');
-            printWindow === null || printWindow === void 0 ? void 0 : printWindow.document.open();
-            printWindow === null || printWindow === void 0 ? void 0 : printWindow.document.write("\n        <html>\n          <head>\n            <title>Print Invoice</title>\n            <style>\n              @media print {\n                body {\n                  font-family: Arial, sans-serif;\n                  padding: 20px;\n                }\n                .print-area {\n                  padding: 2rem;\n                }\n                .print-area img {\n                  display: block;\n                  margin: 0 auto;\n                }\n                .print-area h2 {\n                  margin-top: 2rem;\n                  color: rgb(34, 77, 49);\n                  font-size: 2.25rem;\n                  font-weight: 300;\n                  font-family: \"Inter var\", sans-serif;\n                }\n                .print-area div.flex {\n                  display: flex;\n                  justify-content: space-between;\n                  align-items: center;\n                  margin-bottom: 10px;\n                }\n                .print-area label {\n                  font-weight: bold;\n                  text-align: left;\n                  flex-basis: 30%;\n                }\n                .print-area p,\n                .print-area ul {\n                  text-align: right;\n                  flex-basis: 70%;\n                  margin: 0;\n                }\n                .print-area ul {\n                  list-style-type: none;\n                }\n              }\n            </style>\n          </head>\n          <body>\n            <div class=\"print-area\">\n              " + printArea.innerHTML + "\n            </div>\n          </body>\n        </html>\n        ");
-            printWindow === null || printWindow === void 0 ? void 0 : printWindow.document.close();
-            printWindow === null || printWindow === void 0 ? void 0 : printWindow.print();
-            printWindow === null || printWindow === void 0 ? void 0 : printWindow.close();
-        }
-    };
     //create invoice
     ServiceRepairComponent.prototype.createInvoice = function () {
         var _this = this;
@@ -105,12 +92,6 @@ var ServiceRepairComponent = /** @class */ (function () {
             this.isLoading = false;
             return;
         }
-        // //If email and password fields empty display error message
-        // if (!this.invoice.fullName || !this.invoice.customerEmail || !this.invoice.phoneNumber) {
-        //   this.errMessage = 'Please provide customer\'s name, email address, and phone number';
-        //   this.isLoading = false;
-        //   return;
-        // }
         // Create invoice 
         this.invoice = {
             employeeId: parseInt(employeeId, 10),
@@ -131,12 +112,11 @@ var ServiceRepairComponent = /** @class */ (function () {
                 //store response for populating invoice
                 _this.invoice = response;
                 console.log('Result from register API call', response);
-                //sucess message
-                _this.successMessage = "Invoice Sucessfully Created";
-                //scroll to top of page where sucess message is displayed 
-                window.scrollTo(0, 0);
+                // navigate to invoice page and pass order object as query parameter
+                _this.router.navigate(['/invoice'], { queryParams: { invoice: JSON.stringify(_this.invoice) } });
                 _this.isLoading = false;
             },
+            //db error handling 
             error: function (err) {
                 if (err.error && err.error.message) {
                     console.log('Database Error', err.error.message);
@@ -150,22 +130,6 @@ var ServiceRepairComponent = /** @class */ (function () {
                 return;
             }
         });
-        this.clearForm();
-    };
-    //clear form for next invoice creation 
-    ServiceRepairComponent.prototype.clearForm = function () {
-        // Reset form controls
-        this.serviceForm.reset({
-            fullName: null,
-            phoneNumber: null,
-            customerEmail: null,
-            customOrder: null
-        });
-        this.lineItems.forEach(function (item) { return item.checked = false; });
-        this.customItem = 0;
-        this.errMessage = '';
-        this.total = 0;
-        this.isLoading = false;
     };
     ServiceRepairComponent = __decorate([
         core_1.Component({

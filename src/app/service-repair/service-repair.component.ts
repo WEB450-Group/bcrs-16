@@ -25,7 +25,6 @@ export class ServiceRepairComponent implements OnInit {
   //create invoice variables 
   lineItems: LineItem[];
   errMessage: string;
-  successMessage: string;
   isLoading: boolean;
   invoice: Invoice;
   customItem: number;
@@ -52,7 +51,6 @@ export class ServiceRepairComponent implements OnInit {
   ) {
     //initialize variables
     this.errMessage = '';
-    this.successMessage = '';
     this.isLoading = false;
     this.lineItems = [];
     this.customItem = 0;
@@ -60,10 +58,7 @@ export class ServiceRepairComponent implements OnInit {
     this.tax = 0.09;
     this.total = 0;
     this.checked = false; 
-
     this.date = new Date().toLocaleDateString()
-
-    
   }
 
   ngOnInit() {
@@ -101,72 +96,6 @@ export class ServiceRepairComponent implements OnInit {
     return total;
   }
   
-  //printer function for invoices 
-  printInvoice() {
-    const printArea = document.getElementById('printArea');
-    if (printArea) {
-      const printWindow = window.open('', '_blank', 'width=800,height=600');
-      printWindow?.document.open();
-      printWindow?.document.write(`
-        <html>
-          <head>
-            <title>Print Invoice</title>
-            <style>
-              @media print {
-                body {
-                  font-family: Arial, sans-serif;
-                  padding: 20px;
-                }
-                .print-area {
-                  padding: 2rem;
-                }
-                .print-area img {
-                  display: block;
-                  margin: 0 auto;
-                }
-                .print-area h2 {
-                  margin-top: 2rem;
-                  color: rgb(34, 77, 49);
-                  font-size: 2.25rem;
-                  font-weight: 300;
-                  font-family: "Inter var", sans-serif;
-                }
-                .print-area div.flex {
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  margin-bottom: 10px;
-                }
-                .print-area label {
-                  font-weight: bold;
-                  text-align: left;
-                  flex-basis: 30%;
-                }
-                .print-area p,
-                .print-area ul {
-                  text-align: right;
-                  flex-basis: 70%;
-                  margin: 0;
-                }
-                .print-area ul {
-                  list-style-type: none;
-                }
-              }
-            </style>
-          </head>
-          <body>
-            <div class="print-area">
-              ${printArea.innerHTML}
-            </div>
-          </body>
-        </html>
-        `);
-      printWindow?.document.close();
-      printWindow?.print();
-      printWindow?.close();
-    }
-  }
-   
   //create invoice
   createInvoice() {
     this.isLoading = true;
@@ -185,12 +114,7 @@ export class ServiceRepairComponent implements OnInit {
       this.isLoading = false;
       return;
     }
-    // //If email and password fields empty display error message
-    // if (!this.invoice.fullName || !this.invoice.customerEmail || !this.invoice.phoneNumber) {
-    //   this.errMessage = 'Please provide customer\'s name, email address, and phone number';
-    //   this.isLoading = false;
-    //   return;
-    // }
+
     // Create invoice 
     this.invoice = {
       employeeId: parseInt(employeeId, 10),
@@ -212,13 +136,11 @@ export class ServiceRepairComponent implements OnInit {
         //store response for populating invoice
         this.invoice = response;
         console.log('Result from register API call', response);
-        //sucess message
-        this.successMessage = "Invoice Sucessfully Created";
-        
-        //scroll to top of page where sucess message is displayed 
-        window.scrollTo(0, 0);
+        // navigate to invoice page and pass order object as query parameter
+        this.router.navigate(['/invoice'], { queryParams: { invoice: JSON.stringify(this.invoice) } });
         this.isLoading = false;
       },
+      //db error handling 
       error: (err) => {
         if (err.error && err.error.message) {
           console.log('Database Error', err.error.message);
@@ -231,22 +153,5 @@ export class ServiceRepairComponent implements OnInit {
           return;
       }
     });
-    this.clearForm();
   }
-
-  //clear form for next invoice creation 
-  clearForm() {
-    // Reset form controls
-    this.serviceForm.reset({
-      fullName: null,
-      phoneNumber: null,
-      customerEmail: null,
-      customOrder: null
-    });
-    this.lineItems.forEach(item => item.checked = false);
-    this.customItem = 0;
-    this.errMessage = '';
-    this.total = 0;
-    this.isLoading = false;
-  } 
 }
