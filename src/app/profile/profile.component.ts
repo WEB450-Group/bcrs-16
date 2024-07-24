@@ -23,10 +23,13 @@ export class ProfileComponent {
   // Local variables
   employeeId: number;
   employee: Employee;
+  employeeInitials: string;
   errorMessage: string;
   successfulMessage: string;
   isLoading: boolean = false;
   editModeCheck: boolean = false;
+  avatarColors: Array<string> = [ '#228c57', '#1e7048', '#26a06b', '#1f7042', '#2ca478', '#1b6239' ]; // Shades of green
+  randomAvatarColor: string;
 
   updateProfileForm: FormGroup = this.fb.group({
     lastName: [null, Validators.compose([Validators.required])],
@@ -44,8 +47,10 @@ export class ProfileComponent {
     const l_employeeID = this.route.snapshot.paramMap.get('employeeId') || '';
     this.employeeId = parseInt(l_employeeID, 10);
     this.employee = {} as Employee;
+    this.employeeInitials = '';
     this.errorMessage = '';
     this.successfulMessage = '';
+    this.randomAvatarColor = this.avatarColors[Math.floor(Math.random() * this.avatarColors.length)];
 
     // If the employeeId is not a number; then navigate the user back to the home page
     if(isNaN(this.employeeId)) {
@@ -60,6 +65,8 @@ export class ProfileComponent {
         console.log(employee);
         // Set the employee found by the ID
         this.employee = employee;
+        // Set the intitials of the employee name
+        this.employeeInitials = `${this.employee.firstName.charAt(0)}${this.employee.lastName.charAt(0)}`;
         // Set the default values of the form
         this.updateProfileForm.patchValue({
           lastName: this.employee.lastName,
@@ -108,6 +115,8 @@ export class ProfileComponent {
             console.log(employee);
             // Update the employee data
             this.employee = employee;
+            // Update the employee intitials in case they change their last name
+            this.employeeInitials = `${this.employee.firstName.charAt(0)}${this.employee.lastName.charAt(0)}`;
             // Update the form with the new data
             this.updateProfileForm.patchValue({
               lastName: this.employee.lastName,
