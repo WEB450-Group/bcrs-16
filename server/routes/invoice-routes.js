@@ -295,7 +295,81 @@ router.get('/service-graph', async (req, res, next) => {
   }
 });
 
+//getAllInvoices
+/**
+ * @openapi
+ * /api/invoices/invoice-list:
+ *   get:
+ *     summary: Retrieve a list of invoices
+ *     description: Fetches an array of invoice objects from the database.
+ *     responses:
+ *       200:
+ *         description: A list of invoices.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   invoiceId:
+ *                     type: string
+ *                     description: The ID of the invoice.
+ *                   orderDate:
+ *                     type: string
+ *                     description: The date the order was placed.
+ *                   employeeId:
+ *                     type: number
+ *                     description: The ID of the employee who created the invoice.
+ *                   invoiceTotal:
+ *                     type: number
+ *                     description: The total amount of the invoice.
+ *                   fullName:
+ *                     type: string
+ *                     description: The full name of the customer.
+ *                   email:
+ *                     type: string
+ *                     description: The email address of the customer.
+ *       404:
+ *         description: No invoices found.
+ *       500:
+ *         description: Internal server error.
+ */
+router.get('/invoice-list', async (req, res, next) => { 
+  try {
+    //connect to database
+    mongo(async (db) => {
+      //find invoice list and create an array of invoice objects
+      const invoice = await db.collection('invoices').find({}, {
+        //What to return from database
+        projection: {
+          invoiceId: 1,
+          orderDate: 1,
+          employeeId: 1,
+          invoiceTotal: 1,
+          fullName: 1,
+          email: 1
+        }
+      //Turn into an array
+      }).toArray();
 
+      console.log('Invoice List', invoice);
+
+      //If invoice list is empty, return 404
+      if (!invoice || invoice.length === 0) {
+        return res.status(404).json({
+          error: 'No Invoices Found'
+        });
+      }
+      //return array of invoice objects
+      res.json(invoice);
+    });
+    // Catch any database errors
+} catch (err) {
+  console.error(err);
+  next(err);
+}  
+});
 
 // Export the router
 module.exports = router;

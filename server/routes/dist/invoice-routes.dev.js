@@ -36,11 +36,14 @@ var lineItemSchema = {
       },
       price: {
         type: 'number'
+      },
+      checked: {
+        type: 'boolean'
       }
-    }
-  },
-  required: ['itemId', 'itemName', 'price'],
-  additionalProperties: false
+    },
+    required: ['itemId', 'itemName', 'price', 'checked'],
+    additionalProperties: false
+  }
 };
 var invoiceSchema = {
   type: 'object',
@@ -250,10 +253,10 @@ router.post('/:employeeId', function (req, res, next) {
                 phoneNumber: invoice.phoneNumber,
                 fullName: invoice.fullName,
                 lineItems: invoice.lineItems,
-                partsAmount: invoice.partsAmount,
-                laborAmount: invoice.laborAmount,
-                lineItemTotal: invoice.lineItemTotal,
-                invoiceTotal: invoice.invoiceTotal,
+                partsAmount: parseFloat(invoice.partsAmount.toFixed(2)),
+                laborAmount: parseFloat(invoice.laborAmount.toFixed(2)),
+                lineItemTotal: parseFloat(invoice.lineItemTotal.toFixed(2)),
+                invoiceTotal: parseFloat(invoice.invoiceTotal.toFixed(2)),
                 orderDate: moment().tz('America/Chicago').format('dddd MM-DD-YYYY'),
                 // CST
                 customOrderDescription: invoice.customOrderDescription
@@ -362,6 +365,110 @@ router.get('/service-graph', function _callee3(req, res, next) {
         case 1:
         case "end":
           return _context3.stop();
+      }
+    }
+  });
+}); //getAllInvoices
+
+/**
+ * @openapi
+ * /api/invoices/invoice-list:
+ *   get:
+ *     summary: Retrieve a list of invoices
+ *     description: Fetches an array of invoice objects from the database.
+ *     responses:
+ *       200:
+ *         description: A list of invoices.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   invoiceId:
+ *                     type: string
+ *                     description: The ID of the invoice.
+ *                   orderDate:
+ *                     type: string
+ *                     description: The date the order was placed.
+ *                   employeeId:
+ *                     type: number
+ *                     description: The ID of the employee who created the invoice.
+ *                   invoiceTotal:
+ *                     type: number
+ *                     description: The total amount of the invoice.
+ *                   fullName:
+ *                     type: string
+ *                     description: The full name of the customer.
+ *                   email:
+ *                     type: string
+ *                     description: The email address of the customer.
+ *       404:
+ *         description: No invoices found.
+ *       500:
+ *         description: Internal server error.
+ */
+
+router.get('/invoice-list', function _callee5(req, res, next) {
+  return regeneratorRuntime.async(function _callee5$(_context5) {
+    while (1) {
+      switch (_context5.prev = _context5.next) {
+        case 0:
+          try {
+            //connect to database
+            mongo(function _callee4(db) {
+              var invoice;
+              return regeneratorRuntime.async(function _callee4$(_context4) {
+                while (1) {
+                  switch (_context4.prev = _context4.next) {
+                    case 0:
+                      _context4.next = 2;
+                      return regeneratorRuntime.awrap(db.collection('invoices').find({}, {
+                        //What to return from database
+                        projection: {
+                          invoiceId: 1,
+                          orderDate: 1,
+                          employeeId: 1,
+                          invoiceTotal: 1,
+                          fullName: 1,
+                          email: 1
+                        } //Turn into an array
+
+                      }).toArray());
+
+                    case 2:
+                      invoice = _context4.sent;
+                      console.log('Invoice List', invoice); //If invoice list is empty, return 404
+
+                      if (!(!invoice || invoice.length === 0)) {
+                        _context4.next = 6;
+                        break;
+                      }
+
+                      return _context4.abrupt("return", res.status(404).json({
+                        error: 'No Invoices Found'
+                      }));
+
+                    case 6:
+                      //return array of invoice objects
+                      res.json(invoice);
+
+                    case 7:
+                    case "end":
+                      return _context4.stop();
+                  }
+                }
+              });
+            }); // Catch any database errors
+          } catch (err) {
+            console.error(err);
+            next(err);
+          }
+
+        case 1:
+        case "end":
+          return _context5.stop();
       }
     }
   });
