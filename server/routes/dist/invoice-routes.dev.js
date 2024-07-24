@@ -374,6 +374,8 @@ router.get('/service-graph', function _callee3(req, res, next) {
  * @openapi
  * /api/invoices/invoice-list:
  *   get:
+ *     tags:
+ *     - Invoices
  *     summary: Retrieve a list of invoices
  *     description: Fetches an array of invoice objects from the database.
  *     responses:
@@ -401,6 +403,9 @@ router.get('/service-graph', function _callee3(req, res, next) {
  *                   fullName:
  *                     type: string
  *                     description: The full name of the customer.
+ *                   phoneNumber:
+ *                     type: string
+ *                     description: The customer's phone number.
  *                   email:
  *                     type: string
  *                     description: The email address of the customer.
@@ -416,7 +421,7 @@ router.get('/invoice-list', function _callee5(req, res, next) {
       switch (_context5.prev = _context5.next) {
         case 0:
           try {
-            //connect to database
+            // Connect to database
             mongo(function _callee4(db) {
               var invoice;
               return regeneratorRuntime.async(function _callee4$(_context4) {
@@ -425,21 +430,22 @@ router.get('/invoice-list', function _callee5(req, res, next) {
                     case 0:
                       _context4.next = 2;
                       return regeneratorRuntime.awrap(db.collection('invoices').find({}, {
-                        //What to return from database
+                        // What to return from database
                         projection: {
                           invoiceId: 1,
                           orderDate: 1,
                           employeeId: 1,
                           invoiceTotal: 1,
                           fullName: 1,
+                          phoneNumber: 1,
                           email: 1
-                        } //Turn into an array
+                        } // Turn into an array
 
                       }).toArray());
 
                     case 2:
                       invoice = _context4.sent;
-                      console.log('Invoice List', invoice); //If invoice list is empty, return 404
+                      console.log('Invoice List', invoice); // If invoice list is empty, return 404
 
                       if (!(!invoice || invoice.length === 0)) {
                         _context4.next = 6;
@@ -451,7 +457,7 @@ router.get('/invoice-list', function _callee5(req, res, next) {
                       }));
 
                     case 6:
-                      //return array of invoice objects
+                      // Return array of invoice objects
                       res.json(invoice);
 
                     case 7:
@@ -460,8 +466,9 @@ router.get('/invoice-list', function _callee5(req, res, next) {
                   }
                 }
               });
-            }); // Catch any database errors
+            });
           } catch (err) {
+            // Catch any database errors
             console.error(err);
             next(err);
           }
