@@ -1,13 +1,4 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-exports.__esModule = true;
-exports.AppModule = void 0;
-var chart_1 = require("primeng/chart");
 /*
 ============================================
 ; Title:  app.module.ts
@@ -17,6 +8,14 @@ var chart_1 = require("primeng/chart");
 ; Description: App Module
 ;===========================================
 */
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+exports.__esModule = true;
+exports.AppModule = void 0;
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var common_1 = require("@angular/common");
@@ -33,6 +32,15 @@ var input_1 = require("@angular/material/input");
 var stepper_1 = require("@angular/material/stepper");
 var button_1 = require("@angular/material/button");
 var dialog_1 = require("@angular/material/dialog");
+var chart_1 = require("primeng/chart");
+var table_1 = require("primeng/table");
+var button_2 = require("primeng/button");
+var inputtext_1 = require("primeng/inputtext");
+var dropdown_1 = require("primeng/dropdown");
+var multiselect_1 = require("primeng/multiselect");
+var slider_1 = require("primeng/slider");
+var progressbar_1 = require("primeng/progressbar");
+var tag_1 = require("primeng/tag");
 var app_component_1 = require("./app.component");
 var home_component_1 = require("./home/home.component");
 var contact_component_1 = require("./contact/contact.component");
@@ -46,6 +54,7 @@ var shared_module_1 = require("./shared/shared.module");
 var employee_directory_component_1 = require("./employee-directory/employee-directory.component");
 var faq_dialog_component_1 = require("./faq/faq-dialog/faq-dialog.component");
 var invoice_component_1 = require("./invoice/invoice.component");
+var search_invoices_component_1 = require("./search-invoices/search-invoices.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -63,6 +72,7 @@ var AppModule = /** @class */ (function () {
                 employee_directory_component_1.EmployeeDirectoryComponent,
                 faq_dialog_component_1.FaqDialogComponent,
                 invoice_component_1.InvoiceComponent,
+                search_invoices_component_1.SearchInvoicesComponent,
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -82,7 +92,15 @@ var AppModule = /** @class */ (function () {
                 stepper_1.MatStepperModule,
                 button_1.MatButtonModule,
                 dialog_1.MatDialogModule,
-                chart_1.ChartModule
+                chart_1.ChartModule,
+                table_1.TableModule,
+                button_2.ButtonModule,
+                inputtext_1.InputTextModule,
+                dropdown_1.DropdownModule,
+                multiselect_1.MultiSelectModule,
+                slider_1.SliderModule,
+                progressbar_1.ProgressBarModule,
+                tag_1.TagModule,
             ],
             providers: [ngx_cookie_service_1.CookieService],
             bootstrap: [app_component_1.AppComponent]

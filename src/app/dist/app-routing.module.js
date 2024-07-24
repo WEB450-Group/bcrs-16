@@ -29,6 +29,7 @@ var faq_component_1 = require("./faq/faq.component");
 var profile_component_1 = require("./profile/profile.component");
 var employee_directory_component_1 = require("./employee-directory/employee-directory.component");
 var invoice_component_1 = require("./invoice/invoice.component");
+var search_invoices_component_1 = require("./search-invoices/search-invoices.component");
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
 exports.routes = [
     {
@@ -56,6 +57,10 @@ exports.routes = [
             {
                 path: 'service-repair',
                 component: service_repair_component_1.ServiceRepairComponent
+            },
+            {
+                path: 'search-invoices',
+                component: search_invoices_component_1.SearchInvoicesComponent
             },
             {
                 path: 'invoice',

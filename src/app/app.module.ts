@@ -25,6 +25,14 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ChartModule } from 'primeng/chart';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { SliderModule } from 'primeng/slider';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { TagModule } from 'primeng/tag';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -39,6 +47,7 @@ import { SharedModule } from './shared/shared.module';
 import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
 import { FaqDialogComponent } from './faq/faq-dialog/faq-dialog.component';
 import { InvoiceComponent } from './invoice/invoice.component';
+import { SearchInvoicesComponent } from './search-invoices/search-invoices.component';
 
 
 
@@ -55,6 +64,7 @@ import { InvoiceComponent } from './invoice/invoice.component';
     EmployeeDirectoryComponent,
     FaqDialogComponent,
     InvoiceComponent,
+    SearchInvoicesComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,7 +84,15 @@ import { InvoiceComponent } from './invoice/invoice.component';
     MatStepperModule,
     MatButtonModule,
     MatDialogModule,
-    ChartModule
+    ChartModule,
+    TableModule,
+    ButtonModule,
+    InputTextModule,
+    DropdownModule,
+    MultiSelectModule,
+    SliderModule,
+    ProgressBarModule,
+    TagModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

@@ -26,4 +26,8 @@ export class InvoiceService {
   findAllServiceRequests() {
     return this.http.get('/api/invoices/service-graph');
   }
+
+  getInvoices(): Observable<any[]> {
+    return this.http.get<any[]>('/api/invoices/invoice-list');
+  }
 }

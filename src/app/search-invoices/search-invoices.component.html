@@ -1,0 +1,69 @@
+<div class="search-invoices-container p-8 lg:py-16">
+  <div class="table-container w-full lg:w-8/10 xl:w-2/3 m-auto">
+    <div class="card">
+      <p-table
+        #dt1
+        [value]="invoices"
+        dataKey="invoiceId"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [loading]="loading"
+        [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['fullName', 'email', 'invoiceId', 'employeeId', 'orderDate']"
+      >
+        <ng-template pTemplate="caption">
+          <div class="flex">
+            <button pButton label="Clear" class="p-button-outlined py-1.5 px-3" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+            <span class="p-input-icon-left ml-auto">
+              <i class="pi pi-search"></i>
+              <!-- <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" /> -->
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="min-width:15rem">
+              <div class="flex align-items-center">
+                Invoice ID
+                <p-columnFilter class="bg-none primary-text" type="text" field="invoiceId" display="menu"></p-columnFilter>
+              </div>
+            </th>
+            <th style="min-width:15rem">
+              <div class="flex align-items-center">
+                Employee ID
+                <p-columnFilter class="bg-none primary-text" type="text" field="employeeId" display="menu"></p-columnFilter>
+              </div>
+            </th>
+            <th style="min-width:15rem">
+              <div class="flex align-items-center">
+                Date
+                <p-columnFilter class="bg-none primary-text" type="text" field="orderDate" display="menu"></p-columnFilter>
+              </div>
+            </th>
+            <th style="min-width:15rem">
+              <div class="flex align-items-center">
+                Total
+                <p-columnFilter class="bg-none primary-text" type="numeric" field="invoiceTotal" display="menu"></p-columnFilter>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-invoice>
+          <tr>
+            <td>{{ invoice.invoiceId }}</td>
+            <td>{{ invoice.employeeId }}</td>
+            <td>{{ invoice.orderDate }}</td>
+            <td>{{ invoice.invoiceTotal | currency:'USD':'symbol' }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">No invoices found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

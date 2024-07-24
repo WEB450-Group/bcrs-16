@@ -27,6 +27,9 @@ var InvoiceService = /** @class */ (function () {
     InvoiceService.prototype.findAllServiceRequests = function () {
         return this.http.get('/api/invoices/service-graph');
     };
+    InvoiceService.prototype.getInvoices = function () {
+        return this.http.get('/api/invoices/invoice-list');
+    };
     InvoiceService = __decorate([
         core_1.Injectable({
             providedIn: 'root'
