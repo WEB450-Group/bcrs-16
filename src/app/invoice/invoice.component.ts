@@ -38,8 +38,9 @@ export class InvoiceComponent implements OnInit {
     const printArea = document.getElementById('printArea');
     if (printArea) {
       const printWindow = window.open('', '_blank', 'width=800,height=600');
-      printWindow?.document.open();
-      printWindow?.document.write(`
+      if (printWindow) {
+        printWindow.document.open();
+        printWindow.document.write(`
           <html>
             <head>
               <title>Print Invoice</title>
@@ -53,8 +54,10 @@ export class InvoiceComponent implements OnInit {
                     padding: 2rem;
                   }
                   .print-area img {
-                    display: block;
-                    margin: 0 auto;
+                    margin: 0 auto 1rem auto; 
+                    max-width: 100%; 
+                    width: 260px; 
+                    height: auto; 
                   }
                   .print-area h2 {
                     margin-top: 2rem;
@@ -92,10 +95,13 @@ export class InvoiceComponent implements OnInit {
               </div>
             </body>
           </html>
-          `);
-      printWindow?.document.close();
-      printWindow?.print();
-      printWindow?.close();
+        `);
+        printWindow.document.close();
+        printWindow.print();
+        printWindow.close();
+      }
     }
   }
+  
+  
 }

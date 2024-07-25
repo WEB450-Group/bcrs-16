@@ -69,6 +69,7 @@ export class CreateEmployeeComponent {
         this.isLoading = false;
       },
       complete: () => {
+        alert('User created successfully!')
         this.router.navigate(['/admin/employees']);
       }
     })

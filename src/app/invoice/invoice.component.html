@@ -1,6 +1,6 @@
 <div class="invoice-container">
   <h2 class="text-3xl lg:text-4xl 2xl:text-5xl pt-6 primary-text font-light text-center">Invoice</h2>
-  <div class="w-full lg:w-2/3 2xl:w-1/2 flex justify-between">
+  <div class="w-full lg:w-1/2 flex justify-between">
     <div></div>
     <a (click)="printInvoice()" class="mr-2 flex bg-transparent cursor-pointer self-end ">
       <p class="font-semi-bold text-xl text-blue-600 pr-2 hover:underline">Print Invoice</p>
@@ -9,11 +9,11 @@
       </div>
     </a>
   </div>
-  <div class="w-full lg:w-2/3 2xl:w-1/2 py-4 px-8 lg:py-8 bg-white rounded-lg shadow-lg border">
-    <form id="printArea" action="submit" class="print-area p-8 lg:p-16">
+  <div id="printArea" class="w-full lg:w-1/2 bg-white rounded-lg shadow-lg border">
+    <form  action="submit" class=" p-8 lg:p-16">
       <img src="./assets/images/logo.png" alt="Bob's Computer Repair Shop Logo" width="260px"
         class="mb-6">
-      <p class="mb-4 font-semibold">Invoice Number: {{ invoice.invoiceId }}</p>
+      <label class="mb-4 font-semibold">Invoice Number: {{ invoice.invoiceId }}</label>
       <div id="invoice">
         <div class="flex justify-between items-center mb-4">
           <label class="font-semibold">Date:</label>

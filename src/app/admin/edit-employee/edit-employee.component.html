@@ -1,16 +1,16 @@
-<div class="page-container w-full flex justify-center bg-white">
+<div class="page-container w-full flex justify-center">
   <!-- Edit Employee Form -->
    <form
    [formGroup]="editEmployeeForm"
    (ngSubmit)="editEmployee()"
-   class="form overflow-hidden rounded-t-lg shadow-md mt-3 w-full lg:w-1/3"
+   class="form overflow-hidden rounded-t-lg shadow-md mt-3 w-full bg-white lg:w-1/3"
    >
-    <div class="primary text-white text-center uppercase font-bold tracking-wide py-3">
-      Edit employee form
+    <div class="primary text-white text-center uppercase font-bold tracking-wide py-4">
+      Edit employee
     </div>
 
-    <fieldset class="form-group">
-      <legend class="text-center font-bold py-2">Employee Information</legend>
+    <fieldset class="form-group border-none p-8">
+      <!-- <legend class="text-center font-bold py-2">Employee Information</legend> -->
 
       <!-- Display error message -->
        <div *ngIf="errorMessage" class="flex justify-center py-3">
@@ -23,31 +23,31 @@
 
        <!-- Employee ID field -->
        <div class="py-2 px-2 flex justify-between">
-        <label for="txtEmployeeId" class="py-1 pl-2">Employee Id: </label>
-        <div id="txtEmployeeId" class="w-4/5 pt-1 mx-3"> {{ employee.employeeId }} </div>
+        <label for="txtEmployeeId" class="font-semibold py-1 ">Employee Id: </label>
+        <div id="txtEmployeeId" class="pt-1 mx-3"> {{ employee.employeeId }} </div>
        </div>
 
        <!-- First Name field -->
        <div class="py-2 px-2 flex justify-between">
-        <label for="txtFistName" class="py-1 pl-2">First Name: </label>
-        <div id="txtFistName" class="w-4/5 pt-1 mx-3"> {{ employee.firstName }} </div>
+        <label for="txtFistName" class="font-semibold	py-1 ">First Name: </label>
+        <div id="txtFistName" class="pt-1 mx-3"> {{ employee.firstName }} </div>
        </div>
 
        <!-- Last Name field -->
        <div class="py-2 px-2 flex justify-between">
-        <label for="txtLastName" class="py-1 pl-2">Last Name: </label>
-        <div id="txtLastName" class="w-4/5 pt-1 mx-3"> {{ employee.lastName }} </div>
+        <label for="txtLastName" class="font-semibold	 py-1 ">Last Name: </label>
+        <div id="txtLastName" class="pt-1 mx-3"> {{ employee.lastName }} </div>
        </div>
 
        <!-- Role field -->
-       <div class="py-2 px-2 flex justify-between">
-        <label for="txtRole" class="py-1 pl-2">Role:</label>
+       <div class="py-2 pl-2 flex-col">
+        <label for="txtRole" class="py-1  font-semibold">Role:</label>
         <select
           name="role"
           id="txtRole"
           formControlName="role"
           required
-          class="w-4/5 shadow-md rounded mx-3"
+          class="w-full rounded p-3 border"
         >
           <option value="standard">Standard</option>
           <option value="admin">Admin</option>
@@ -55,14 +55,14 @@
       </div>
 
       <!-- Disabled field -->
-      <div class="py-3 px-2 flex justify-between">
-        <label for="txtIsDisabled" class="py-1 pl-2">Disable:</label>
+      <div class="py-3 pl-2 flex-col">
+        <label for="txtIsDisabled" class="font-semibold	py-1 ">Disable:</label>
         <select
           name="isDisabled"
           id="txtIsDisabled"
           formControlName="isDisabled"
           required
-          class="w-4/5 shadow-md rounded mx-3"
+          class="w-full rounded p-3 border"
         >
         <option value="true">True</option>
         <option value="false">False</option>
@@ -73,7 +73,7 @@
       <div class="flex justify-center">
         <button
           type="submit"
-          class="py-4 px-2 mt-5 mb-10 w-2/3 font-bold rounded tracking-wide flex items-center justify-center"
+          class="mx-2 py-3 px-2 mt-5 mb-10 w-full font-bold rounded tracking-wide flex items-center justify-center"
         >
           <span *ngIf="!isLoading">Update Employee</span>
           <span *ngIf="isLoading">

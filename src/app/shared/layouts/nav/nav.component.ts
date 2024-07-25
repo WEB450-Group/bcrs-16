@@ -10,7 +10,9 @@
 // imports statements
 import {
   Component,
-  OnInit
+  OnInit,
+  ElementRef, 
+  Renderer2
 } from '@angular/core';
 import { HostListener } from '@angular/core';
 import {
@@ -40,16 +42,28 @@ export class NavComponent implements OnInit {
   isSignedIn: boolean = false;
   isAdmin: boolean = false;
 
-  //HostListener decorator to listen for click events on the document or body, and then checking whether the target of the click is outside the specified element.  https://medium.com/@garcia.alberto.4.2012/listening-to-a-click-outside-a-div-in-angular-81f988c88f7f
+
+  constructor(private router: Router, private cookieService: CookieService, public authService: AuthService, private el: ElementRef, private renderer: Renderer2) {
+    //listen for mouseenter event to show dropdown
+    this.renderer.listen(this.el.nativeElement, 'mouseenter', () => this.handleMouseEnter());
+    //listen for mouseleave event to hide dropdown
+    this.renderer.listen(this.el.nativeElement, 'mouseleave', () => this.handleMouseLeave());
+  }
+  //show drop down
+  handleMouseEnter() {
+    this.dropdownVisible = true;
+  }
+  //hide dropdown
+  handleMouseLeave() {
+    this.dropdownVisible = false;
+  }
+  //hover dropdown event listener 
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: Event) {
     const targetElement = event.target as HTMLElement;
     if (this.dropdownVisible && !targetElement.closest('.logged-in-menu')) {
       this.dropdownVisible = false;
     }
-  }
-
-  constructor(private router: Router, private cookieService: CookieService, public authService: AuthService) {
   }
 
   ngOnInit(): void {

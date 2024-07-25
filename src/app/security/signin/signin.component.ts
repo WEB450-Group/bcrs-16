@@ -67,6 +67,15 @@ export class SigninComponent {
       //if successful set session_user cookie and redirect user to logged in homepage
       next: (employee: any) => {
         console.log('employee', employee);
+
+        // If employee is disabled, don't let them log in
+        if (employee.isDisabled === true) {
+          this.errMessage = "Your account is disabled, please speak with a system administrator to regain access.";
+          this.isLoading = false;
+          console.log('Disabled employee signin');
+          return;
+        }
+        
         //create the sessionCookie object
         const sessionCookie = {
           employeeId: employee.employeeId,
@@ -99,6 +108,7 @@ export class SigninComponent {
           this.isLoading = false;
           return
         }
+        
         this.errMessage = "There was a problem verifying your email address, please try again or contact the system administrator";
         this.isLoading = false;
       },

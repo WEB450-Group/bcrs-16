@@ -1,14 +1,14 @@
-<div class="w-full flex justify-center py-8 px-2 bg-white lg:py-20 lg:mx-0">
+<div class="w-full flex justify-center py-8 px-2 lg:py-20 lg:mx-0">
   <!-- Employee Form -->
   <form
     [formGroup]="employeeForm"
     (ngSubmit)="createEmployee(); employeeForm.reset()"
-    class="form overflow-hidden rounded-lg shadow-md mt-3 w-full lg:w-1/3"
+    class="form overflow-hidden rounded-lg shadow-lg mt-3 w-full bg-white lg:w-1/3"
   >
     <div
-      class="primary text-white text-center uppercase font-bold tracking-wide py-3"
+      class="primary text-white text-center uppercase font-bold tracking-wide py-4"
     >
-      Create new employee form
+      Create new employee
     </div>
     <fieldset class="form-group">
       <legend class="text-center font-bold py-2">Employee Information</legend>
@@ -24,15 +24,15 @@
       <hr />
 
       <!-- First name field -->
-      <div class="px-4 py-2">
+      <div class="p-4">
       <div class="py-2 px-2 mx-3">
-        <label for="txtFirstName" class="py-1 font-bold">First name:</label>
+        <label for="txtFirstName" class="py-1 font-bold">First name:<span class="text-red-500">*</span></label>
         <input
           type="text"
           id="txtFirstName"
           formControlName="firstName"
           required
-          class="w-full shadow-md py-2 px-2 border rounded"
+          class="w-full  py-2 px-2 border rounded"
         />
       </div>
 
@@ -53,13 +53,13 @@
 
       <!-- Last name field -->
       <div class="py-2 px-2 mx-3">
-        <label for="txtLastName" class="py-1 font-bold">Last name:</label>
+        <label for="txtLastName" class="py-1 font-bold">Last name:<span class="text-red-500">*</span></label>
         <input
           type="text"
           id="txtLastName"
           formControlName="lastName"
           required
-          class="w-full shadow-md py-2 px-2 border rounded"
+          class="w-full  py-2 px-2 border rounded"
         />
       </div>
 
@@ -80,13 +80,13 @@
 
       <!-- Phone number field -->
       <div class="py-2 px-2 mx-3">
-        <label for="txtPhoneNumber" class="py-1 font-bold">Phone number:</label>
+        <label for="txtPhoneNumber" class="py-1 font-bold">Phone number:<span class="text-red-500">*</span></label>
         <input
           type="text"
           id="txtPhoneNumber"
           formControlName="phoneNumber"
           required
-          class="w-full py-2 px-2 border shadow-md rounded"
+          class="w-full py-2 px-2 border  rounded"
         />
       </div>
 
@@ -121,13 +121,13 @@
 
       <!-- Email address field -->
       <div class="py-2 px-2  mx-3">
-        <label for="txtEmail" class="py-1 font-bold">Email:</label>
+        <label for="txtEmail" class="py-1 font-bold">Email:<span class="text-red-500">*</span></label>
         <input
           type="text"
           id="txtEmail"
           formControlName="email"
           required
-          class="w-full py-2 px-2 border shadow-md rounded"
+          class="w-full py-2 px-2 border  rounded"
         />
       </div>
 
@@ -148,13 +148,13 @@
 
       <!-- Address field -->
       <div class="py-2 px-2 mx-3">
-        <label for="txtAddress" class="py-1 font-bold">Address:</label>
+        <label for="txtAddress" class="py-1 font-bold">Address:<span class="text-red-500">*</span></label>
         <input
           type="text"
           id="txtAddress"
           formControlName="address"
           required
-          class="py-2 px-2 w-full border shadow-md rounded"
+          class="py-2 px-2 w-full border  rounded"
         />
       </div>
 
@@ -175,13 +175,13 @@
 
       <!-- Role field -->
       <div class="py-2 px-2  mx-3">
-        <label for="txtRole" class="py-1 font-bold">Role:</label>
+        <label for="txtRole" class="py-1 font-bold">Role:<span class="text-red-500">*</span></label>
         <select
           name="role"
           id="txtRole"
           formControlName="role"
           required
-          class="w-full shadow-md py-2 px-2 border rounded"
+          class="w-full  py-2 px-2 border rounded"
         >
           <option value="standard" selected>Standard</option>
           <option value="admin">Admin</option>
@@ -207,7 +207,7 @@
       <div class="flex justify-center">
         <button
           type="submit"
-          class="py-3 px-2 my-5 w-2/3 font-bold rounded tracking-wide flex items-center justify-center"
+          class="py-3 px-2 mt-4 mb-10 w-full mx-9 font-bold rounded tracking-wide flex items-center justify-center"
         >
           <span *ngIf="!isLoading">Create Employee</span>
           <span *ngIf="isLoading">

@@ -19,12 +19,13 @@ exports.SigninComponent = void 0;
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var SigninComponent = /** @class */ (function () {
-    function SigninComponent(fb, router, cookieService, secService, route) {
+    function SigninComponent(fb, router, cookieService, secService, route, authService) {
         this.fb = fb;
         this.router = router;
         this.cookieService = cookieService;
         this.secService = secService;
         this.route = route;
+        this.authService = authService;
         this.errMessage = '';
         this.isLoading = false;
         this.fieldTextType = false;
@@ -56,9 +57,16 @@ var SigninComponent = /** @class */ (function () {
         }
         //call signin function from security service
         this.secService.signIn(email, password).subscribe({
-            //if succesfful set session_user cookie and redirect user to logged in homepage
+            //if successful set session_user cookie and redirect user to logged in homepage
             next: function (employee) {
                 console.log('employee', employee);
+                // If employee is disabled, don't let them log in
+                if (employee.isDisabled === true) {
+                    _this.errMessage = "Your account is disabled, please speak with a system administrator to regain access.";
+                    _this.isLoading = false;
+                    console.log('Disabled employee signin');
+                    return;
+                }
                 //create the sessionCookie object
                 var sessionCookie = {
                     employeeId: employee.employeeId,
@@ -73,6 +81,8 @@ var SigninComponent = /** @class */ (function () {
                 };
                 //set session user
                 _this.cookieService.set('session_user', JSON.stringify(sessionCookie), 1);
+                // Set the employeeId in AuthService
+                _this.authService.setEmployeeId(employee.employeeId);
                 //check if there is a return URL, if not redirect to home page
                 var returnUrl = _this.route.snapshot.queryParamMap.get('returnUrl') || '/';
                 //set is loading to false when logged in

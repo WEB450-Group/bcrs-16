@@ -14,7 +14,7 @@
         <mat-step [stepControl]="firstFormGroup" label="Personal Information">
           <form [formGroup]="firstFormGroup">
             <!-- EMAIL -->
-            <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Email</label>
+            <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Email <span class="text-red-500">*</span></label>
             <div>
               <input id="email" formControlName="email" placeholder="Enter Your Email" required
                 [ngClass]="{'border-red-600 placeholder-err': firstFormGroup.controls['email'].invalid && (firstFormGroup.controls['email'].dirty || firstFormGroup.controls['email'].touched)}"
@@ -30,7 +30,7 @@
             </div>
 
             <!-- PASSWORD  -->
-            <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Password</label>
+            <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Password <span class="text-red-500">*</span></label>
             <div class="flex">
               <input id="password" [type]="fieldTextType ? 'text' : 'password'" formControlName="password"
                 [ngClass]="{'border-red-600 placeholder-err': firstFormGroup.controls['password'].invalid && (firstFormGroup.controls['password'].dirty || firstFormGroup.controls['password'].touched)}"
@@ -70,7 +70,7 @@
         <!-- STEP 2 -->
         <mat-step [stepControl]="secondFormGroup" label="Contact Information">
           <form [formGroup]="secondFormGroup">
-            <label for="firstName" class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">First Name</label>
+            <label for="firstName" class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">First Name <span class="text-red-500">*</span></label>
             <div>
               <input id="firstName" formControlName="firstName" placeholder="Enter Your First Name" required
                 [ngClass]="{'border-red-600 placeholder-err': secondFormGroup.controls['firstName'].invalid && (secondFormGroup.controls['firstName'].dirty || secondFormGroup.controls['firstName'].touched)}"
@@ -82,7 +82,7 @@
               </div>
             </div>
 
-            <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Last Name</label>
+            <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Last Name <span class="text-red-500">*</span></label>
             <div>
               <input id="lastName" formControlName="lastName" placeholder="Enter Your Last Name" required
                 [ngClass]="{'border-red-600 placeholder-err': secondFormGroup.controls['lastName'].invalid && (secondFormGroup.controls['lastName'].dirty || secondFormGroup.controls['lastName'].touched)}"
@@ -94,7 +94,7 @@
               </div>
             </div>
 
-            <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Phone Number</label>
+            <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Phone Number <span class="text-red-500">*</span></label>
             <div>
               <input id="phone" formControlName="phoneNumber" placeholder="(555)123-4567" required
                 [ngClass]="{'border-red-600 placeholder-err': secondFormGroup.controls['phoneNumber'].invalid && (secondFormGroup.controls['phoneNumber'].dirty || secondFormGroup.controls['phoneNumber'].touched)}"
@@ -106,7 +106,7 @@
               </div>
             </div>
 
-            <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Address</label>
+            <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Address <span class="text-red-500">*</span></label>
             <div>
               <input id="address" formControlName="address" placeholder="Enter Your Address" required
                 [ngClass]="{'border-red-600 placeholder-err': secondFormGroup.controls['address'].invalid && (secondFormGroup.controls['address'].dirty || secondFormGroup.controls['address'].touched)}"
@@ -124,7 +124,7 @@
               matStepperNext
               [disabled]="secondFormGroup.invalid"
               [ngClass]="{'bg-gray-300': secondFormGroup.invalid}"
-              class="mt-2 py-2 px-3 rounded-md w-full md:w-auto"
+              class="mt-2 py-2 px-3 rounded-md w-full ml-2 md:w-auto"
               >
               Next
               ></button>
@@ -135,7 +135,7 @@
         <!-- STEP 3 -->
         <mat-step [stepControl]="thirdFormGroup" label="Security Questions">
           <form [formGroup]="thirdFormGroup">
-            <label class="text-medium 2lg:text-xl font-bold tracking-wide text-start pt-4">Select Security Question 1</label>
+            <label class="text-medium 2lg:text-xl font-bold tracking-wide text-start pt-4">Select Security Question 1 <span class="text-red-500">*</span></label>
             <mat-form-field class="w-full">
               <mat-select placeholder="Select question" formControlName="question1" required>
                 <mat-option *ngFor="let question of qArray1" [value]="question">{{ question }}</mat-option>
@@ -152,7 +152,7 @@
               </div>
             </div>
 
-            <label class="text-medium 2lg:text-xl font-bold tracking-wide text-start pt-4">Select Security Question 2</label>
+            <label class="text-medium 2lg:text-xl font-bold tracking-wide text-start pt-4">Select Security Question 2 <span class="text-red-500">*</span></label>
             <mat-form-field class="w-full">
               <mat-select placeholder="Select question" formControlName="question2" required>
                 <mat-option *ngFor="let question of qArray2" [value]="question">{{ question }}</mat-option>
@@ -169,7 +169,7 @@
               </div>
             </div>
 
-            <label class="text-medium 2lg:text-xl font-bold tracking-wide text-start pt-4">Select Security Question 3</label>
+            <label class="text-medium 2lg:text-xl font-bold tracking-wide text-start pt-4">Select Security Question 3 <span class="text-red-500">*</span></label>
             <mat-form-field class="w-full">
               <mat-select placeholder="Select question" formControlName="question3" required>
                 <mat-option *ngFor="let question of qArray3" [value]="question">{{ question }}</mat-option>
@@ -217,16 +217,22 @@
       <div *ngIf="errMessage" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
         {{ errMessage }}
       </div>
-      <div class="flex flex-col pl-2 pb-6">
-        <a [routerLink]="['/security/signin']" routerLinkActive="router-link-active"
-          class="pl-4 font-semibold hover:underline">Sign In
-        </a>
-        <a [routerLink]="['/security/verify-email']" routerLinkActive="router-link-active"
-          class="pl-4 font-semibold hover:underline">Forgot Password
-        </a>
-        <a [routerLink]="['/']" routerLinkActive="router-link-active"
-          class="pl-4 font-semibold hover:underline">Return To Home Page
-        </a>
+      <div class="flex flex-col">
+        <div>
+          <a [routerLink]="['/security/verify-email']" routerLinkActive="router-link-active"
+            class="pl-4 font-semibold hover:underline">Forgot Password
+          </a>
+        </div>
+        <div>
+          <a [routerLink]="['/security/registration']" routerLinkActive="router-link-active"
+            class="pl-4 font-semibold hover:underline">Create Account
+          </a>
+        </div>
+        <div>
+          <a [routerLink]="['/']" routerLinkActive="router-link-active"
+            class="pl-4 font-semibold hover:underline">Return To Home Page
+          </a>
+        </div>
       </div>
     </div>
   </div>

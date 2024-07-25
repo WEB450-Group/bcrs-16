@@ -22,7 +22,7 @@
             <th class="px-6 py-4"></th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-slate-300 font-semi-bold">
+        <tbody class="divide-y divide-slate-300 font-semi-bold bg-white">
           <tr *ngIf="isLoading" role="status" class="">
             <td colspan="7">
               <svg aria-hidden="true" class="p-4 w-16 h-16 text-gray-200 animate-spin dark:text-gray-400 fill-green-700"
@@ -37,7 +37,7 @@
             </td>
           </tr>
           <tr *ngFor="let employee of currentEmployees">
-            <td class="px-6 py-4">{{employee.employeeId}}</td>
+            <td class="px-6 py-4 font-bold">{{employee.employeeId}}</td>
             <td class="px-6 py-4">{{employee.firstName}}</td>
             <td class="px-6 py-4">{{employee.lastName}}</td>
             <td class="px-6 py-4">{{employee.phoneNumber}}</td>
@@ -75,7 +75,7 @@
             <th class="px-6 py-4"></th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-slate-300 font-semi-bold">
+        <tbody class="divide-y divide-slate-300 font-semi-bold bg-white">
           <tr *ngIf="isLoading" role="status" class="">
             <td colspan="7">
               <svg aria-hidden="true" class="p-4 w-16 h-16 text-gray-200 animate-spin dark:text-gray-400 fill-green-700"
@@ -90,7 +90,7 @@
             </td>
           </tr>
           <tr *ngFor="let employee of disabledEmployees">
-            <td class="px-6 py-4">{{employee.employeeId}}</td>
+            <td class="px-6 py-4 font-semibold">{{employee.employeeId}}</td>
             <td class="px-6 py-4">{{employee.firstName}}</td>
             <td class="px-6 py-4">{{employee.lastName}}</td>
             <td class="px-6 py-4">{{employee.phoneNumber}}</td>
