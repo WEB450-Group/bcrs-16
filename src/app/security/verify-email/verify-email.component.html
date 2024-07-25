@@ -13,14 +13,14 @@
       <!-- FORM FIELDS -->
       <div class="my-2">
         <form [formGroup]="emailForm" (ngSubmit)="submit()" class="md:pt-3 md:px-4 pb-8 bg-white">
-          <label class="text-medium 2lg:text-xl font-bold tracking-wide pb-2 text-start">Email Address<span class="text-red-500">*</span></label>
+          <label class="text-medium 2lg:text-xl font-bold tracking-wide pb-2 text-start">Email Address<span class="text-red-500 px-1">*</span></label>
           <div>
             <input id="email" type="email" formControlName="email"
             [ngClass]="{'border-red-600 placeholder-err': emailForm.controls['email'].invalid && (emailForm.controls['email'].dirty || emailForm.controls['email'].touched)}"
             placeholder="Enter your email address"
             class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
           </div>
-          
+
           <!-- ERROR MESSAGES -->
           <div *ngIf="emailForm.controls['email'].invalid && emailForm.controls['email'].touched" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
             <div *ngIf="emailForm.controls['email'].errors?.['required']">
@@ -30,7 +30,7 @@
               Please enter a valid email address.
             </div>
           </div>
-          
+
           <div *ngIf="errMessage" class="bg-red-50 text-red-800 p-2 mt-2 rounded" role="alert">
             {{ errMessage }}
           </div>

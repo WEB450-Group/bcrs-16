@@ -12,7 +12,7 @@
       <!-- FORM FIELDS -->
       <div class="my-2">
         <form [formGroup]="signinForm" (ngSubmit)="signIn()" class="md:pt-3 md:px-4 pb-8 bg-white">
-          <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start">Email Address<span class="text-red-500">*</span></label>
+          <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start">Email Address<span class="text-red-500 px-1">*</span></label>
           <div>
             <input id="username" type="email" formControlName="email"
               [ngClass]="{'border-red-600': signinForm.controls['email'].invalid && (signinForm.controls['email'].dirty || signinForm.controls['email'].touched)}"
@@ -20,7 +20,7 @@
               class="block w-full p-2 mb-2 border border-gray-300 rounded-md focus:outline-none focus:shadow focus:border-blue-200">
           </div>
 
-          <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start">Password<span class="text-red-500">*</span></label>
+          <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start">Password<span class="text-red-500 px-1">*</span></label>
           <div class="flex">
             <input id="password" [type]="fieldTextType ? 'text' : 'password'" formControlName="password"
               [ngClass]="{'border-red-600': signinForm.controls['password'].invalid && (signinForm.controls['password'].dirty || signinForm.controls['password'].touched)}"
@@ -31,7 +31,7 @@
               <i class="fa" [ngClass]="
                 {
                 'fa-eye-slash': !fieldTextType,
-                'fa-eye': fieldTextType 
+                'fa-eye': fieldTextType
                 }" (click)="toggleFieldTextType()">
               </i>
             </span>
@@ -57,7 +57,7 @@
               </svg>
             </span>
           </button>
-          
+
         </form>
         <!-- LINKS  -->
         <div class="flex flex-col">
@@ -77,7 +77,7 @@
             </a>
           </div>
         </div>
-        
+
       </div>
     </div>
   </div>
