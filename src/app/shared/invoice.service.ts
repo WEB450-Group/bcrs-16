@@ -28,6 +28,6 @@ export class InvoiceService {
   }
 
   getInvoices(): Observable<any[]> {
-    return this.http.get<any[]>('/api/invoices/invoice-list');
+    return this.http.get<Invoice[]>('/api/invoices/invoice-list');
   }
 }

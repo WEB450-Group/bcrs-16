@@ -52,7 +52,12 @@
         </ng-template>
         <ng-template pTemplate="body" let-invoice>
           <tr class="border border-slate-400">
-            <td>{{ invoice.invoiceId }}</td>
+            <td>
+              <a
+              (click)="openDialog(invoice)"
+              class="px-6 py-2 p-5 tracking-wider rounded-lg underline text-blue-500 hover:cursor-pointer hover:text-blue-400">
+                {{ invoice.invoiceId }}
+              </a></td>
             <td>{{ invoice.employeeId }}</td>
             <td>{{ invoice.orderDate }}</td>
             <td>{{ invoice.invoiceTotal | currency:'USD':'symbol' }}</td>

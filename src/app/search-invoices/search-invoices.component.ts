@@ -10,6 +10,9 @@
 
 import { Component, OnInit } from '@angular/core';
 import { InvoiceService } from '../shared/invoice.service';
+import { InvoiceDialogComponent } from './invoice-dialog/invoice-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Invoice } from '../shared/order';
 
 @Component({
   selector: 'app-search-invoices',
@@ -20,7 +23,7 @@ export class SearchInvoicesComponent implements OnInit {
   invoices: any[] = [];
   loading: boolean = true;
 
-  constructor(private invoiceService: InvoiceService) {}
+  constructor(private invoiceService: InvoiceService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.loadInvoices();
@@ -59,5 +62,14 @@ export class SearchInvoicesComponent implements OnInit {
       default:
         return 'info';
     }
+  }
+
+  openDialog(invoice: Invoice) {
+    console.log('Invoice data:', invoice)
+    this.dialog.open(InvoiceDialogComponent, {
+      data: invoice,
+      width: '100%',
+      maxWidth: '800px'
+    })
   }
 }

@@ -160,9 +160,6 @@ router.post('/:employeeId', (req, res, next) => {
     // Get the data from the request body
     const invoice = req.body;
 
-    // Make phoneNumber number input into a number
-    invoice.phoneNumber = Number(invoice.phoneNumber);
-
     // Parse the number variables
     invoice.partsAmount = parseFloat(invoice.partsAmount, 10);
     invoice.laborAmount = parseFloat(invoice.laborAmount, 10);
@@ -182,11 +179,15 @@ router.post('/:employeeId', (req, res, next) => {
     const validate = ajvInstance.compile(invoiceSchema);
     const valid = validate(invoice);
 
+
     // If the invoice object doesn't match the invoiceSchema; then return status code 400 with message 'Bad request'
     if(!valid) {
       console.error('Error validating invoice object against the schema', validate.errors);
       return next(createError(400, `Bad request: ${validate.errors}`));
     }
+
+    // Make phoneNumber number input into a number
+    invoice.phoneNumber = Number(invoice.phoneNumber);
 
     // Call mongo and do the operations needed to create an invoice
     mongo(async db => {
@@ -353,9 +354,12 @@ router.get('/invoice-list', async (req, res, next) => {
           orderDate: 1,
           employeeId: 1,
           invoiceTotal: 1,
+          lineItemTotal: 1,
+          laborAmount: 1,
           fullName: 1,
           phoneNumber: 1,
-          email: 1
+          customerEmail: 1,
+          lineItems: 1
         }
       // Turn into an array
       }).toArray();
