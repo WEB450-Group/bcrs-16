@@ -467,7 +467,7 @@ router.post('/verify/employees/:email', (req, res, next) => {
       return next(createError(400, `Bad request: ${validate.errors}`));
     }
 
-    //connect to databse
+    //connect to database
     mongo(async db => {
       //find employee by saved email
       const employee = await db.collection('employees').findOne({ email: email });
@@ -581,7 +581,7 @@ router.post('/verify/employees/:email/security-questions', (req, res, next) => {
         return;
       }
 
-      //send status 200 and employee security qustions
+      //send status 200 and employee security questions
       res.send(employee.selectedSecurityQuestions);
     }, next);
 

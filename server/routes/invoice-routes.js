@@ -2,7 +2,7 @@
 ============================================
 ; Title:  employee-routes.js
 ; Author: Professor Krasso
-; Date: 15. Jule, 2024
+; Date: 15. July, 2024
 ; Modified by: Joanna Brumfield and Zadkiel Rodriguez Alvarado
 ; Description: Employee Routes
 ;===========================================
@@ -40,7 +40,7 @@ const invoiceSchema = {
   properties: {
     employeeId: { type: 'number' },
     customerEmail: { type: 'string' },
-    phoneNumber: { type: 'number' },
+    phoneNumber: { type: 'string' },
     fullName: { type: 'string' },
     lineItems: lineItemSchema,
     partsAmount: { type: 'number' },
@@ -160,20 +160,21 @@ router.post('/:employeeId', (req, res, next) => {
     // Get the data from the request body
     const invoice = req.body;
 
+    // Make phoneNumber number input into a number
+    invoice.phoneNumber = Number(invoice.phoneNumber);
+
     // Parse the number variables
-    invoice.phoneNumber = parseInt(invoice.phoneNumber, 10);
     invoice.partsAmount = parseFloat(invoice.partsAmount, 10);
     invoice.laborAmount = parseFloat(invoice.laborAmount, 10);
     invoice.lineItemTotal = parseFloat(invoice.lineItemTotal, 10);
     invoice.invoiceTotal = parseFloat(invoice.invoiceTotal, 10);
 
     // Check if the phoneNumber, partsAmount, laborAmount, lineItemTotal and/or invoiceTotal are numbers; if not then return status code 400 with message 'Bad request'
-    if(isNaN(invoice.phoneNumber)
-    || isNaN(invoice.partsAmount)
+    if(isNaN(invoice.partsAmount)
     || isNaN(invoice.laborAmount)
     || isNaN(invoice.lineItemTotal)
     || isNaN(invoice.invoiceTotal)) {
-      console.error('Make sure phoneNumber, partsAmount, laborAmount, lineItemTotal and/or invoiceTotal and all number type.');
+      console.error('Make sure partsAmount, laborAmount, lineItemTotal and/or invoiceTotal and all number type.');
       return next(createError(400, 'Bad request: Inputs must be numbers.'));
     }
 
@@ -340,7 +341,7 @@ router.get('/service-graph', async (req, res, next) => {
  *       500:
  *         description: Internal server error.
  */
-router.get('/invoice-list', async (req, res, next) => { 
+router.get('/invoice-list', async (req, res, next) => {
   try {
     // Connect to database
     mongo(async (db) => {
@@ -374,7 +375,7 @@ router.get('/invoice-list', async (req, res, next) => {
     // Catch any database errors
     console.error(err);
     next(err);
-  }  
+  }
 });
 
 // Export the router

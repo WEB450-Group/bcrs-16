@@ -22,9 +22,6 @@
         <li *ngIf="isSignedIn">
           <a routerLink="/service-repair" routerLinkActive="active" class="block py-1 px-2 uppercase tracking-wider">Service Repair</a>
         </li>
-        <li *ngIf="isSignedIn">
-          <a routerLink="/search-invoices" routerLinkActive="active" class="block py-1 px-2 uppercase tracking-wider">Invoices List</a>
-        </li>
         <li [ngClass]="{'hidden': isSignedIn, 'm-0': isSignedIn}">
           <a *ngIf="!isSignedIn" routerLink="/security/registration" class="block py-1 px-2 uppercase tracking-wider">Register</a>
         </li>
@@ -49,13 +46,16 @@
               <a routerLink="/faq" class="block w-full text-left py-2 px-4 tracking-wider">FAQ</a>
             </li>
             <li>
+              <a routerLink="/employee-directory" class="block w-full text-left py-2 px-4 tracking-wider">Employee Directory</a>
+            </li>
+            <li>
               <a [routerLink]="getProfileLink()" class="block w-full text-left py-2 px-4 tracking-wider">Profile</a>
             </li>
             <li [ngClass]="{'hidden': !isAdmin, 'visible': isAdmin}">
               <a routerLink="/admin/service-graph" class="block w-full text-left py-2 px-4 tracking-wider">Service Graph</a>
             </li>
             <li>
-              <a routerLink="/employee-directory" class="block w-full text-left py-2 px-4 tracking-wider">Employee Directory</a>
+              <a routerLink="/search-invoices" class="block w-full text-left py-2 px-4 tracking-wider">Invoices List</a>
             </li>
             <li>
               <a (click)="signOut()" class="block w-full text-left py-2 px-4 tracking-wider cursor-pointer">Sign Out</a>
