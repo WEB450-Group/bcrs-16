@@ -15,10 +15,10 @@
       >
         <ng-template pTemplate="caption">
           <div class="flex">
-            <button pButton label="Clear" class="p-button-outlined py-1.5 px-3" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+            <button pButton class="p-button-outlined py-1.5 px-3" icon="pi pi-filter-slash" (click)="clear(dt1)">Clear</button>
             <span class="p-input-icon-left ml-auto">
               <i class="pi pi-search"></i>
-              <!-- <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" /> -->
+               <input pInputText class="p-2 border shadow-md rounded" type="text" (input)="applyFilter($event, dt1)" placeholder="Search keyword" />
             </span>
           </div>
         </ng-template>
@@ -27,31 +27,31 @@
             <th style="min-width:15rem">
               <div class="flex align-items-center">
                 Invoice ID
-                <p-columnFilter class="bg-none primary-text" type="text" field="invoiceId" display="menu"></p-columnFilter>
+                <p-columnFilter class="bg-none primary-text px-2" type="text" field="invoiceId" display="menu"></p-columnFilter>
               </div>
             </th>
             <th style="min-width:15rem">
               <div class="flex align-items-center">
                 Employee ID
-                <p-columnFilter class="bg-none primary-text" type="text" field="employeeId" display="menu"></p-columnFilter>
+                <p-columnFilter class="bg-none primary-text px-2" type="text" field="employeeId" display="menu"></p-columnFilter>
               </div>
             </th>
             <th style="min-width:15rem">
               <div class="flex align-items-center">
                 Date
-                <p-columnFilter class="bg-none primary-text" type="text" field="orderDate" display="menu"></p-columnFilter>
+                <p-columnFilter class="bg-none primary-text px-2" type="text" field="orderDate" display="menu"></p-columnFilter>
               </div>
             </th>
             <th style="min-width:15rem">
               <div class="flex align-items-center">
                 Total
-                <p-columnFilter class="bg-none primary-text" type="numeric" field="invoiceTotal" display="menu"></p-columnFilter>
+                <p-columnFilter class="bg-none primary-text px-2" type="numeric" field="invoiceTotal" display="menu"></p-columnFilter>
               </div>
             </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-invoice>
-          <tr>
+          <tr class="border border-slate-400">
             <td>{{ invoice.invoiceId }}</td>
             <td>{{ invoice.employeeId }}</td>
             <td>{{ invoice.orderDate }}</td>

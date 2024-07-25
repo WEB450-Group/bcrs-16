@@ -4,7 +4,7 @@
 ; Author: Professor Krasso
 ; Date: 29. June, 2024
 ; Modified by: Joanna Brumfield and Zadkiel Rodriguez Alvarado
-; Description: Search Invoice Component 
+; Description: Search Invoice Component
 ;===========================================
 */
 
@@ -41,6 +41,11 @@ export class SearchInvoicesComponent implements OnInit {
 
   clear(dt: any): void {
     dt.clear();
+  }
+
+  applyFilter(event: Event, dt: any) {
+    const input = event.target as HTMLInputElement;
+    dt.filterGlobal(input.value, 'contains');
   }
 
   getSeverity(status: string): string {

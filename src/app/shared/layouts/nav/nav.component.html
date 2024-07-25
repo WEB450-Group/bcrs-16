@@ -22,7 +22,9 @@
         <li *ngIf="isSignedIn">
           <a routerLink="/service-repair" routerLinkActive="active" class="block py-1 px-2 uppercase tracking-wider">Service Repair</a>
         </li>
-
+        <li *ngIf="isSignedIn">
+          <a routerLink="/search-invoices" routerLinkActive="active" class="block py-1 px-2 uppercase tracking-wider">Invoices List</a>
+        </li>
         <li [ngClass]="{'hidden': isSignedIn, 'm-0': isSignedIn}">
           <a *ngIf="!isSignedIn" routerLink="/security/registration" class="block py-1 px-2 uppercase tracking-wider">Register</a>
         </li>
