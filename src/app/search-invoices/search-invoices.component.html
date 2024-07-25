@@ -15,7 +15,7 @@
       >
         <ng-template pTemplate="caption">
           <div class="flex">
-            <button pButton class="p-button-outlined py-1.5 px-3" icon="pi pi-filter-slash" (click)="clear(dt1)">Clear</button>
+            <button pButton class="p-button-outlined py-1.5 px-3" icon="pi pi-filter-slash" (click)="clear(dt1)">Clear Query</button>
             <span class="p-input-icon-left ml-auto">
               <i class="pi pi-search"></i>
                <input pInputText class="p-2 border shadow-md rounded" type="text" (input)="applyFilter($event, dt1)" placeholder="Search keyword" />
@@ -51,7 +51,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-invoice>
-          <tr class="border border-slate-400">
+          <tr class="border-b">
             <td>
               <a
               (click)="openDialog(invoice)"

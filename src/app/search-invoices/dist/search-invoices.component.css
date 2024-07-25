@@ -1,3 +1,114 @@
 .search-invoices-container {
   min-height: 90vh;
 }
+
+::ng-deep .p-datatable {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .p-datatable-header {
+  border-start-end-radius: 0.5rem;
+  border-start-start-radius: 0.5rem;
+  border: #224d31;
+  background-color: #224d31;
+}
+
+::ng-deep .p-datatable-thead {
+  border-right: 1px solid gray;
+}
+
+::ng-deep .p-datatable-thead > tr > th {
+  background-color: #fff;
+}
+
+::ng-deep .p-column-filter-menu-button.p-link.ng-tns-c2355412547-0.ng-star-inserted,
+::ng-deep .p-column-filter-menu-button.p-link.ng-tns-c2355412547-1.ng-star-inserted,
+::ng-deep .p-column-filter-menu-button.p-link.ng-tns-c2355412547-2.ng-star-inserted,
+::ng-deep .p-column-filter-menu-button.p-link.ng-tns-c2355412547-3.ng-star-inserted,
+::ng-deep .p-column-filter-menu-button.p-link.ng-tns-c2355412547-3.ng-star-inserted.p-column-filter-menu-button-open {
+  background-color: transparent;
+  padding-bottom: 1rem;
+}
+
+::ng-deep .p-icon.pi-filter-icon {
+  background-color: transparent;
+  color: #224d31;
+}
+
+::ng-deep .p-paginator .p-paginator-pages .p-paginator-page {
+  background-color: transparent;
+  color: #224d31;
+  border: none;
+}
+
+::ng-deep .p-paginator .p-paginator-pages .p-paginator-page:hover {
+  background-color: transparent;
+  color: #224d31;
+  opacity: 0.8;
+}
+
+::ng-deep .p-paginator .p-paginator-pages .p-highlight {
+  background-color: transparent;
+  color: #224d31;
+  border: none;
+}
+
+ng-deep .p-paginator .p-paginator-first,
+:host ::ng-deep .p-paginator .p-paginator-prev,
+:host ::ng-deep .p-paginator .p-paginator-next,
+:host ::ng-deep .p-paginator .p-paginator-last {
+  background-color: transparent;
+  color: #224d31;
+  border: none;
+}
+
+::ng-deep .p-paginator .p-paginator-first:hover,
+::ng-deep .p-paginator .p-paginator-prev:hover,
+::ng-deep .p-paginator .p-paginator-next:hover,
+::ng-deep .p-paginator .p-paginator-last:hover {
+  background-color: transparent;
+  color: #224d31;
+  opacity: 0.8;
+}
+
+::ng-deep .p-paginator .p-paginator-first.p-disabled,
+::ng-deep .p-paginator .p-paginator-prev.p-disabled,
+::ng-deep .p-paginator .p-paginator-next.p-disabled,
+::ng-deep .p-paginator .p-paginator-last.p-disabled {
+  background-color: transparent;
+  color: #888;
+}
+
+::ng-deep .p-element.p-column-filter-add-button.p-button-text.p-button-sm {
+  padding: 0.25rem 0.5rem;
+}
+
+::ng-deep .p-element.p-button-outlined.p-button-sm.p-button.p-component.ng-star-inserted {
+  padding: 0.25rem;
+}
+
+::ng-deep .p-element.p-button-sm.ng-tns-c2355412547-0.p-button.p-component.ng-star-inserted {
+  padding: 0.25rem;
+}
+
+::ng-deep .p-element.p-button-sm.ng-tns-c2355412547-1.p-button.p-component.ng-star-inserted {
+  padding: 0.25rem;
+}
+
+::ng-deep .p-element.p-button-sm.ng-tns-c2355412547-2.p-button.p-component.ng-star-inserted {
+  padding: 0.25rem;
+}
+
+::ng-deep .p-element.p-button-sm.ng-tns-c2355412547-3.p-button.p-component.ng-star-inserted {
+  padding: 0.25rem;
+}
+
+::ng-deep .p-inputtext.p-component.p-element.p-inputnumber-input {
+  border: 1px solid #ccc;
+  padding: 0.25rem;
+}
+
+::ng-deep .p-inputtext.p-component.p-element.ng-star-inserted {
+  border: 1px solid #ccc;
+  padding: 0.25rem;
+}
