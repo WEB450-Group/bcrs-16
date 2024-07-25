@@ -19,6 +19,7 @@
 
 ::ng-deep .p-datatable-thead > tr > th {
   background-color: #fff;
+  border-bottom: gray;
 }
 
 ::ng-deep .p-column-filter-menu-button.p-link.ng-tns-c2355412547-0.ng-star-inserted,
