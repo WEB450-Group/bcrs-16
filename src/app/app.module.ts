@@ -65,6 +65,7 @@ import { SearchInvoicesComponent } from './search-invoices/search-invoices.compo
     FaqDialogComponent,
     InvoiceComponent,
     SearchInvoicesComponent,
+
   ],
   imports: [
     BrowserModule,
