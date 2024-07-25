@@ -48,6 +48,7 @@ import { EmployeeDirectoryComponent } from './employee-directory/employee-direct
 import { FaqDialogComponent } from './faq/faq-dialog/faq-dialog.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { SearchInvoicesComponent } from './search-invoices/search-invoices.component';
+import { InvoiceDialogComponent } from './search-invoices/invoice-dialog/invoice-dialog.component';
 
 
 
@@ -65,6 +66,7 @@ import { SearchInvoicesComponent } from './search-invoices/search-invoices.compo
     FaqDialogComponent,
     InvoiceComponent,
     SearchInvoicesComponent,
+    InvoiceDialogComponent,
 
   ],
   imports: [
