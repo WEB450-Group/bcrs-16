@@ -6,7 +6,12 @@
     "start": "ng build && node ./bin/www",
     "build": "ng build",
     "server": "nodemon ./bin/www",
-    "client": "ng serve --open"
+    "client": "ng serve --open",
+    "render-deploy": "ng build --configuration=production"
+  },
+  "engines": {
+    "node": "^20.15.0",
+    "npm": "^10.7.0"
   },
   "private": true,
   "dependencies": {
