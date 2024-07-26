@@ -8,16 +8,9 @@
 ;===========================================
 */
 // imports statements
-import {
-  Component,
-  OnInit,
-  ElementRef, 
-  Renderer2
-} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { HostListener } from '@angular/core';
-import {
-  Router,
-  RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from 'src/app/shared/auth.service';
 
@@ -41,23 +34,22 @@ export class NavComponent implements OnInit {
   };
   isSignedIn: boolean = false;
   isAdmin: boolean = false;
+  hideDropdownTimeout: any;
 
-
-  constructor(private router: Router, private cookieService: CookieService, public authService: AuthService, private el: ElementRef, private renderer: Renderer2) {
-    //listen for mouseenter event to show dropdown
-    this.renderer.listen(this.el.nativeElement, 'mouseenter', () => this.handleMouseEnter());
-    //listen for mouseleave event to hide dropdown
-    this.renderer.listen(this.el.nativeElement, 'mouseleave', () => this.handleMouseLeave());
-  }
-  //show drop down
-  handleMouseEnter() {
+  constructor(private router: Router, private cookieService: CookieService, public authService: AuthService) {}
+  
+  //show dropdown on hover
+  showDropdown() {
+    clearTimeout(this.hideDropdownTimeout);
     this.dropdownVisible = true;
   }
-  //hide dropdown
-  handleMouseLeave() {
-    this.dropdownVisible = false;
+  //hide dropdown with a timeout 
+  hideDropdown() {
+    this.hideDropdownTimeout = setTimeout(() => {
+      this.dropdownVisible = false;
+    }, 300);
   }
-  //hover dropdown event listener 
+  //click dropdown event listener for mobile
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: Event) {
     const targetElement = event.target as HTMLElement;

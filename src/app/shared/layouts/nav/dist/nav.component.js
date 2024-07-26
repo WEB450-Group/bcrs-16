@@ -20,13 +20,10 @@ exports.NavComponent = void 0;
 var core_1 = require("@angular/core");
 var core_2 = require("@angular/core");
 var NavComponent = /** @class */ (function () {
-    function NavComponent(router, cookieService, authService, el, renderer) {
-        var _this = this;
+    function NavComponent(router, cookieService, authService) {
         this.router = router;
         this.cookieService = cookieService;
         this.authService = authService;
-        this.el = el;
-        this.renderer = renderer;
         this.menuVisible = false;
         this.dropdownVisible = false;
         this.appUser = {
@@ -35,20 +32,20 @@ var NavComponent = /** @class */ (function () {
         };
         this.isSignedIn = false;
         this.isAdmin = false;
-        //listen for mouseenter event to show dropdown
-        this.renderer.listen(this.el.nativeElement, 'mouseenter', function () { return _this.handleMouseEnter(); });
-        //listen for mouseleave event to hide dropdown
-        this.renderer.listen(this.el.nativeElement, 'mouseleave', function () { return _this.handleMouseLeave(); });
     }
-    //show drop down
-    NavComponent.prototype.handleMouseEnter = function () {
+    //show dropdown on hover
+    NavComponent.prototype.showDropdown = function () {
+        clearTimeout(this.hideDropdownTimeout);
         this.dropdownVisible = true;
     };
-    //hide dropdown
-    NavComponent.prototype.handleMouseLeave = function () {
-        this.dropdownVisible = false;
+    //hide dropdown with a timeout 
+    NavComponent.prototype.hideDropdown = function () {
+        var _this = this;
+        this.hideDropdownTimeout = setTimeout(function () {
+            _this.dropdownVisible = false;
+        }, 300);
     };
-    //hover dropdown event listener 
+    //click dropdown event listener for mobile
     NavComponent.prototype.handleClickOutside = function (event) {
         var targetElement = event.target;
         if (this.dropdownVisible && !targetElement.closest('.logged-in-menu')) {

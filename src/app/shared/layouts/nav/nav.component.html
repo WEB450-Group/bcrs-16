@@ -1,5 +1,5 @@
 <nav class="bg-black shadow border-b ">
-  <div class="base-container flex flex-wrap items-center justify-between mx-auto py-1 px-4 shardow-bottom">
+  <div class="base-container flex flex-wrap items-center justify-between mx-auto py-1 px-4 shadow-bottom">
     <a routerLink="/" routerLinkActive="active" class="flex items-center pl-2">
       <img src="/assets/images/logo-white.png" alt="Bob's Computer Repair Shop Logo" width="240px" class="p-1">
       <span class="self-center text-2xl font-semibold whitespace-nowrap"></span>
@@ -12,11 +12,8 @@
     </button>
     <div [ngClass]="{'hidden': !menuVisible, 'block': menuVisible, 'w-full': true, 'md:block': true, 'md:w-auto': true}"
       id="navbar-default">
-
-      <ul
-        class="text-lg flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 text-white">
+      <ul class="text-lg flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 text-white">
         <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="block py-1 px-2 uppercase tracking-widest">Home</a></li>
-
         <li><a routerLink="/about" routerLinkActive="active" class="block py-1 px-2 uppercase tracking-wider">About</a></li>
         <li><a routerLink="/contact" routerLinkActive="active" class="block py-1 px-2 uppercase tracking-wider">Contact</a></li>
         <li *ngIf="isSignedIn">
@@ -29,16 +26,14 @@
           <a *ngIf="!isSignedIn" routerLink="/security/signin" class="block py-1 px-2 uppercase tracking-wider">Log In</a>
         </li>
 
-        <li *ngIf="isSignedIn" class="logged-in-menu relative">
-          <a (click)="toggleDropdown()" class="flex items-center px-2 py-1 md:px-0 uppercase tracking-wider bg-transparent hover:cursor-pointer">
+        <li *ngIf="isSignedIn" class="logged-in-menu relative" (mouseenter)="showDropdown()" (mouseleave)="hideDropdown()">
+          <a class="flex items-center px-2 py-1 md:px-0 uppercase tracking-wider bg-transparent hover:cursor-pointer">
             <mat-icon class="mr-2 mb-1">person</mat-icon>
             <span>Hi, {{ appUser.firstName }}</span>
             <mat-icon>arrow_drop_down</mat-icon>
           </a>
 
-          <ul id="dropDownMenu" data-dropdown-toggle="dropdownMenu"
-            *ngIf="dropdownVisible"
-            class="absolute md:right-0 mt-4 w-48 rounded-b-lg bg-black shadow">
+          <ul id="dropDownMenu" class="absolute md:right-0 mt-4 w-48 rounded-b-lg bg-black shadow" [ngClass]="{'block': dropdownVisible, 'hidden': !dropdownVisible}" (mouseenter)="showDropdown()" (mouseleave)="hideDropdown()">
             <li [ngClass]="{'hidden': !isAdmin, 'visible': isAdmin}">
               <a routerLink="/admin/employees" class="block w-full text-left py-2 px-4 tracking-wider">Employee List</a>
             </li>
@@ -66,5 +61,3 @@
     </div>
   </div>
 </nav>
-
-

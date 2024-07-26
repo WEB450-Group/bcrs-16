@@ -1,6 +1,7 @@
 nav {
   box-shadow: 0 1px 3px rgba(94, 94, 94, 0.1);
 }
+
 a:hover {
-  opacity: .75;
+  opacity: 0.75;
 }
