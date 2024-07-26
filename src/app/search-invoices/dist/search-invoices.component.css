@@ -1,25 +1,25 @@
 .search-invoices-container {
-  min-height: 90vh;
+  min-height: 90vh !important;
 }
 
 ::ng-deep .p-datatable {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
 }
 
 ::ng-deep .p-datatable-header {
-  border-start-end-radius: 0.5rem;
-  border-start-start-radius: 0.5rem;
-  border: #224d31;
-  background-color: #224d31;
+  border-start-end-radius: 0.5rem !important;
+  border-start-start-radius: 0.5rem !important;
+  border: #224d31 !important;
+  background-color: #224d31 !important;
 }
 
 ::ng-deep .p-datatable-thead {
-  border-right: 1px solid gray;
+  border-right: 1px solid gray !important;
 }
 
 ::ng-deep .p-datatable-thead > tr > th {
-  background-color: #fff;
-  border-bottom: gray;
+  background-color: #fff !important;
+  border-bottom: gray !important;
 }
 
 ::ng-deep .p-column-filter-menu-button.p-link.ng-tns-c2355412547-0.ng-star-inserted,
@@ -27,89 +27,93 @@
 ::ng-deep .p-column-filter-menu-button.p-link.ng-tns-c2355412547-2.ng-star-inserted,
 ::ng-deep .p-column-filter-menu-button.p-link.ng-tns-c2355412547-3.ng-star-inserted,
 ::ng-deep .p-column-filter-menu-button.p-link.ng-tns-c2355412547-3.ng-star-inserted.p-column-filter-menu-button-open {
-  background-color: transparent;
-  padding-bottom: 1rem;
+  background-color: transparent !important;
+  padding-bottom: 1rem !important;
 }
 
 ::ng-deep .p-icon.pi-filter-icon {
-  background-color: transparent;
-  color: #224d31;
+  background-color: transparent !important;
+  color: #224d31 !important;
 }
 
 ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page {
-  background-color: transparent;
-  color: #224d31;
-  border: none;
+  background-color: transparent !important;
+  color: #224d31 !important;
+  border: none !important;
 }
 
 ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page:hover {
-  background-color: transparent;
-  color: #224d31;
-  opacity: 0.8;
+  background-color: transparent !important;
+  color: #224d31 !important;
+  opacity: 0.8 !important;
 }
 
 ::ng-deep .p-paginator .p-paginator-pages .p-highlight {
-  background-color: transparent;
-  color: #224d31;
-  border: none;
+  background-color: transparent !important;
+  color: #224d31 !important;
+  border: none !important;
 }
 
-ng-deep .p-paginator .p-paginator-first,
-:host ::ng-deep .p-paginator .p-paginator-prev,
-:host ::ng-deep .p-paginator .p-paginator-next,
-:host ::ng-deep .p-paginator .p-paginator-last {
-  background-color: transparent;
-  color: #224d31;
-  border: none;
+::ng-deep .p-paginator .p-paginator-first,
+::ng-deep .p-paginator .p-paginator-prev,
+::ng-deep .p-paginator .p-paginator-next,
+::ng-deep .p-paginator .p-paginator-last {
+  background-color: transparent !important;
+  color: #224d31 !important;
+  border: none !important;
 }
 
 ::ng-deep .p-paginator .p-paginator-first:hover,
 ::ng-deep .p-paginator .p-paginator-prev:hover,
 ::ng-deep .p-paginator .p-paginator-next:hover,
 ::ng-deep .p-paginator .p-paginator-last:hover {
-  background-color: transparent;
-  color: #224d31;
-  opacity: 0.8;
+  background-color: transparent !important;
+  color: #224d31 !important;
+  opacity: 0.8 !important;
 }
 
 ::ng-deep .p-paginator .p-paginator-first.p-disabled,
 ::ng-deep .p-paginator .p-paginator-prev.p-disabled,
 ::ng-deep .p-paginator .p-paginator-next.p-disabled,
 ::ng-deep .p-paginator .p-paginator-last.p-disabled {
-  background-color: transparent;
-  color: #888;
+  background-color: transparent !important;
+  color: #888 !important;
+}
+
+::ng-deep .p-column-filter-menu-button.p-link {
+  background-color: transparent !important;
 }
 
 ::ng-deep .p-element.p-column-filter-add-button.p-button-text.p-button-sm {
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0.5rem !important;
 }
 
 ::ng-deep .p-element.p-button-outlined.p-button-sm.p-button.p-component.ng-star-inserted {
-  padding: 0.25rem;
+  padding: 0.25rem !important;
 }
 
 ::ng-deep .p-element.p-button-sm.ng-tns-c2355412547-0.p-button.p-component.ng-star-inserted {
-  padding: 0.25rem;
+  padding: 0.25rem !important;
 }
 
 ::ng-deep .p-element.p-button-sm.ng-tns-c2355412547-1.p-button.p-component.ng-star-inserted {
-  padding: 0.25rem;
+  padding: 0.25rem !important;
 }
 
 ::ng-deep .p-element.p-button-sm.ng-tns-c2355412547-2.p-button.p-component.ng-star-inserted {
-  padding: 0.25rem;
+  padding: 0.25rem !important;
 }
 
 ::ng-deep .p-element.p-button-sm.ng-tns-c2355412547-3.p-button.p-component.ng-star-inserted {
-  padding: 0.25rem;
+  padding: 0.25rem !important;
 }
 
 ::ng-deep .p-inputtext.p-component.p-element.p-inputnumber-input {
-  border: 1px solid #ccc;
-  padding: 0.25rem;
+  border: 1px solid #ccc !important;
+  padding: 0.25rem !important;
 }
 
 ::ng-deep .p-inputtext.p-component.p-element.ng-star-inserted {
-  border: 1px solid #ccc;
-  padding: 0.25rem;
+  border: 1px solid #ccc !important;
+  padding: 0.25rem !important;
 }
