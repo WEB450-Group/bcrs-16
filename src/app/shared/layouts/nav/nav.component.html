@@ -26,7 +26,7 @@
           <a *ngIf="!isSignedIn" routerLink="/security/registration" class="block py-1 px-2 uppercase tracking-wider">Register</a>
         </li>
         <li [ngClass]="{'hidden': isSignedIn, 'm-0': isSignedIn}">
-          <a *ngIf="!isSignedIn" routerLink="/security/signin" class="block py-1 px-2 uppercase tracking-wider">Log In</a>
+          <a *ngIf="!isSignedIn" routerLink="/security/signin" class="block py-1 px-2 uppercase tracking-wider">Sign In</a>
         </li>
 
         <li *ngIf="isSignedIn" class="logged-in-menu relative">
