@@ -10,4 +10,5 @@
 export interface Faq {
   question: string;
   answer: string;
+  isAdmin?: boolean; // Optional
 }

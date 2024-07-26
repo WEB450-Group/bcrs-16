@@ -14,7 +14,7 @@
         <mat-step [stepControl]="firstFormGroup" label="Personal Information">
           <form [formGroup]="firstFormGroup">
             <!-- EMAIL -->
-            <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Email <span class="text-red-500">*</span></label>
+            <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Email <span class="text-red-500 px-1">*</span></label>
             <div>
               <input id="email" formControlName="email" placeholder="Enter Your Email" required
                 [ngClass]="{'border-red-600 placeholder-err': firstFormGroup.controls['email'].invalid && (firstFormGroup.controls['email'].dirty || firstFormGroup.controls['email'].touched)}"
@@ -30,7 +30,7 @@
             </div>
 
             <!-- PASSWORD  -->
-            <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Password <span class="text-red-500">*</span></label>
+            <label class="text-medium 2xl:text-xl font-bold tracking-wide text-start mt-4">Password <span class="text-red-500 px-1">*</span></label>
             <div class="flex">
               <input id="password" [type]="fieldTextType ? 'text' : 'password'" formControlName="password"
                 [ngClass]="{'border-red-600 placeholder-err': firstFormGroup.controls['password'].invalid && (firstFormGroup.controls['password'].dirty || firstFormGroup.controls['password'].touched)}"
@@ -219,13 +219,13 @@
       </div>
       <div class="flex flex-col">
         <div>
-          <a [routerLink]="['/security/verify-email']" routerLinkActive="router-link-active"
-            class="pl-4 font-semibold hover:underline">Forgot Password
+          <a [routerLink]="['/security/signin']" routerLinkActive="router-link-active"
+            class="pl-4 font-semibold hover:underline">Sign in
           </a>
         </div>
         <div>
-          <a [routerLink]="['/security/registration']" routerLinkActive="router-link-active"
-            class="pl-4 font-semibold hover:underline">Create Account
+          <a [routerLink]="['/security/verify-email']" routerLinkActive="router-link-active"
+            class="pl-4 font-semibold hover:underline">Forgot Password
           </a>
         </div>
         <div>
