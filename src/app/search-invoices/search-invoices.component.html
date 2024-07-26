@@ -10,6 +10,9 @@
         [rowsPerPageOptions]="[10, 25, 50]"
         [loading]="loading"
         [paginator]="true"
+        [resizableColumns]="true"
+        [scrollable]="true"
+        scrollHeight="400px"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [globalFilterFields]="['fullName', 'email', 'invoiceId', 'employeeId', 'orderDate']"
       >
@@ -25,7 +28,7 @@
         <ng-template pTemplate="header">
           <tr>
             <th style="min-width:15rem">
-              <div class="flex align-items-center">
+              <div class="flex align-items-center px-4">
                 Invoice ID
                 <p-columnFilter class="bg-none primary-text px-2" type="text" field="invoiceId" display="menu"></p-columnFilter>
               </div>
@@ -38,13 +41,13 @@
             </th>
             <th style="min-width:15rem">
               <div class="flex align-items-center">
-                Date
+                Customer's Name
                 <p-columnFilter class="bg-none primary-text px-2" type="text" field="orderDate" display="menu"></p-columnFilter>
               </div>
             </th>
             <th style="min-width:15rem">
               <div class="flex align-items-center">
-                Total
+                Date
                 <p-columnFilter class="bg-none primary-text px-2" type="numeric" field="invoiceTotal" display="menu"></p-columnFilter>
               </div>
             </th>
@@ -55,17 +58,17 @@
             <td>
               <a
               (click)="openDialog(invoice)"
-              class="px-6 py-2 p-5 tracking-wider rounded-lg underline text-blue-500 hover:cursor-pointer hover:text-blue-400">
+              class="px-4 underline text-blue-500 hover:cursor-pointer hover:text-blue-400">
                 {{ invoice.invoiceId }}
               </a></td>
             <td>{{ invoice.employeeId }}</td>
+            <td>{{ invoice.fullName }}</td>
             <td>{{ invoice.orderDate }}</td>
-            <td>{{ invoice.invoiceTotal | currency:'USD':'symbol' }}</td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td colspan="6">No invoices found.</td>
+            <td colspan="6" class="text-center py-4">No invoices found.</td>
           </tr>
         </ng-template>
       </p-table>

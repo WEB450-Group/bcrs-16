@@ -26,7 +26,7 @@
       <!-- First name field -->
       <div class="p-4">
       <div class="py-2 px-2 mx-3">
-        <label for="txtFirstName" class="py-1 font-bold">First name:<span class="text-red-500">*</span></label>
+        <label for="txtFirstName" class="py-1 font-bold">First name:<span class="text-red-500 px-1">*</span></label>
         <input
           type="text"
           id="txtFirstName"
@@ -53,7 +53,7 @@
 
       <!-- Last name field -->
       <div class="py-2 px-2 mx-3">
-        <label for="txtLastName" class="py-1 font-bold">Last name:<span class="text-red-500">*</span></label>
+        <label for="txtLastName" class="py-1 font-bold">Last name:<span class="text-red-500 px-1">*</span></label>
         <input
           type="text"
           id="txtLastName"
@@ -80,7 +80,7 @@
 
       <!-- Phone number field -->
       <div class="py-2 px-2 mx-3">
-        <label for="txtPhoneNumber" class="py-1 font-bold">Phone number:<span class="text-red-500">*</span></label>
+        <label for="txtPhoneNumber" class="py-1 font-bold">Phone number:<span class="text-red-500 px-1">*</span></label>
         <input
           type="text"
           id="txtPhoneNumber"
@@ -121,7 +121,7 @@
 
       <!-- Email address field -->
       <div class="py-2 px-2  mx-3">
-        <label for="txtEmail" class="py-1 font-bold">Email:<span class="text-red-500">*</span></label>
+        <label for="txtEmail" class="py-1 font-bold">Email:<span class="text-red-500 px-1">*</span></label>
         <input
           type="text"
           id="txtEmail"
@@ -148,7 +148,7 @@
 
       <!-- Address field -->
       <div class="py-2 px-2 mx-3">
-        <label for="txtAddress" class="py-1 font-bold">Address:<span class="text-red-500">*</span></label>
+        <label for="txtAddress" class="py-1 font-bold">Address:<span class="text-red-500 px-1">*</span></label>
         <input
           type="text"
           id="txtAddress"
@@ -175,7 +175,7 @@
 
       <!-- Role field -->
       <div class="py-2 px-2  mx-3">
-        <label for="txtRole" class="py-1 font-bold">Role:<span class="text-red-500">*</span></label>
+        <label for="txtRole" class="py-1 font-bold">Role:<span class="text-red-500 px-1">*</span></label>
         <select
           name="role"
           id="txtRole"
@@ -208,6 +208,8 @@
         <button
           type="submit"
           class="py-3 px-2 mt-4 mb-10 w-full mx-9 font-bold rounded tracking-wide flex items-center justify-center"
+          [disabled]="employeeForm.invalid"
+          [ngClass]="{'opacity-20': employeeForm.invalid, 'opacity-100': !employeeForm.invalid}"
         >
           <span *ngIf="!isLoading">Create Employee</span>
           <span *ngIf="isLoading">
