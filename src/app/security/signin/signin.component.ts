@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
 import { SecurityService } from '../security.service';
 import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class SigninComponent {
   fieldTextType: boolean = false;
 
   signinForm = this.fb.group({
-    email: [null, Validators.compose([Validators.required, Validators.email])],
+    email: new FormControl<string | null>(null, Validators.compose([Validators.required, Validators.email])),
     password: [null, Validators.compose([Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)])],
   }, { updateOn: 'submit' })
 
@@ -47,9 +47,9 @@ export class SigninComponent {
 
     // console.log('Signin Form', this.signinForm.value);
     //get email value from signin form
-    let email = this.signinForm.controls['email'].value;
+    const email = this.signinForm.controls['email'].value?.toLowerCase();
     //get password from form
-    let password = this.signinForm.controls['password'].value;
+    const password = this.signinForm.controls['password'].value;
 
     //If email and password fields empty display error message
     if (!email) {
@@ -75,7 +75,7 @@ export class SigninComponent {
           console.log('Disabled employee signin');
           return;
         }
-        
+
         //create the sessionCookie object
         const sessionCookie = {
           employeeId: employee.employeeId,
@@ -103,12 +103,12 @@ export class SigninComponent {
       },
       error: (err) => {
         console.log('Server error from API call', err);
-        if(err.status === 400 || 401 ) {
+        if(err.status === 400) {
           this.errMessage = "The email address and/or password you provided are not valid";
           this.isLoading = false;
           return
         }
-        
+
         this.errMessage = "There was a problem verifying your email address, please try again or contact the system administrator";
         this.isLoading = false;
       },

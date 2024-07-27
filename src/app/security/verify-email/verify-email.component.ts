@@ -22,7 +22,7 @@ export class VerifyEmailComponent {
   isLoading: boolean = false;
 
   emailForm: FormGroup = this.fb.group({
-    email: [null, [Validators.required, Validators.email]] 
+    email: [null, Validators.compose([Validators.required, Validators.email])]
   })
 
   constructor( private fb: FormBuilder, private securityService: SecurityService, private router: Router ) {
@@ -32,7 +32,7 @@ export class VerifyEmailComponent {
 
   submit() {
     this.isLoading = true;
-    const email = this.emailForm.controls['email'].value;
+    const email = this.emailForm.controls['email'].value.toLowerCase();
     console.log(email);
     console.log('Email from form:', email);
 

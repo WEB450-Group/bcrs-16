@@ -107,7 +107,7 @@ export class RegistrationComponent implements OnInit {
     this.isLoading = true;
 
     this.employee = {
-      email: this.firstFormGroup.get('email')?.value,
+      email: this.firstFormGroup.get('email')?.value.toLowerCase(),
       password: this.firstFormGroup.get('password')?.value,
       firstName: this.secondFormGroup.get('firstName')?.value,
       lastName: this.secondFormGroup.get('lastName')?.value,
@@ -116,15 +116,15 @@ export class RegistrationComponent implements OnInit {
       selectedSecurityQuestions: [
         {
           question: this.thirdFormGroup.get('question1')?.value,
-          answer: this.thirdFormGroup.get('answer1')?.value,
+          answer: this.thirdFormGroup.get('answer1')?.value.toLowerCase(),
         },
         {
           question: this.thirdFormGroup.get('question2')?.value,
-          answer: this.thirdFormGroup.get('answer2')?.value,
+          answer: this.thirdFormGroup.get('answer2')?.value.toLowerCase(),
         },
         {
           question: this.thirdFormGroup.get('question3')?.value,
-          answer: this.thirdFormGroup.get('answer3')?.value,
+          answer: this.thirdFormGroup.get('answer3')?.value.toLowerCase(),
         }
       ],
       role: 'standard',

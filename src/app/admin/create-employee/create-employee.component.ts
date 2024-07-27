@@ -8,7 +8,7 @@
 ;===========================================
 */
 import { Component } from '@angular/core';
-import { CreateEmployee, Employee } from '../../shared/employee.interface';
+import { CreateEmployee } from '../../shared/employee.interface';
 import { EmployeeService } from '../../shared/employee.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -52,8 +52,8 @@ export class CreateEmployeeComponent {
     const employee: CreateEmployee = {
       firstName: this.employeeForm.controls['firstName'].value,
       lastName: this.employeeForm.controls['lastName'].value,
-      email: this.employeeForm.controls['email'].value,
-      phoneNumber: parseInt(this.employeeForm.controls['phoneNumber'].value, 10),
+      email: this.employeeForm.controls['email'].value.toLowerCase(),
+      phoneNumber: this.employeeForm.controls['phoneNumber'].value,
       address: this.employeeForm.controls['address'].value,
       role: this.employeeForm.controls['role'].value,
     };

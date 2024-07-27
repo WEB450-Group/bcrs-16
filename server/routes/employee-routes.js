@@ -253,7 +253,7 @@ router.get('/:employeeId', (req, res, next) => {
  *               email:
  *                 type: string
  *               phoneNumber:
- *                 type: number
+ *                 type: string
  *               address:
  *                 type: string
  *               role:
@@ -307,22 +307,6 @@ router.post('/', (req, res, next) => {
       // Create the new employeeId for the registering user by getting the lastEmployee's employeeId and adding 1 to it
       const lastEmployee = employees[employees.length - 1];
       const newEmployeeId = lastEmployee.employeeId + 1;
-
-
-      // Check that the checkPhoneNumber is consists of numbers only with the parseInt function; If the checkPhoneNumber is is not a number it will return NaN
-      const checkPhoneNumber = parseInt(employee.phoneNumber, 10);
-
-      // If the checkPhoneNumber is NaN; then return a status code 400 with a message "Invalid phone number!"
-      if (isNaN(checkPhoneNumber)) {
-        console.error("Invalid phone number!");
-        return next(createError(400, "Invalid phone number!"));
-      }
-
-      // Check if the phone number is the correct length of number (US ONLY)
-      if (checkPhoneNumber.toString().length !== 10) {
-        console.log("Invalid phone number!");
-        return next(createError(400, "Invalid phone number!"));
-      }
 
       console.log("Phone number is valid!");
 
@@ -653,7 +637,7 @@ router.get('/:email/security-questions', (req, res, next) => {
  *               lastName:
  *                 type: string
  *               phoneNumber:
- *                 type: number
+ *                 type: string
  *               address:
  *                 type: string
  *     responses:
