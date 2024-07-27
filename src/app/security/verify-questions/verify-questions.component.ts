@@ -107,15 +107,15 @@ export class VerifyQuestionsComponent {
     let securityQuestions = [
       {
         question: this.question1,
-        answer: this.sqForm.controls['answer1'].value
+        answer: this.sqForm.controls['answer1'].value.toLowerCase()
       },
       {
         question: this.question2,
-        answer: this.sqForm.controls['answer2'].value
+        answer: this.sqForm.controls['answer2'].value.toLowerCase()
       },
       {
         question: this.question3,
-        answer: this.sqForm.controls['answer3'].value
+        answer: this.sqForm.controls['answer3'].value.toLowerCase()
       },
     ]
     //log user input
