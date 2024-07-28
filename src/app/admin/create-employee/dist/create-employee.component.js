@@ -28,7 +28,7 @@ var CreateEmployeeComponent = /** @class */ (function () {
             firstName: [null, forms_1.Validators.compose([forms_1.Validators.required])],
             lastName: [null, forms_1.Validators.compose([forms_1.Validators.required])],
             email: [null, forms_1.Validators.compose([forms_1.Validators.required])],
-            phoneNumber: [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern('^[0-9]{10}$')])],
+            phoneNumber: [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern('^\\(\\d{3}\\)\\d{3}-\\d{4}$')])],
             address: [null, forms_1.Validators.compose([forms_1.Validators.required])],
             role: [null, forms_1.Validators.compose([forms_1.Validators.required])]
         });
@@ -45,8 +45,8 @@ var CreateEmployeeComponent = /** @class */ (function () {
         var employee = {
             firstName: this.employeeForm.controls['firstName'].value,
             lastName: this.employeeForm.controls['lastName'].value,
-            email: this.employeeForm.controls['email'].value,
-            phoneNumber: parseInt(this.employeeForm.controls['phoneNumber'].value, 10),
+            email: this.employeeForm.controls['email'].value.toLowerCase(),
+            phoneNumber: this.employeeForm.controls['phoneNumber'].value,
             address: this.employeeForm.controls['address'].value,
             role: this.employeeForm.controls['role'].value
         };
