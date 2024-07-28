@@ -30,7 +30,7 @@ export class CreateEmployeeComponent {
     firstName: [null, Validators.compose([Validators.required])],
     lastName: [null, Validators.compose([Validators.required])],
     email: [null, Validators.compose([Validators.required])],
-    phoneNumber: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{10}$')])],
+    phoneNumber: [null, Validators.compose([Validators.required, Validators.pattern('^\\(\\d{3}\\)\\d{3}-\\d{4}$')])],
     address: [null, Validators.compose([Validators.required])],
     role: [null, Validators.compose([Validators.required])],
   });
