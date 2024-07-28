@@ -286,9 +286,6 @@ router.post('/', (req, res, next) => {
       return next(createError(400, `Bad request: ${validate.errors}`));
     }
 
-    // Turn the phoneNumber from a string value to a number
-    employee.phoneNumber = Number(employee.phoneNumber);
-
     // Call mongo and create the new user
     mongo(async db => {
 
@@ -694,9 +691,6 @@ router.put('/profile/:employeeId', (req, res, next) =>{
             console.error('Error validating the updateEmployee against the schema');
             return next(createError(400, `Bad request: ${validate.errors}`));
           }
-
-          // Change the phoneNumber from a string value to a number
-          updateProfile.phoneNumber = Number(updateProfile.phoneNumber);
 
           // Update the users lastName, phoneNumber, and/or address
           const result = await db.collection('employees').updateOne(

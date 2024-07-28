@@ -37,13 +37,13 @@ export class NavComponent implements OnInit {
   hideDropdownTimeout: any;
 
   constructor(private router: Router, private cookieService: CookieService, public authService: AuthService) {}
-  
+
   //show dropdown on hover
   showDropdown() {
     clearTimeout(this.hideDropdownTimeout);
     this.dropdownVisible = true;
   }
-  //hide dropdown with a timeout 
+  //hide dropdown with a timeout
   hideDropdown() {
     this.hideDropdownTimeout = setTimeout(() => {
       this.dropdownVisible = false;
@@ -75,9 +75,7 @@ export class NavComponent implements OnInit {
 
   // Get employee Id for the profile page
   getProfileLink(): string {
-    console.log('Getting the profile page...');
     const employeeId = this.authService.getEmployeeId();
-    console.log('Employee Id for Profile page', employeeId);
     return employeeId ? `/profile/${employeeId}` : '/not-found';
   }
 

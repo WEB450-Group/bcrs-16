@@ -90,7 +90,7 @@ export class ProfileComponent {
 
     // Set the update profile employee values to the ones on the form
     updateProfileEmployee.lastName = this.updateProfileForm.controls['lastName'].value;
-    updateProfileEmployee.phoneNumber = parseInt(this.updateProfileForm.controls['phoneNumber'].value);
+    updateProfileEmployee.phoneNumber = this.updateProfileForm.controls['phoneNumber'].value;
     updateProfileEmployee.address = this.updateProfileForm.controls['address'].value;
 
     console.log(updateProfileEmployee);

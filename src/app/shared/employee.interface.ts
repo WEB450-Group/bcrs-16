@@ -15,7 +15,7 @@ export interface Employee {
     lastName: string;
     email: string;
     password: string;
-    phoneNumber: number;
+    phoneNumber: string;
     address: string;
     isDisabled: boolean;
     role: string;
@@ -26,7 +26,7 @@ export interface CreateEmployee {
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber: number;
+  phoneNumber: string;
   address: string;
   role: string;
 }
@@ -45,6 +45,6 @@ export interface Registration {
 
 export interface UpdateProfile {
   lastName: string;
-  phoneNumber: number;
+  phoneNumber: string;
   address: string;
 }

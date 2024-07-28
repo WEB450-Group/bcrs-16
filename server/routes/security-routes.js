@@ -189,9 +189,6 @@ router.post('/register', (req, res, next) => {
     // Encrypt the employee's password using bcrypt
     employee.password = bcrypt.hashSync(employee.password, saltRounds);
 
-    // Make phoneNumber number input into a number
-    employee.phoneNumber = Number(employee.phoneNumber);
-
     // Call mongo and create the new employee
     mongo(async db => {
 
